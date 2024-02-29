@@ -16,6 +16,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -24,17 +25,28 @@ repositories {
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
+    set('restDocsCopyFrom', file("build/docs/asciidoc/index.html"))
+    set('restDocsCopyIntoBuild', file("build/resources/main/static/docs"))
+    set('restDocsCopyIntoLocal', file("src/main/resources/static/docs"))
 }
 
 dependencies {
+    //spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //lombok
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //database
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'io.rest-assured:rest-assured'
 }
 
 tasks.named('test') {
@@ -44,5 +56,27 @@ tasks.named('test') {
 
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+    sources {
+        include("**/index.adoc")
+    }
+    baseDirFollowsSourceFile()
     dependsOn test
 }
+
+asciidoctor.doFirst {
+    delete file(restDocsCopyFrom)
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file(restDocsCopyFrom)
+    into file(restDocsCopyIntoLocal)
+    into file(restDocsCopyIntoBuild)
+}
+
+tasks.named('resolveMainClassName') {
+    inputs.files(tasks.named('copyDocument'))
+}
+
+bootJar.dependsOn('copyDocument')

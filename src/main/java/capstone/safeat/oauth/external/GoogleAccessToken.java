@@ -5,10 +5,22 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(SnakeCaseStrategy.class)
 public record GoogleAccessToken(
-    String accessToken,
-    String expiresIn,
+    String issuedAt,
     String scope,
-    String tokenType
+    String applicationName,
+    String refreshTokenIssuedAt,
+    String status,
+    String refreshTokenStatus,
+    String apiProductList,
+    String expiresIn,
+    String organizationId,
+    String tokenType,
+    String refreshToken,
+    String clientId,
+    String accessToken,
+    String organizationName,
+    String refreshTokenExpiresIns,
+    String refreshCount
 ) {
 
 }

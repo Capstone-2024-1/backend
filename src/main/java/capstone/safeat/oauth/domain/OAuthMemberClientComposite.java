@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OAuthMemberClientComposite {
 
   private final Map<OAuthServerType, OAuthMemberClient> oAuthMemberClientMap;

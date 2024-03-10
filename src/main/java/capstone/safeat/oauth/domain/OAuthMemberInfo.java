@@ -1,9 +1,12 @@
 package capstone.safeat.oauth.domain;
 
 public record OAuthMemberInfo(
-    Long id,
+    String oauthServerId,
     String profileImageUrl,
-    OAuthServerType oAuthServerType
+    OAuthServerType oauthServerType
 ) {
 
+  public OAuthMemberId oauthMemberId() {
+    return new OAuthMemberId(oauthServerId, oauthServerType);
+  }
 }

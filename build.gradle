@@ -37,6 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt:0.12.5'
+
     //mac환경에서 실행을 위한 의존성 추가
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 

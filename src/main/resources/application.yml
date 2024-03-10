@@ -19,6 +19,8 @@ oauth:
     client-id: "local"
     redirect-uri: "local"
     client-secret: "client-secret"
+jwt:
+  secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="
 
 ---
 

@@ -8,6 +8,6 @@ import org.springframework.web.service.annotation.PostExchange;
 
 public interface GoogleApiClient {
 
-  @PostExchange(url = "https://apitest.acme.com/oauth/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
-  GoogleAccessToken fetchToken(@RequestParam final MultiValueMap<String, String> params);
+  @PostExchange(url = "https://oauth2.googleapis.com/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
+  GoogleOAuthResponse fetchToken(@RequestParam final MultiValueMap<String, String> params);
 }

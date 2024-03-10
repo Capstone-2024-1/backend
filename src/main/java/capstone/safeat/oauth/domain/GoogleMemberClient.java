@@ -3,8 +3,8 @@ package capstone.safeat.oauth.domain;
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 
 import capstone.safeat.oauth.GoogleOAuthConfig;
-import capstone.safeat.oauth.external.GoogleAccessToken;
 import capstone.safeat.oauth.external.GoogleApiClient;
+import capstone.safeat.oauth.external.GoogleOAuthResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,7 +19,8 @@ public class GoogleMemberClient implements OAuthMemberClient {
 
   @Override
   public OAuthMemberInfo fetchMember(final String authCode) {
-    final GoogleAccessToken accessToken = googleApiClient.fetchToken(createRequestParam(authCode));
+    final GoogleOAuthResponse oauthResponse = googleApiClient
+        .fetchToken(createRequestParam(authCode));
     return null;
   }
 
@@ -29,6 +30,7 @@ public class GoogleMemberClient implements OAuthMemberClient {
     param.add("code", authCode);
     param.add("redirect_uri", googleOAuthConfig.redirectUri());
     param.add("client_id", googleOAuthConfig.clientId());
+    param.add("client_secret", googleOAuthConfig.clientSecret());
     return param;
   }
 

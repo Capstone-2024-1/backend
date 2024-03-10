@@ -11,29 +11,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-  config:
-    activate:
-      on-profile: local
 oauth:
   google:
-    client-id: "local"
-    redirect-uri: "local"
+    client-id: "test"
+    redirect-uri: "test"
     client-secret: "client-secret"
 jwt:
   secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="
-
----
-
-spring:
-  config:
-    import: classpath:secret/application-dev.yml
-    activate:
-      on-profile: dev
-
----
-
-spring:
-  config:
-    import: classpath:secret/application-prod.yml
-    activate:
-      on-profile: prod

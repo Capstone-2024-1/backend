@@ -87,4 +87,6 @@ tasks.named('resolveMainClassName') {
     inputs.files(tasks.named('copyDocument'))
 }
 
+jar.dependsOn('copyDocument')
+
 bootJar.dependsOn('copyDocument')

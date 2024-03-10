@@ -1,10 +1,11 @@
-package capstone.safeat.oauth.domain;
+package capstone.safeat.oauth.external;
 
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 
 import capstone.safeat.oauth.GoogleOAuthConfig;
-import capstone.safeat.oauth.external.GoogleApiClient;
-import capstone.safeat.oauth.external.GoogleOAuthResponse;
+import capstone.safeat.oauth.domain.OAuthMemberClient;
+import capstone.safeat.oauth.domain.OAuthMemberInfo;
+import capstone.safeat.oauth.domain.OAuthServerType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,7 +22,9 @@ public class GoogleMemberClient implements OAuthMemberClient {
   public OAuthMemberInfo fetchMember(final String authCode) {
     final GoogleOAuthResponse oauthResponse = googleApiClient
         .fetchToken(createRequestParam(authCode));
-    return null;
+    final GoogleMemberProfileResponse memberProfileResponse = googleApiClient
+        .fetchMemberProfile("Bearer " + oauthResponse.accessToken());
+    return new OAuthMemberInfo(memberProfileResponse.id(), memberProfileResponse.picture(), GOOGLE);
   }
 
   private MultiValueMap<String, String> createRequestParam(final String authCode) {

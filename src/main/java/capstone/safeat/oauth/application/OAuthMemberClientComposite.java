@@ -1,8 +1,12 @@
-package capstone.safeat.oauth.domain;
+package capstone.safeat.oauth.application;
 
 import static capstone.safeat.oauth.domain.OAuthExceptionType.OAUTH_CLIENT_NOT_FOUND;
 import static java.util.function.Function.identity;
 
+import capstone.safeat.oauth.domain.OAuthException;
+import capstone.safeat.oauth.domain.OAuthMemberClient;
+import capstone.safeat.oauth.domain.OAuthMemberInfo;
+import capstone.safeat.oauth.domain.OAuthServerType;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -12,10 +16,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuthMemberClientComposite {
 
-  private final Map<OAuthServerType, OAuthMemberClient> oAuthMemberClientMap;
+  private final Map<OAuthServerType, OAuthMemberClient> oauthMemberClientMap;
 
   public OAuthMemberClientComposite(final Set<OAuthMemberClient> oAuthMemberClients) {
-    this.oAuthMemberClientMap = oAuthMemberClients.stream()
+    this.oauthMemberClientMap = oAuthMemberClients.stream()
         .collect(Collectors.toMap(OAuthMemberClient::supportType, identity()));
   }
 
@@ -24,7 +28,7 @@ public class OAuthMemberClientComposite {
   }
 
   private OAuthMemberClient getClient(final OAuthServerType serverType) {
-    return Optional.ofNullable(oAuthMemberClientMap.get(serverType))
+    return Optional.ofNullable(oauthMemberClientMap.get(serverType))
         .orElseThrow(() -> new OAuthException(OAUTH_CLIENT_NOT_FOUND));
   }
 }

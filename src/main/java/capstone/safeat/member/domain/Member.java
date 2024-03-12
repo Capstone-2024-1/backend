@@ -1,43 +1,24 @@
 package capstone.safeat.member.domain;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
+import lombok.Builder;
+import lombok.Getter;
 
-import capstone.safeat.oauth.domain.OAuthMemberId;
-import capstone.safeat.oauth.domain.OAuthMemberInfo;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
-import lombok.NoArgsConstructor;
-
-@Entity
-@NoArgsConstructor(access = PROTECTED)
+@Getter
 public class Member {
 
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long id;
+  private final Long id;
+  private final String nickName;
+  private final String profileImageUrl;
 
-  @Embedded
-  @NotNull
-  private OAuthMemberId oauthMemberId;
-
-  private String nickName;
-
-  private String profileImageUrl;
-
-  private Member(final OAuthMemberId oauthMemberId, final String profileImageUrl) {
-    this.oauthMemberId = oauthMemberId;
+  @Builder
+  public Member(final Long id, final String nickName, final String profileImageUrl) {
+    this.id = id;
+    this.nickName = nickName;
     this.profileImageUrl = profileImageUrl;
   }
 
-  public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
-    return new Member(oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
-  }
-
-  public Long getId() {
-    return id;
+  @Builder
+  public Member(final String nickName, final String profileImageUrl) {
+    this(null, nickName, profileImageUrl);
   }
 }

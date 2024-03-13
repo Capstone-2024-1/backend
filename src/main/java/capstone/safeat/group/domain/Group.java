@@ -3,6 +3,7 @@ package capstone.safeat.group.domain;
 import static capstone.safeat.group.exception.GroupExceptionType.MEMBER_IS_ALREADY_CONTAIN;
 
 import capstone.safeat.group.exception.GroupException;
+import capstone.safeat.group.exception.GroupExceptionType;
 import capstone.safeat.member.domain.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,13 @@ public class Group {
   }
 
   public void drop(final Member member) {
+    members.remove(member);
+  }
+
+  public void expel(final Member creator, final Member member) {
+    if (!this.creator.equals(creator)) {
+      throw new GroupException(GroupExceptionType.EXECUTORS_IS_NOT_CREATOR);
+    }
     members.remove(member);
   }
 }

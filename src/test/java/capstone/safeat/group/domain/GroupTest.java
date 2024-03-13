@@ -3,10 +3,10 @@ package capstone.safeat.group.domain;
 import static capstone.safeat.fixture.domain.GroupFixture.새로운_그룹_생성;
 import static capstone.safeat.group.exception.GroupExceptionType.MEMBER_IS_ALREADY_CONTAIN;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.domain.Member;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -35,9 +35,21 @@ class GroupTest {
       final Member newMember = new Member("홍실", "profile");
       group.addMember(newMember);
 
-      Assertions.assertThatThrownBy(() -> group.addMember(newMember))
+      assertThatThrownBy(() -> group.addMember(newMember))
           .isInstanceOf(GroupException.class)
           .hasMessage(MEMBER_IS_ALREADY_CONTAIN.getMessage());
     }
+  }
+
+  @Test
+  void 그룹에서_정상적으로_탈퇴한다() {
+    final Group group = 새로운_그룹_생성();
+    final Member member = new Member("홍실", "profile");
+    group.addMember(member);
+
+    group.drop(member);
+
+    assertThat(group.getMembers())
+        .doesNotContain(member);
   }
 }

@@ -30,4 +30,8 @@ public class Group {
       throw new GroupException(MEMBER_IS_ALREADY_CONTAIN);
     }
   }
+
+  public void drop(final Member member) {
+    members.remove(member);
+  }
 }

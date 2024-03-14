@@ -12,12 +12,16 @@ import lombok.Getter;
 @Getter
 public class Group {
 
+  private static final String DEFAULT_GROUP_IMAGE_URL = "";
+
   private final Member creator;
   private final List<Member> members;
+  private final String imageUrl;
 
   public Group(final Member creator) {
     this.creator = creator;
     this.members = new ArrayList<>();
+    this.imageUrl = DEFAULT_GROUP_IMAGE_URL;
     members.add(creator);
   }
 

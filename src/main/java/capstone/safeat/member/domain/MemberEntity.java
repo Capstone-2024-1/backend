@@ -9,11 +9,15 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "member")
 @NoArgsConstructor(access = PROTECTED)
 public class MemberEntity {
 
@@ -25,6 +29,9 @@ public class MemberEntity {
   @Embedded
   @NotNull
   private OAuthMemberId oauthMemberId;
+
+  @OneToMany
+  private List<GroupMemberEntity> groupMember;
 
   private String nickName;
 

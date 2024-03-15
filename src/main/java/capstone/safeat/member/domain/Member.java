@@ -1,45 +1,45 @@
 package capstone.safeat.member.domain;
 
-import java.util.Objects;
-import lombok.Builder;
-import lombok.Getter;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
-@Getter
+import capstone.safeat.oauth.domain.OAuthMemberId;
+import capstone.safeat.oauth.domain.OAuthMemberInfo;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "member")
+@NoArgsConstructor(access = PROTECTED)
 public class Member {
 
-  private final Long id;
-  private final String nickName;
-  private final String profileImageUrl;
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Getter
+  private Long id;
 
-  @Builder
-  public Member(final Long id, final String nickName, final String profileImageUrl) {
-    this.id = id;
-    this.nickName = nickName;
+  @Embedded
+  @NotNull
+  private OAuthMemberId oauthMemberId;
+
+  private String nickName;
+
+  private String profileImageUrl;
+
+  private Member(
+      final Long id, final OAuthMemberId oauthMemberId, final String profileImageUrl
+  ) {
+    this.oauthMemberId = oauthMemberId;
     this.profileImageUrl = profileImageUrl;
   }
 
-  @Builder
-  public Member(final String nickName, final String profileImageUrl) {
-    this(null, nickName, profileImageUrl);
-  }
-
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    final Member member = (Member) o;
-    if (member.id == null || id == null) {
-      return false;
-    }
-    return Objects.equals(id, member.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
+  public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
+    return new Member(null, oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
 }

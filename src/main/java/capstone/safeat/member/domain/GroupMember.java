@@ -16,21 +16,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "group_member")
 @NoArgsConstructor(access = PROTECTED)
-public class GroupMemberEntity {
+public class GroupMember {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "group_id",
-      nullable = false,
-      foreignKey = @ForeignKey(name = "fk_group_member_to_group"))
+  @JoinColumn(name = "group_id", nullable = false
+      , foreignKey = @ForeignKey(name = "fk_group_member_to_group"))
   private GroupEntity group;
 
   @ManyToOne
-  @JoinColumn(name = "member_id",
-      nullable = false,
-      foreignKey = @ForeignKey(name = "fk_group_member_to_member"))
-  private MemberEntity member;
+  @JoinColumn(name = "member_id", nullable = false
+      , foreignKey = @ForeignKey(name = "fk_group_member_to_member"))
+  private Member member;
 }

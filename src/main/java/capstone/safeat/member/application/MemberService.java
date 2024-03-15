@@ -1,6 +1,7 @@
 package capstone.safeat.member.application;
 
 import capstone.safeat.member.domain.Member;
+import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.member.dto.LoginResponse;
 import capstone.safeat.oauth.application.OAuthMemberClientComposite;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
@@ -15,16 +16,15 @@ public class MemberService {
 
   private final OAuthMemberClientComposite oauthMemberClientComposite;
   private final JwtProvider jwtProvider;
-  private final MemberReader memberReader;
-  private final MemberUpdater memberUpdater;
+  private final MemberRepository memberRepository;
 
   @Transactional
   public LoginResponse createToken(final String oauthType, final String code) {
     final OAuthServerType oauthServerType = OAuthServerType.fromName(oauthType);
     final OAuthMemberInfo oauthMemberInfo = oauthMemberClientComposite
         .fetchMemberInfo(oauthServerType, code);
-    final Member member = memberReader.findByOAuthMemberId(oauthMemberInfo.oauthMemberId())
-        .orElseGet(() -> memberUpdater.saveNewMember(oauthMemberInfo));
+    final Member member = memberRepository.findByOauthMemberId(oauthMemberInfo.oauthMemberId())
+        .orElseGet(() -> memberRepository.save(Member.createOAuthMember(oauthMemberInfo)));
     return new LoginResponse(member.getId(), jwtProvider.createToken(member.getId()));
   }
 }

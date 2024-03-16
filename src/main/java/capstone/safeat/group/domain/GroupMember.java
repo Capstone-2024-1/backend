@@ -1,9 +1,9 @@
-package capstone.safeat.member.domain;
+package capstone.safeat.group.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import capstone.safeat.group.domain.GroupEntity;
+import capstone.safeat.member.domain.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -25,10 +25,15 @@ public class GroupMember {
   @ManyToOne
   @JoinColumn(name = "group_id", nullable = false
       , foreignKey = @ForeignKey(name = "fk_group_member_to_group"))
-  private GroupEntity group;
+  private Group group;
 
   @ManyToOne
   @JoinColumn(name = "member_id", nullable = false
       , foreignKey = @ForeignKey(name = "fk_group_member_to_member"))
   private Member member;
+
+  public GroupMember(final Group group, final Member member) {
+    this.group = group;
+    this.member = member;
+  }
 }

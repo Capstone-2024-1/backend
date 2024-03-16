@@ -1,49 +1,72 @@
 package capstone.safeat.group.domain;
 
-import static capstone.safeat.group.exception.GroupExceptionType.MEMBER_IS_ALREADY_CONTAIN;
+import static capstone.safeat.group.exception.GroupExceptionType.EXECUTORS_IS_NOT_CREATOR;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 import capstone.safeat.group.exception.GroupException;
-import capstone.safeat.group.exception.GroupExceptionType;
 import capstone.safeat.member.domain.Member;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Entity
+@Table(name = "group_")
+@NoArgsConstructor(access = PROTECTED)
 public class Group {
 
   private static final String DEFAULT_GROUP_IMAGE_URL = "";
 
-  private final Member creator;
-  private final List<Member> members;
-  private final String imageUrl;
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private Long id;
+
+  @NotNull
+  private String imageUrl;
+
+  @Embedded
+  private GroupMembers groupMembers;
+
+  @OneToOne(fetch = LAZY)
+  @JoinColumn(name = "creator_id", nullable = false
+      , foreignKey = @ForeignKey(name = "fk_group_to_member"))
+  private Member creator;
+
+  private Group(
+      final String imageUrl, final List<GroupMember> groupMembers, final Member creator
+  ) {
+    this.imageUrl = imageUrl;
+    this.groupMembers = new GroupMembers(groupMembers);
+    this.creator = creator;
+  }
 
   public Group(final Member creator) {
-    this.creator = creator;
-    this.members = new ArrayList<>();
-    this.imageUrl = DEFAULT_GROUP_IMAGE_URL;
-    members.add(creator);
+    this(DEFAULT_GROUP_IMAGE_URL, new ArrayList<>(), creator);
+    addMember(creator);
   }
 
   public void addMember(final Member member) {
-    validateIfExist(member);
-    members.add(member);
-  }
-
-  private void validateIfExist(final Member member) {
-    if (members.contains(member)) {
-      throw new GroupException(MEMBER_IS_ALREADY_CONTAIN);
-    }
+    groupMembers.addMember(new GroupMember(this, member));
   }
 
   public void drop(final Member member) {
-    members.remove(member);
+    groupMembers.remove(member);
   }
 
   public void expel(final Member creator, final Member member) {
     if (!this.creator.equals(creator)) {
-      throw new GroupException(GroupExceptionType.EXECUTORS_IS_NOT_CREATOR);
+      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
     }
-    members.remove(member);
+    drop(member);
   }
 }

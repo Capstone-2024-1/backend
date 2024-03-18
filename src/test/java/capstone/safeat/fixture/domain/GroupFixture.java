@@ -7,6 +7,6 @@ import capstone.safeat.group.domain.Group;
 public class GroupFixture {
 
   public static Group 새로운_그룹_생성() {
-    return new Group(멤버_홍혁준_생성());
+    return Group.create(멤버_홍혁준_생성());
   }
 }

@@ -24,4 +24,11 @@ public class GroupService {
     final Group newGroup = groupUpdater.saveNewGroupBy(creator);
     return newGroup.getId();
   }
+
+  @Transactional
+  public void leaveGroup(final Long memberId, final Long groupId) {
+    final Member leaver = memberRepository.findById(memberId)
+        .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+    groupUpdater.removeMember(groupId, leaver);
+  }
 }

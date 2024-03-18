@@ -40,7 +40,7 @@ class GroupUpdaterTest extends ApplicationTest {
     final Group newGroup = groupUpdater.saveNewGroupBy(creator);
 
     final boolean exists = groupRepository.existsById(newGroup.getId());
-    final List<GroupMember> groupMember = groupMemberRepository.findByGroup(newGroup);
+    final List<GroupMember> groupMember = groupMemberRepository.findByGroupId(newGroup.getId());
     assertAll(
         () -> assertThat(exists)
             .isTrue(),
@@ -55,7 +55,7 @@ class GroupUpdaterTest extends ApplicationTest {
 
     groupUpdater.removeMember(newGroup.getId(), creator);
 
-    final List<GroupMember> groupMember = groupMemberRepository.findByGroup(newGroup);
+    final List<GroupMember> groupMember = groupMemberRepository.findByGroupId(newGroup.getId());
     assertThat(groupMember.size())
         .isEqualTo(0);
   }

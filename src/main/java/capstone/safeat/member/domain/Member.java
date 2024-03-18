@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +25,6 @@ public class Member {
   private Long id;
 
   @Embedded
-  @NotNull
   private OAuthMemberId oauthMemberId;
 
   private String nickName;
@@ -39,6 +38,13 @@ public class Member {
     this.profileImageUrl = profileImageUrl;
   }
 
+  @Builder
+  public Member(final String nickName, final String profileImageUrl) {
+    this.nickName = nickName;
+    this.profileImageUrl = profileImageUrl;
+  }
+
+  @Builder
   public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
     return new Member(null, oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }

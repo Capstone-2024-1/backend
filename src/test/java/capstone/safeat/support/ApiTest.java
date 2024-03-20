@@ -5,6 +5,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.controller.MemberController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,12 @@ public abstract class ApiTest {
 
   @Autowired
   protected MockMvc mockMvc;
-
+  @Autowired
+  protected ObjectMapper objectMapper;
   @MockBean
   protected MemberService memberService;
+//  @MockBean
+//  protected GroupService groupService;
 
   @BeforeEach
   void setUp(

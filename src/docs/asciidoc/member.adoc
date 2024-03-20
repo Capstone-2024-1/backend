@@ -16,9 +16,9 @@ endif::[]
 
 include::{snippets}/../../build/generated-snippets/login/http-request.adoc[]
 
-===== *Http Query Parameter adoc*
+===== *Http Request Body adoc*
 
-include::{snippets}/../../build/generated-snippets/login/query-parameters.adoc[]
+include::{snippets}/../../build/generated-snippets/login/request-fields.adoc[]
 
 ===== *Http Response*
 

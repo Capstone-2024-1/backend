@@ -6,6 +6,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -23,7 +24,7 @@ public class MemberApiTest extends ApiTest {
 
   @Test
   void 로그인() throws Exception {
-    final LoginResponse itemPreviewResponses = new LoginResponse(1L, "access Token");
+    final LoginResponse itemPreviewResponses = new LoginResponse(1L, "access Token", false);
     final String code = "실제 Google OAuth에서 반환해준 Auth 코드";
     final LoginRequest loginRequest = new LoginRequest(code);
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
@@ -44,7 +45,8 @@ public class MemberApiTest extends ApiTest {
             ),
             responseFields(
                 fieldWithPath("id").type(NUMBER).description("멤버의 id"),
-                fieldWithPath("accessToken").type(STRING).description("accessToken")
+                fieldWithPath("accessToken").type(STRING).description("accessToken"),
+                fieldWithPath("isRegistered").type(BOOLEAN).description("회원가입이 완료된 멤버인지")
             )
         ));
   }

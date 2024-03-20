@@ -25,6 +25,10 @@ public class MemberService {
         .fetchMemberInfo(oauthServerType, code);
     final Member member = memberRepository.findByOauthMemberId(oauthMemberInfo.oauthMemberId())
         .orElseGet(() -> memberRepository.save(Member.createOAuthMember(oauthMemberInfo)));
-    return new LoginResponse(member.getId(), jwtProvider.createToken(member.getId()));
+    return new LoginResponse(
+        member.getId(),
+        jwtProvider.createToken(member.getId()),
+        member.isRegistered()
+    );
   }
 }

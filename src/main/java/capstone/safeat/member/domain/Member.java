@@ -10,19 +10,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
 public class Member {
 
-  @Id
+  @Id @Getter
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @Embedded
   @NotNull
   private OAuthMemberId oauthMemberId;
+
+  @Getter
+  @NotNull
+  private boolean isRegistered;
 
   private String nickName;
 
@@ -31,13 +36,11 @@ public class Member {
   private Member(final OAuthMemberId oauthMemberId, final String profileImageUrl) {
     this.oauthMemberId = oauthMemberId;
     this.profileImageUrl = profileImageUrl;
+    this.isRegistered = false;
   }
 
   public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
     return new Member(oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
 
-  public Long getId() {
-    return id;
-  }
 }

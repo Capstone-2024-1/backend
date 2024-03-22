@@ -48,7 +48,7 @@ jobs:
   deploy:
     needs: build
     name: 배포
-    runs-on: self-hosted
+    runs-on: [ self-hosted, prod ]
     steps:
       - name: 도커 실행
         run:

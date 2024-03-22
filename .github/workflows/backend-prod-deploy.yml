@@ -35,8 +35,7 @@ jobs:
       - name: 도커 이미지 빌드 및 푸시
         uses: docker/build-push-action@v4
         with:
-          context: backend/emm-sale
-          file: backend/emm-sale/Dockerfile-prod
+          file: Dockerfile-prod
           platforms: linux/64/v8
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/safeat:latest

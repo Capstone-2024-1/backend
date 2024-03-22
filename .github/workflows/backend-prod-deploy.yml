@@ -48,6 +48,8 @@ jobs:
           platforms: linux/64/v8
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/safeat:${{ steps.timestamp.outputs.timestamp }}
+          submodules: 'recursive'
+          token: ${{ secrets.SUBMODULE_TOKEN }}
 
   deploy:
     needs: build

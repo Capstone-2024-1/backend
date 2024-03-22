@@ -47,7 +47,9 @@ jobs:
           file: Dockerfile-prod
           platforms: linux/64/v8
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kerdy:${{ steps.timestamp.outputs.timestamp }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/safeat:${{ steps.timestamp.outputs.timestamp }}
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          submodules: true
 
   deploy:
     needs: build

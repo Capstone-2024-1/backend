@@ -50,7 +50,9 @@ jobs:
     name: 배포
     runs-on: [ self-hosted, prod ]
     steps:
-      - name: 도커 실행
+      - name: 실행중인 도커 제거
         run:
-          docker stop safeat && docker rm safeat && docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/safeat
+          docker stop safeat && docker rm safeat && docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/safeat || true
+      - name: 새로 빌드한 도커 실행
+        run:
           docker run -d -p 8080:8080 --name safeat -e TZ=Asia/Seoul --network host ${{ secrets.DOCKERHUB_USERNAME }}/safeat

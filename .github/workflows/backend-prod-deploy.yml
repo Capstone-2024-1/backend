@@ -52,5 +52,5 @@ jobs:
     steps:
       - name: 도커 실행
         run:
-          docker stop safeat && docker rm safeat && docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/safeat
-          docker run -d -p 8080:8080 --name safeat -e TZ=Asia/Seoul --network host ${{ secrets.DOCKERHUB_USERNAME }}/safeat
+          sudo docker stop safeat && docker rm safeat && docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/safeat
+          sudo docker run -d -p 8080:8080 --name safeat -e TZ=Asia/Seoul --network host ${{ secrets.DOCKERHUB_USERNAME }}/safeat

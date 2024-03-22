@@ -7,8 +7,6 @@ jobs:
   build:
     name: 빌드
     runs-on: ubuntu-22.04
-    outputs:
-      current_timestamp: ${{ steps.timestamp.outputs.timestamp }}
     steps:
       - name: workflow_dispatch에서 지정한 branch로 checkout
         uses: actions/checkout@v3
@@ -21,13 +19,6 @@ jobs:
         with:
           java-version: 17
           distribution: 'corretto'
-
-      - name: unix 타임스탬프 얻기
-        id: timestamp
-        run: echo "::set-output name=timestamp::$(date +%s)"
-
-      - name: unix 타임스탬프 확인하기
-        run: echo ${{ steps.timestamp.outputs.timestamp }}
 
       - name: Gradle에 실행 권한 부여
         run: chmod +x gradlew
@@ -57,4 +48,5 @@ jobs:
     steps:
       - name: 도커 실행
         run:
-          sudo /home/ubuntu/deploy.sh ${{ secrets.DOCKERHUB_USERNAME }} ${{ needs.build.outputs.current_timestamp }}
+          docker stop safeat && docker rm safeat && docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/safeat
+          docker run -d -p 8080:8080 --name safeat -e TZ=Asia/Seoul --network host ${{ secrets.DOCKERHUB_USERNAME }}/safeat

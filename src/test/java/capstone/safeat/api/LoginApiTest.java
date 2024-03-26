@@ -14,13 +14,13 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import capstone.safeat.member.dto.LoginRequest;
-import capstone.safeat.member.dto.LoginResponse;
+import capstone.safeat.login.dto.LoginRequest;
+import capstone.safeat.login.dto.LoginResponse;
 import capstone.safeat.support.ApiTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-public class MemberApiTest extends ApiTest {
+public class LoginApiTest extends ApiTest {
 
   @Test
   void 로그인() throws Exception {
@@ -30,9 +30,9 @@ public class MemberApiTest extends ApiTest {
     final String requestBody = objectMapper.writeValueAsString(loginRequest);
     final String oauthType = "google";
 
-    when(memberService.createToken(oauthType, code)).thenReturn(itemPreviewResponses);
+    when(loginService.createToken(oauthType, code)).thenReturn(itemPreviewResponses);
 
-    mockMvc.perform(post("/login/oauth/" + oauthType)
+    mockMvc.perform(post("/login/oauth/google")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(requestBody))
         .andExpect(status().isOk())

@@ -1,4 +1,4 @@
-package capstone.safeat.member.application;
+package capstone.safeat.login.application;
 
 import static io.jsonwebtoken.io.Decoders.BASE64;
 
@@ -22,7 +22,7 @@ public class JwtProvider {
     this.encodedSecretKey = encodedSecretKey;
   }
 
-  public String createToken(final Long memberId) {
+  public String createAccessTokenWith(final Long memberId) {
     final Date now = new Date();
     final Date expiration
         = new Date(now.getTime() + Duration.ofDays(DURATION_DAY).toMillis());
@@ -37,7 +37,7 @@ public class JwtProvider {
         .compact();
   }
 
-  public Long parseToken(final String jwt) {
+  public Long parseMemberId(final String jwt) {
     final Integer memberId = (Integer) Jwts.parser()
         .verifyWith(Keys.hmacShaKeyFor(BASE64.decode(encodedSecretKey)))
         .build()

@@ -1,4 +1,4 @@
-package capstone.safeat.member.dto;
+package capstone.safeat.login.dto;
 
 import lombok.Getter;
 

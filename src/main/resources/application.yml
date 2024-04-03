@@ -11,6 +11,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+    open-in-view: false
   config:
     activate:
       on-profile: local

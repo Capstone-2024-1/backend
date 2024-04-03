@@ -3,6 +3,7 @@ package capstone.safeat.member.domain;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import capstone.safeat.base.BaseEntity;
 import capstone.safeat.oauth.domain.OAuthMemberId;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import jakarta.persistence.Embedded;
@@ -15,9 +16,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
-  @Id @Getter
+  @Id
+  @Getter
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
@@ -42,5 +44,4 @@ public class Member {
   public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
     return new Member(oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
-
 }

@@ -3,6 +3,8 @@ package capstone.safeat.support;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
+import capstone.safeat.category.application.CategoryService;
+import capstone.safeat.category.controller.CategoryController;
 import capstone.safeat.login.MemberIdArgumentResolver;
 import capstone.safeat.login.application.LoginService;
 import capstone.safeat.login.controller.LoginController;
@@ -22,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@WebMvcTest({MemberController.class, LoginController.class})
+@WebMvcTest({MemberController.class, LoginController.class, CategoryController.class})
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
 public abstract class ApiTest {
@@ -35,6 +37,8 @@ public abstract class ApiTest {
   protected MemberService memberService;
   @MockBean
   protected LoginService loginService;
+  @MockBean
+  protected CategoryService categoryService;
   @MockBean
   protected MemberIdArgumentResolver memberIdArgumentResolver;
 

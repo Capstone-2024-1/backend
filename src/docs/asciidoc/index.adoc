@@ -11,4 +11,9 @@ endif::[]
 = safet-API 문서
 
 == *[ Member ]*
+
 include::member.adoc[]
+
+== *[ Category ]*
+
+include::category.adoc[]

@@ -1,6 +1,6 @@
 package capstone.safeat.api;
 
-import static capstone.safeat.fixture.CategoryFixture.카테고리들;
+import static capstone.safeat.fixture.docs.CategoryDocsFixture.카테고리들;
 import static java.sql.JDBCType.ARRAY;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

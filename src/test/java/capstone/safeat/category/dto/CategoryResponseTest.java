@@ -1,6 +1,6 @@
 package capstone.safeat.category.dto;
 
-import static capstone.safeat.fixture.CategoryFixture.카테고리들;
+import static capstone.safeat.fixture.docs.CategoryDocsFixture.카테고리들;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.safeat.category.domain.Category;

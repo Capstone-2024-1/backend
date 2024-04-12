@@ -28,6 +28,7 @@ public class Member extends BaseEntity {
 
   @Embedded
   @NotNull
+  @Getter
   private OAuthMemberId oauthMemberId;
 
   @Getter
@@ -36,6 +37,7 @@ public class Member extends BaseEntity {
 
   private String nickName;
 
+  @Getter
   private String profileImageUrl;
 
   @Builder

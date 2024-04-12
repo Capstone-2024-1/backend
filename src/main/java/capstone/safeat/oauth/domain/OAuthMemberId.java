@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -15,10 +16,12 @@ import lombok.ToString;
 public class OAuthMemberId {
 
   @NotNull
+  @Getter
   private String oauthServerId;
 
   @Enumerated(STRING)
   @NotNull
+  @Getter
   private OAuthServerType oauthServerType;
 
   public OAuthMemberId(final String oauthServerId, final OAuthServerType oauthServerType) {

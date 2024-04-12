@@ -22,4 +22,8 @@ public class MemberReader {
     return memberRepository.findById(memberId)
         .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
   }
+
+  public Optional<Member> readBy(final OAuthMemberInfo oauthMemberInfo) {
+    return memberRepository.findByOauthMemberId(oauthMemberInfo.oauthMemberId());
+  }
 }

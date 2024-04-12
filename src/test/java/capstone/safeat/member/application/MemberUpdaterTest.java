@@ -2,6 +2,7 @@ package capstone.safeat.member.application;
 
 import static capstone.safeat.fixture.domain.CategoryDomainFixture.저장된_사과_망고;
 import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
+import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import capstone.safeat.category.application.CategoryReader;
@@ -9,6 +10,7 @@ import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.CategoryRepository;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
+import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import capstone.safeat.support.RepositoryTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,8 @@ class MemberUpdaterTest extends RepositoryTest {
   private MemberRepository memberRepository;
   @Autowired
   private CategoryRepository categoryRepository;
+  @Autowired
+  private MemberReader memberReader;
   @Autowired
   private CategoryReader categoryReader;
 
@@ -42,5 +46,17 @@ class MemberUpdaterTest extends RepositoryTest {
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparatorIgnoringFields("parent", "children")
         .containsExactlyInAnyOrderElementsOf(expected);
+  }
+
+  @Test
+  void 멤버가_회원가입한다(){
+    final OAuthMemberInfo info = new OAuthMemberInfo("1234567890", "image", GOOGLE);
+
+    final Member expected = memberUpdater.registerNewMember(info);
+
+    final Member actual = memberReader.readMember(expected.getId());
+    assertThat(actual)
+        .usingRecursiveComparison()
+        .isEqualTo(expected);
   }
 }

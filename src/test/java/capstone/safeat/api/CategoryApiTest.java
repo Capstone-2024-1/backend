@@ -1,6 +1,6 @@
 package capstone.safeat.api;
 
-import static capstone.safeat.fixture.CategoryFixture.카테고리들;
+import static capstone.safeat.fixture.docs.CategoryDocsFixture.카테고리들;
 import static java.sql.JDBCType.ARRAY;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -34,6 +34,7 @@ public class CategoryApiTest extends ApiTest {
                 fieldWithPath("[].id").type(NUMBER).description("멤버의 id"),
                 fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
                 fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
+//                fieldWithPath("[].childIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
                 subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
             )
         ));

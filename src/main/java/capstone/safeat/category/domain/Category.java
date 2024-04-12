@@ -1,5 +1,6 @@
 package capstone.safeat.category.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -7,6 +8,11 @@ import capstone.safeat.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,20 +30,29 @@ public class Category extends BaseEntity {
 
   private String englishName;
 
-  private Long parentCategoryId;
+  @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "parent_id")
+  private Category parent;
+
+  @OneToMany(mappedBy = "parent")
+  private List<Category> children;
 
   @Builder
   public Category(
       final Long id, final String koreanName,
-      final String englishName, final Long parentCategoryId
+      final String englishName, final Category parent
   ) {
     this.id = id;
     this.koreanName = koreanName;
     this.englishName = englishName;
-    this.parentCategoryId = parentCategoryId;
+    this.parent = parent;
   }
 
   public boolean isRootCategory() {
-    return parentCategoryId == null;
+    return parent == null;
+  }
+
+  public Optional<Category> getParent() {
+    return Optional.ofNullable(parent);
   }
 }

@@ -11,11 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
+@ToString
 public class Member extends BaseEntity {
 
   @Id
@@ -25,6 +28,7 @@ public class Member extends BaseEntity {
 
   @Embedded
   @NotNull
+  @Getter
   private OAuthMemberId oauthMemberId;
 
   @Getter
@@ -33,8 +37,10 @@ public class Member extends BaseEntity {
 
   private String nickName;
 
+  @Getter
   private String profileImageUrl;
 
+  @Builder
   private Member(final OAuthMemberId oauthMemberId, final String profileImageUrl) {
     this.oauthMemberId = oauthMemberId;
     this.profileImageUrl = profileImageUrl;

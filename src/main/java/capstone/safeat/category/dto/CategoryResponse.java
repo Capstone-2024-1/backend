@@ -6,7 +6,7 @@ import capstone.safeat.category.domain.Category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -19,6 +19,7 @@ public class CategoryResponse {
   private final Long id;
   private final String englishName;
   private final String koreanName;
+  //  private final List<Long> childIds = new ArrayList<>();
   private final List<CategoryResponse> childCategories;
 
   private static CategoryResponse fromWithEmptyChildren(final Category category) {
@@ -37,14 +38,16 @@ public class CategoryResponse {
     return categories.stream()
         .filter(Category::isRootCategory)
         .map(category -> responseMap.get(category.getId()))
-        .collect(Collectors.toList());
+        .toList();
   }
 
-  private static void addChildren(final List<Category> categories,
-      final Map<Long, CategoryResponse> responseMap) {
+  private static void addChildren(
+      final List<Category> categories, final Map<Long, CategoryResponse> responseMap
+  ) {
     for (final Category category : categories) {
-      if (!category.isRootCategory()) {
-        final Long parentId = category.getParentCategoryId();
+      final Optional<Category> parent = category.getParent();
+      if (parent.isPresent()) {
+        final Long parentId = parent.get().getId();
         final CategoryResponse categoryResponse = responseMap.get(category.getId());
         responseMap.get(parentId).getChildCategories().add(categoryResponse);
       }

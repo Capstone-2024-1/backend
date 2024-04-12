@@ -7,9 +7,11 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
+@ToString
 public class OAuthMemberId {
 
   @NotNull

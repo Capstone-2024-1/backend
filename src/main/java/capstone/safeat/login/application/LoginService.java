@@ -1,8 +1,9 @@
 package capstone.safeat.login.application;
 
 import capstone.safeat.login.dto.LoginResponse;
+import capstone.safeat.member.application.MemberReader;
+import capstone.safeat.member.application.MemberUpdater;
 import capstone.safeat.member.domain.Member;
-import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.oauth.application.OAuthMemberClientComposite;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import capstone.safeat.oauth.domain.OAuthServerType;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
   private final OAuthMemberClientComposite oauthMemberClientComposite;
-  private final MemberRepository memberRepository;
+  private final MemberUpdater memberUpdater;
+  private final MemberReader memberReader;
   private final JwtProvider jwtProvider;
 
   @Transactional
@@ -23,8 +25,10 @@ public class LoginService {
     final OAuthServerType oauthServerType = OAuthServerType.fromName(oauthType);
     final OAuthMemberInfo oauthMemberInfo = oauthMemberClientComposite
         .fetchMemberInfo(oauthServerType, code);
-    final Member member = memberRepository.findByOauthMemberId(oauthMemberInfo.oauthMemberId())
-        .orElseGet(() -> memberRepository.save(Member.createOAuthMember(oauthMemberInfo)));
+
+    final Member member = memberReader.readBy(oauthMemberInfo)
+        .orElseGet(() -> memberUpdater.registerNewMember(oauthMemberInfo));
+
     return new LoginResponse(
         member.getId(),
         jwtProvider.createAccessTokenWith(member.getId()),

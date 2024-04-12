@@ -2,17 +2,25 @@ package capstone.safeat.category.application;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.CategoryRepository;
+import capstone.safeat.category.domain.MemberCategoryRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Service
+@Repository
+@Transactional(readOnly = true)
 public class CategoryReader {
 
   private final CategoryRepository categoryRepository;
+  private final MemberCategoryRepository memberCategoryRepository;
 
   public List<Category> readAll() {
-     return categoryRepository.findAll();
+    return categoryRepository.findAll();
+  }
+
+  public List<Category> readAllById(final List<Long> categoryIds) {
+    return categoryRepository.findAllById(categoryIds);
   }
 }

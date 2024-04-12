@@ -8,7 +8,7 @@ endif::[]
 :toclevels: 3
 :sectlinks:
 
-= safet-API 문서
+= safeat-API 문서
 
 == *[ Member ]*
 
@@ -17,3 +17,7 @@ include::member.adoc[]
 == *[ Category ]*
 
 include::category.adoc[]
+
+== *[ Login ]*
+
+include::login.adoc[]

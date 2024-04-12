@@ -10,20 +10,16 @@ endif::[]
 :operation-http-request-title: Example Request
 :operation-http-response-title: Example Response
 
-==== *Login API*
+==== *Member API*
 
 ===== *Http Request*
 
-include::{snippets}/../../build/generated-snippets/login/http-request.adoc[]
+include::{snippets}/../../build/generated-snippets/member-add-category/http-request.adoc[]
 
 ===== *Http Request Body adoc*
 
-include::{snippets}/../../build/generated-snippets/login/request-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/member-add-category/request-fields.adoc[]
 
 ===== *Http Response*
 
-include::{snippets}/../../build/generated-snippets/login/http-response.adoc[]
-
-===== *Http Response Description*
-
-include::{snippets}/../../build/generated-snippets/login/response-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/member-add-category/http-response.adoc[]

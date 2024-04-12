@@ -36,7 +36,7 @@ public class MemberApiTest extends ApiTest {
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
-        .andDo(document("login",
+        .andDo(document("member-add-category",
             requestHeaders(
                 headerWithName(CONTENT_TYPE).description("application/json")
             ),

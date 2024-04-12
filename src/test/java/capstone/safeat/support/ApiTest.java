@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
+import capstone.safeat.base.LocalDateTimeProvider;
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.controller.CategoryController;
 import capstone.safeat.login.application.JwtProvider;
@@ -18,7 +19,10 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -31,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@Import({RestDocsResultConfig.class})
 public abstract class ApiTest {
 
   @Autowired
@@ -46,7 +51,7 @@ public abstract class ApiTest {
   @MockBean
   protected JwtProvider jwtProvider;
 
-//  @MockBean
+  //  @MockBean
 //  protected GroupService groupService;
 
   @BeforeEach
@@ -63,5 +68,14 @@ public abstract class ApiTest {
 
   protected void setAccessToken(final String accessToken, final Long id) {
     when(jwtProvider.parseMemberId(accessToken)).thenReturn(id);
+  }
+}
+
+@TestConfiguration
+class RestDocsResultConfig {
+
+  @Bean
+  LocalDateTimeProvider localDateTimeProvider() {
+    return new LocalDateTimeProvider();
   }
 }

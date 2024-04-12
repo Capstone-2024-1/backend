@@ -1,4 +1,4 @@
-package capstone.safeat.member.domain;
+package capstone.safeat.category.domain;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,8 +9,7 @@ public interface MemberCategoryRepository extends JpaRepository<MemberCategory, 
   @Query("""
       select mc
       from MemberCategory mc
-      join fetch Category c
-      on mc.category = c
+      join fetch mc.category c
       where mc.memberId = :memberId
       """)
   List<MemberCategory> findByMemberId(Long memberId);

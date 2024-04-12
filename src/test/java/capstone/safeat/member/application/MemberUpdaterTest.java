@@ -6,6 +6,7 @@ import static capstone.safeat.fixture.domain.CategoryDomainFixture.사과;
 import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.CategoryRepository;
 import capstone.safeat.member.domain.Member;
@@ -14,39 +15,37 @@ import capstone.safeat.support.RepositoryTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-class MemberCategoryUpdaterTest extends RepositoryTest {
+class MemberUpdaterTest extends RepositoryTest {
 
   @Autowired
-  private MemberCategoryUpdater memberCategoryUpdater;
-  @Autowired
-  private MemberCategoryReader memberCategoryReader;
+  private MemberUpdater memberUpdater;
 
   @Autowired
   private MemberRepository memberRepository;
   @Autowired
   private CategoryRepository categoryRepository;
+  @Autowired
+  private CategoryReader categoryReader;
 
-  //TODO : 이 부분 시간 없어서 넘어갔는데 꼭 확인해보기 무슨 에러인지
   @Test
-  @Transactional
   void 멤버에_카테고리를_추가한다() {
     //given
     final Member member = memberRepository.save(멤버_1());
     final Category parent = categoryRepository.save(과일());
     final Category apple = categoryRepository.save(사과(parent));
     final Category mango = categoryRepository.save(망고(parent));
+    final List<Category> expected = List.of(apple, mango);
 
     //when
-    memberCategoryUpdater.saveMemberCategories(member, List.of(apple, mango));
+    memberUpdater.saveCategoryIntoMember(member, expected);
 
     //then
-    final List<Category> categories
-        = memberCategoryReader.findCategoriesByMemberId(member.getId());
+    final List<Category> actual
+        = categoryReader.readCategoriesByMemberId(member.getId());
 
-    assertThat(categories)
-        .usingRecursiveFieldByFieldElementComparatorIgnoringFields()
+    assertThat(actual)
+        .usingRecursiveFieldByFieldElementComparatorIgnoringFields("parent", "children")
         .containsExactlyInAnyOrder(apple, mango);
   }
 }

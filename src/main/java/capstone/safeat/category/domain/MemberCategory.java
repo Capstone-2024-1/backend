@@ -1,11 +1,10 @@
-package capstone.safeat.member.domain;
+package capstone.safeat.category.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import capstone.safeat.base.BaseEntity;
-import capstone.safeat.category.domain.Category;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

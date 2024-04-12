@@ -1,8 +1,6 @@
 package capstone.safeat.member.application;
 
-import static capstone.safeat.fixture.domain.CategoryDomainFixture.과일;
-import static capstone.safeat.fixture.domain.CategoryDomainFixture.망고;
-import static capstone.safeat.fixture.domain.CategoryDomainFixture.사과;
+import static capstone.safeat.fixture.domain.CategoryDomainFixture.저장된_사과_망고;
 import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -32,10 +30,7 @@ class MemberUpdaterTest extends RepositoryTest {
   void 멤버에_카테고리를_추가한다() {
     //given
     final Member member = memberRepository.save(멤버_1());
-    final Category parent = categoryRepository.save(과일());
-    final Category apple = categoryRepository.save(사과(parent));
-    final Category mango = categoryRepository.save(망고(parent));
-    final List<Category> expected = List.of(apple, mango);
+    final List<Category> expected = 저장된_사과_망고(categoryRepository);
 
     //when
     memberUpdater.saveCategoryIntoMember(member, expected);
@@ -46,6 +41,6 @@ class MemberUpdaterTest extends RepositoryTest {
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparatorIgnoringFields("parent", "children")
-        .containsExactlyInAnyOrder(apple, mango);
+        .containsExactlyInAnyOrderElementsOf(expected);
   }
 }

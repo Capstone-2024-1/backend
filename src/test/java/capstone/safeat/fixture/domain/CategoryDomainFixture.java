@@ -1,6 +1,8 @@
 package capstone.safeat.fixture.domain;
 
 import capstone.safeat.category.domain.Category;
+import capstone.safeat.category.domain.CategoryRepository;
+import java.util.List;
 
 public class CategoryDomainFixture {
 
@@ -80,5 +82,12 @@ public class CategoryDomainFixture {
         .englishName("Pepper")
         .parent(parent)
         .build();
+  }
+
+  public static List<Category> 저장된_사과_망고(final CategoryRepository categoryRepository) {
+    final Category fruit = categoryRepository.save(과일());
+    final Category mango = categoryRepository.save(망고(fruit));
+    final Category apple = categoryRepository.save(사과(fruit));
+    return List.of(apple, mango);
   }
 }

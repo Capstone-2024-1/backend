@@ -14,12 +14,11 @@ public class MemberService {
 
   private final MemberReader memberReader;
   private final MemberUpdater memberUpdater;
-  private final CategoryReader categoryReader;
 
   @Transactional
   public void addCategoryIntoMember(final Long memberId, final List<Long> categoryIds) {
     final Member member = memberReader.readMember(memberId);
-    final List<Category> categories = categoryReader.readAllById(categoryIds);
+    final List<Category> categories = Category.readAllById(categoryIds);
     memberUpdater.saveCategoryIntoMember(member, categories);
   }
 }

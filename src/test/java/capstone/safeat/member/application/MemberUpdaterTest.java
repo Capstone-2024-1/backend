@@ -1,13 +1,11 @@
 package capstone.safeat.member.application;
 
-import static capstone.safeat.fixture.domain.CategoryDomainFixture.저장된_사과_망고;
 import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
-import capstone.safeat.category.domain.CategoryRepository;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
@@ -24,8 +22,6 @@ class MemberUpdaterTest extends RepositoryTest {
   @Autowired
   private MemberRepository memberRepository;
   @Autowired
-  private CategoryRepository categoryRepository;
-  @Autowired
   private MemberReader memberReader;
   @Autowired
   private CategoryReader categoryReader;
@@ -34,7 +30,7 @@ class MemberUpdaterTest extends RepositoryTest {
   void 멤버에_카테고리를_추가한다() {
     //given
     final Member member = memberRepository.save(멤버_1());
-    final List<Category> expected = 저장된_사과_망고(categoryRepository);
+    final List<Category> expected = List.of(Category.APPLE, Category.MANGO);
 
     //when
     memberUpdater.saveCategoryIntoMember(member, expected);

@@ -1,17 +1,17 @@
 package capstone.safeat.category.dto;
 
-import static capstone.safeat.category.domain.CategoryRefactor.APPLE;
-import static capstone.safeat.category.domain.CategoryRefactor.CUCUMBER;
-import static capstone.safeat.category.domain.CategoryRefactor.FRUITING_VEGETABLES;
-import static capstone.safeat.category.domain.CategoryRefactor.FRUITS;
-import static capstone.safeat.category.domain.CategoryRefactor.MANGO;
-import static capstone.safeat.category.domain.CategoryRefactor.POTATO;
-import static capstone.safeat.category.domain.CategoryRefactor.ROOT_VEGETABLES;
-import static capstone.safeat.category.domain.CategoryRefactor.SWEET_POTATO;
-import static capstone.safeat.category.domain.CategoryRefactor.VEGETABLES;
+import static capstone.safeat.category.domain.Category.APPLE;
+import static capstone.safeat.category.domain.Category.CUCUMBER;
+import static capstone.safeat.category.domain.Category.FRUITING_VEGETABLES;
+import static capstone.safeat.category.domain.Category.FRUITS;
+import static capstone.safeat.category.domain.Category.MANGO;
+import static capstone.safeat.category.domain.Category.POTATO;
+import static capstone.safeat.category.domain.Category.ROOT_VEGETABLES;
+import static capstone.safeat.category.domain.Category.SWEET_POTATO;
+import static capstone.safeat.category.domain.Category.VEGETABLES;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import capstone.safeat.category.domain.CategoryRefactor;
+import capstone.safeat.category.domain.Category;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -53,11 +53,11 @@ class CategoryResponseTest {
             ))
     );
 
-    final List<CategoryRefactor> categories = List.of(
-        FRUITS, CategoryRefactor.APPLE, CategoryRefactor.MANGO,
-        CategoryRefactor.VEGETABLES, CategoryRefactor.ROOT_VEGETABLES,
-        CategoryRefactor.FRUITING_VEGETABLES, CategoryRefactor.POTATO,
-        CategoryRefactor.SWEET_POTATO, CategoryRefactor.CUCUMBER
+    final List<Category> categories = List.of(
+        FRUITS, Category.APPLE, Category.MANGO,
+        Category.VEGETABLES, Category.ROOT_VEGETABLES,
+        Category.FRUITING_VEGETABLES, Category.POTATO,
+        Category.SWEET_POTATO, Category.CUCUMBER
     );
 
     final List<CategoryResponse> actual = CategoryResponse.convertHierarchy(categories);

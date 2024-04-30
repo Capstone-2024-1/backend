@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import capstone.safeat.category.domain.CategoryRefactor;
+import capstone.safeat.category.domain.Category;
 import capstone.safeat.support.ApiTest;
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +22,8 @@ public class CategoryApiTest extends ApiTest {
 
   @Test
   void 카테고리_종류를_반환한다() throws Exception {
-    final List<CategoryRefactor> categories =
-        Arrays.stream(CategoryRefactor.values()).toList();
+    final List<Category> categories =
+        Arrays.stream(Category.values()).toList();
 
     when(categoryService.findAllCategory()).thenReturn(categories);
 

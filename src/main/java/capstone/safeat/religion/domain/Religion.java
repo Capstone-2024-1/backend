@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +29,14 @@ public class Religion extends BaseEntity {
 
   public Religion(final String name) {
     this.name = name;
+  }
+
+  @Builder
+  public Religion(
+      final Long id, final String name, final List<ReligionCategory> religionCategories
+  ) {
+    this.id = id;
+    this.name = name;
+    this.religionCategories = religionCategories;
   }
 }

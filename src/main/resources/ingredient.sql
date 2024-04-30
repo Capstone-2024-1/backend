@@ -66,3 +66,82 @@ values (37, 26, '오이', 'Cucumber'),
        (38, 26, '고추', 'Chilly'),
        (39, 26, '토마토', 'Tomato'),
        (40, 26, '기타 열매 채소', 'Other fruit vegetables');
+
+### Grains
+insert into category (id, parent_id, english_name, korean_name)
+values (41, null, '곡식', 'Grain'),
+       (42, 41, '쌀', 'Rice'),
+       (43, 41, '밀', 'Wheat'),
+       (44, 41, '옥수수', 'Corn'),
+       (45, 41, '메밀', 'Buckwheat'),
+       (46, 41, '콩', 'Beans'),
+       (47, 41, '기타 곡류', 'Other Grains');
+
+### Meet
+insert into category (id, parent_id, english_name, korean_name)
+values (48, null, '고기', 'Meat'),
+       (49, 48, '소고기', 'Beef'),
+       (50, 48, '돼지고기', 'Pork'),
+       (51, 48, '가금류', 'Poultry'),
+       (52, 48, '양고기', 'Lamb'),
+       (53, 48, '말고기', 'Horse Meat');
+
+### Poultry
+insert into category (id, parent_id, english_name, korean_name)
+values (54, 51, '닭고기', 'Chicken'),
+       (55, 51, '오리고기', 'Duck');
+
+### Egg
+insert into category (id, parent_id, english_name, korean_name)
+values (56, null, '계란', 'Eggs');
+
+### seafood
+insert into category (id, parent_id, english_name, korean_name)
+values (57, null, '어패류', 'Sea foods');
+
+### depth 1
+insert into category (id, parent_id, english_name, korean_name)
+values (58, 57, '생선', 'fish'),
+       (59, 57, '기타 연체류', 'Other Mollusks'),
+       (60, 57, '갑각류', 'Crustaceans'),
+       (61, 57, '조개류', 'Shellfish'),
+       (62, 57, '기타 어패류', 'Other seafood');
+
+### Fish
+insert into category (id, parent_id, english_name, korean_name)
+values (63, 58, '고등어', 'Mackerel'),
+       (64, 58, '기타 생선', 'Other Fish');
+
+### Crustaceans
+insert into category (id, parent_id, english_name, korean_name)
+values (65, 60, '새우', 'Shrimp'),
+       (66, 60, '게', 'Crab'),
+       (67, 60, '기타 갑각류', 'Other Crustaceans');
+
+### Shellfish
+insert into category (id, parent_id, english_name, korean_name)
+values (68, 61, '전복', 'Abalone'),
+       (69, 61, '굴', 'Oyster'),
+       (70, 61, '홍합', 'Mussel'),
+       (71, 61, '기타 조개류', 'Other Shellfish');
+
+
+### Seasonings
+insert into category (id, parent_id, english_name, korean_name)
+values (72, null, '조미료', 'Seasonings'),
+       (73, 72, '고추', 'Pepper'),
+       (74, 72, '생강', 'Ginger'),
+       (75, 72, '꿀', 'Honey'),
+       (76, 72, '기타 양념류', 'Other seasonings');
+
+### Gluten
+insert into category (id, parent_id, english_name, korean_name)
+values (77, null, '글루텐', 'Gluten');
+
+### Gluten
+insert into category (id, parent_id, english_name, korean_name)
+values (78, null, '유제품', 'Dairy'),
+       (79, 78, '우유', 'Milk'),
+       (80, 78, '치즈', 'Cheese'),
+       (81, 78, '버터', 'Butter'),
+       (82, 78, '기타 유제품', 'Other dairy products');

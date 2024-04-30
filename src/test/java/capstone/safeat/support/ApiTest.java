@@ -13,6 +13,7 @@ import capstone.safeat.login.controller.LoginController;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.controller.MemberController;
 import capstone.safeat.religion.application.ReligionService;
+import capstone.safeat.religion.controller.ReligionController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -32,7 +33,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@WebMvcTest({MemberController.class, LoginController.class, CategoryController.class})
+@WebMvcTest({
+    MemberController.class, LoginController.class, CategoryController.class,
+    ReligionController.class
+})
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

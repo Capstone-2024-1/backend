@@ -20,19 +20,18 @@ import org.junit.jupiter.api.Test;
 public class ReligionApiTest extends ApiTest {
 
   @Test
-  void 채식주의_종류를_반환한다() throws Exception {
-    final List<Religion> categories = 종교들();
+  void 종교_종류를_반환한다() throws Exception {
+    final List<Religion> religions = 종교들();
 
-    when(religionService.findAllReligions()).thenReturn(categories);
+    when(religionService.findAllReligions()).thenReturn(religions);
 
     mockMvc.perform(get("/categories/religions"))
         .andExpect(status().isOk())
-        .andDo(document("religion tree",
+        .andDo(document("religion-tree",
             responseFields(
-                fieldWithPath("[]").type(ARRAY).description("채식주의 전체"),
-                fieldWithPath("[].id").type(NUMBER).description("채식주의의 id"),
-                fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
-                fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
+                fieldWithPath("[]").type(ARRAY).description("종교 전체"),
+                fieldWithPath("[].id").type(NUMBER).description("종교의 id"),
+                fieldWithPath("[].name").type(STRING).description("종교의 이름"),
                 fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
                 subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
             )

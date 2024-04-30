@@ -93,6 +93,46 @@ public class CategoryDocsFixture {
         .build();
   }
 
+  public static Category 부추() {
+    return Category.builder()
+        .id(11L)
+        .koreanName("부추")
+        .englishName("Chives")
+        .build();
+  }
+
+  public static Category 돼지고기() {
+    return Category.builder()
+        .id(12L)
+        .koreanName("돼지고기")
+        .englishName("Pork")
+        .build();
+  }
+
+  public static Category 기타_연체류() {
+    return Category.builder()
+        .id(13L)
+        .koreanName("기타 연체류")
+        .englishName("Other Mollusks")
+        .build();
+  }
+
+  public static Category 육류() {
+    return Category.builder()
+        .id(14L)
+        .koreanName("육류")
+        .englishName("Meat")
+        .build();
+  }
+
+  public static Category 생선류() {
+    return Category.builder()
+        .id(15L)
+        .koreanName("생선류")
+        .englishName("Fish")
+        .build();
+  }
+
   public static List<Category> 카테고리들() {
     final Category 과일 = 과일();
     final Category 채소 = 채소();

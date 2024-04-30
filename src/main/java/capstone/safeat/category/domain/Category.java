@@ -1,6 +1,5 @@
 package capstone.safeat.category.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +11,7 @@ public enum Category {
   FRUITS(1L, "과일", "Fruits", null),
   NUTS(2L, "견과", "Nuts", null),
   VEGETABLES(3L, "채소", "Vegetables", null),
-  GRAINS(4L, "곡식", "Grains", null),
-  MEATS(5L, "축산", "Meat", null),
+  MEATS(5L, "고기", "Meat", null),
   EGGS(6L, "계란", "Eggs", null),
   SEA_FOODS(7L, "어패류", "Seafood", null),
   SEASONINGS(8L, "조미료", "Seasonings", null),
@@ -131,13 +129,9 @@ public enum Category {
     return Optional.ofNullable(parent);
   }
 
-  public List<Category> getChildren() {
-    final List<Category> children = new ArrayList<>();
-    for (final Category category : Category.values()) {
-      if (category.parent == this) {
-        children.add(category);
-      }
-    }
-    return children;
+  public List<Category> getAllChildren() {
+    return Arrays.stream(Category.values())
+        .filter(c -> c.parent == this)
+        .toList();
   }
 }

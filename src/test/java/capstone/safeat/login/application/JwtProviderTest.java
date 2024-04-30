@@ -2,7 +2,6 @@ package capstone.safeat.login.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import capstone.safeat.login.application.JwtProvider;
 import io.jsonwebtoken.Jwts.SIG;
 import io.jsonwebtoken.io.Encoders;
 import javax.crypto.SecretKey;

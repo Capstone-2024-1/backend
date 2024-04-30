@@ -12,6 +12,7 @@ import capstone.safeat.login.application.LoginService;
 import capstone.safeat.login.controller.LoginController;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.controller.MemberController;
+import capstone.safeat.religion.application.ReligionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -48,6 +49,8 @@ public abstract class ApiTest {
   protected LoginService loginService;
   @MockBean
   protected CategoryService categoryService;
+  @MockBean
+  protected ReligionService religionService;
   @MockBean
   protected JwtProvider jwtProvider;
 

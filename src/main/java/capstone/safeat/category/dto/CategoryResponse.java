@@ -2,7 +2,7 @@ package capstone.safeat.category.dto;
 
 import static java.util.stream.Collectors.toMap;
 
-import capstone.safeat.category.domain.Category;
+import capstone.safeat.category.domain.CategoryRefactor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,22 +24,22 @@ public class CategoryResponse {
   private final Set<Long> flatChildIds;
   private final List<CategoryResponse> childCategories;
 
-  private static CategoryResponse fromWithEmptyChildren(final Category category) {
+  private static CategoryResponse fromWithEmptyChildren(final CategoryRefactor category) {
     return new CategoryResponse(
         category.getId(), category.getEnglishName(),
         category.getKoreanName(), new HashSet<>(), new ArrayList<>()
     );
   }
 
-  public static List<CategoryResponse> convertHierarchy(final List<Category> categories) {
+  public static List<CategoryResponse> convertHierarchy(final List<CategoryRefactor> categories) {
     final Map<Long, CategoryResponse> responseMap = categories.stream()
-        .collect(toMap(Category::getId, CategoryResponse::fromWithEmptyChildren));
+        .collect(toMap(CategoryRefactor::getId, CategoryResponse::fromWithEmptyChildren));
 
     addChildrenCategories(categories, responseMap);
     addFlatChildIds(responseMap.values().stream().toList());
 
     return categories.stream()
-        .filter(Category::isRootCategory)
+        .filter(CategoryRefactor::isRootCategory)
         .map(category -> responseMap.get(category.getId()))
         .toList();
   }
@@ -61,14 +61,15 @@ public class CategoryResponse {
   }
 
   private static void addChildrenCategories(
-      final List<Category> categories, final Map<Long, CategoryResponse> responseMap
+      final List<CategoryRefactor> categories, final Map<Long, CategoryResponse> responseMap
   ) {
-    for (final Category category : categories) {
-      final Optional<Category> parent = category.getParent();
+    for (final CategoryRefactor category : categories) {
+      final Optional<CategoryRefactor> parent = category.getParent();
       if (parent.isPresent()) {
         final Long parentId = parent.get().getId();
         final CategoryResponse categoryResponse = responseMap.get(category.getId());
-        responseMap.get(parentId).getChildCategories().add(categoryResponse);
+        Optional.ofNullable(responseMap.get(parentId))
+            .ifPresent(parentResponse -> parentResponse.getChildCategories().add(categoryResponse));
       }
     }
   }

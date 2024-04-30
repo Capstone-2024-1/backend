@@ -1,6 +1,5 @@
 package capstone.safeat.api;
 
-import static capstone.safeat.fixture.docs.CategoryDocsFixture.카테고리들;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -12,8 +11,9 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import capstone.safeat.category.domain.Category;
+import capstone.safeat.category.domain.CategoryRefactor;
 import capstone.safeat.support.ApiTest;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,8 @@ public class CategoryApiTest extends ApiTest {
 
   @Test
   void 카테고리_종류를_반환한다() throws Exception {
-    final List<Category> categories = 카테고리들();
+    final List<CategoryRefactor> categories =
+        Arrays.stream(CategoryRefactor.values()).toList();
 
     when(categoryService.findAllCategory()).thenReturn(categories);
 

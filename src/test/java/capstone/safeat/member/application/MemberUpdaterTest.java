@@ -49,7 +49,7 @@ class MemberUpdaterTest extends RepositoryTest {
   }
 
   @Test
-  void 멤버가_회원가입한다(){
+  void 멤버가_회원가입한다() {
     final OAuthMemberInfo info = new OAuthMemberInfo("1234567890", "image", GOOGLE);
 
     final Member expected = memberUpdater.registerNewMember(info);

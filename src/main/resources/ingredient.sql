@@ -132,6 +132,7 @@ values (72, null, '조미료', 'Seasonings'),
        (73, 72, '고추', 'Pepper'),
        (74, 72, '생강', 'Ginger'),
        (75, 72, '꿀', 'Honey'),
+       (83, 72, '홍거', 'Asafoetida'),
        (76, 72, '기타 양념류', 'Other seasonings');
 
 ### Gluten

@@ -2,6 +2,7 @@ package capstone.safeat.category.controller;
 
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.dto.CategoryResponse;
+import capstone.safeat.category.dto.ReligionResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,13 @@ public class CategoryController {
   public ResponseEntity<List<CategoryResponse>> getCategoryTree() {
     final var categories = categoryService.findAllCategory();
     final List<CategoryResponse> categoryTree = CategoryResponse.convertHierarchy(categories);
+    return ResponseEntity.ok(categoryTree);
+  }
+
+  @GetMapping("/religions")
+  public ResponseEntity<List<ReligionResponse>> getReligionTree() {
+    final var religions = categoryService.findAllReligion();
+    final List<ReligionResponse> categoryTree = ReligionResponse.convertHierarchy(religions);
     return ResponseEntity.ok(categoryTree);
   }
 }

@@ -12,8 +12,6 @@ import capstone.safeat.login.application.LoginService;
 import capstone.safeat.login.controller.LoginController;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.controller.MemberController;
-import capstone.safeat.religion.application.ReligionService;
-import capstone.safeat.religion.controller.ReligionController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -35,7 +33,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest({
     MemberController.class, LoginController.class, CategoryController.class,
-    ReligionController.class
 })
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
@@ -53,8 +50,6 @@ public abstract class ApiTest {
   protected LoginService loginService;
   @MockBean
   protected CategoryService categoryService;
-  @MockBean
-  protected ReligionService religionService;
   @MockBean
   protected JwtProvider jwtProvider;
 

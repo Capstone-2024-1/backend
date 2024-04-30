@@ -3,26 +3,28 @@ package capstone.safeat.category.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import lombok.Getter;
 
+@Getter
 public enum CategoryRefactor {
 
-  FRUITS(1L, "Fruits", "과일", null),
-  NUTS(2L, "Nuts", "견과", null),
-  VEGETABLES(3L, "Vegetables", "채소", null),
-  GRAINS(4L, "Grains", "곡식", null),
-  MEATS(5L, "Meat", "축산", null),
-  EGGS(6L, "Eggs", "계란", null),
-  SEA_FOODS(7L, "Seafood", "어패류", null),
-  SEASONINGS(8L, "Seasonings", "조미료", null),
-  DAIRIES(9L, "Dairy", "유제품", null),
-  GLUTEN(10L, "Gluten", "글루텐", null),
+  FRUITS(1L, "과일", "Fruits", null),
+  NUTS(2L, "견과", "Nuts", null),
+  VEGETABLES(3L, "채소", "Vegetables", null),
+  GRAINS(4L, "곡식", "Grains", null),
+  MEATS(5L, "축산", "Meat", null),
+  EGGS(6L, "계란", "Eggs", null),
+  SEA_FOODS(7L, "어패류", "Seafood", null),
+  SEASONINGS(8L, "조미료", "Seasonings", null),
+  DAIRIES(9L, "유제품", "Dairy", null),
+  GLUTEN(10L, "글루텐", "Gluten", null),
 
-  APPLE(11L, "Apple", "사과", FRUITS),
-  KIWI(12L, "Kiwi", "키위", FRUITS),
-  PEACH(13L, "Peach", "복숭아", FRUITS),
-  BANANA(14L, "Banana", "바나나", FRUITS),
-  MANGO(15L, "mango", "망고", FRUITS),
-  OTHER_FRUITS(16L, "Other fruits", "기타 과일류", FRUITS),
+  APPLE(11L, "사과", "Apple", FRUITS),
+  KIWI(12L, "키위", "Kiwi", FRUITS),
+  PEACH(13L, "복숭아", "Peach", FRUITS),
+  BANANA(14L, "바나나", "Banana", FRUITS),
+  MANGO(15L, "망고", "Mango", FRUITS),
+  OTHER_FRUITS(16L, "기타 과일류", "Other fruits", FRUITS),
 
   WALNUT(17L, "호두", "Walnut", NUTS),
   ALMOND(18L, "아몬드", "Almond", NUTS),
@@ -100,15 +102,17 @@ public enum CategoryRefactor {
   OTHER_DAIRY_PRODUCTS(82L, "기타 유제품", "Other dairy products", DAIRIES);
 
   private final Long id;
-  private final String englishName;
   private final String koreanName;
+  private final String englishName;
   private final CategoryRefactor parent;
 
-  CategoryRefactor(final Long id, final String englishName, final String koreanName,
-      final CategoryRefactor parent) {
+  CategoryRefactor(
+      final Long id, final String koreanName, final String englishName,
+      final CategoryRefactor parent
+  ) {
     this.id = id;
-    this.englishName = englishName;
     this.koreanName = koreanName;
+    this.englishName = englishName;
     this.parent = parent;
   }
 
@@ -129,4 +133,5 @@ public enum CategoryRefactor {
     }
     return children;
   }
+
 }

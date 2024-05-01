@@ -17,6 +17,7 @@ include::member.adoc[]
 == *[ Category ]*
 
 include::category.adoc[]
+include::religion.adoc[]
 
 == *[ Login ]*
 

@@ -31,7 +31,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@WebMvcTest({MemberController.class, LoginController.class, CategoryController.class})
+@WebMvcTest({
+    MemberController.class, LoginController.class, CategoryController.class,
+})
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

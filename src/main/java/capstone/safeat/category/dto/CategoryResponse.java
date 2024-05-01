@@ -68,7 +68,8 @@ public class CategoryResponse {
       if (parent.isPresent()) {
         final Long parentId = parent.get().getId();
         final CategoryResponse categoryResponse = responseMap.get(category.getId());
-        responseMap.get(parentId).getChildCategories().add(categoryResponse);
+        Optional.ofNullable(responseMap.get(parentId))
+            .ifPresent(parentResponse -> parentResponse.getChildCategories().add(categoryResponse));
       }
     }
   }

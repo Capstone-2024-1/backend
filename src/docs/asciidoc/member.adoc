@@ -7,8 +7,6 @@ endif::[]
 :toc: left
 :toclevels: 3
 :sectlinks:
-:operation-http-request-title: Example Request
-:operation-http-response-title: Example Response
 
 ==== *Member에 카테고리 추가*
 

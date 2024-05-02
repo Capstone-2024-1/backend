@@ -63,7 +63,7 @@ class GroupServiceTest extends ApplicationTest {
     );
 
     final List<GroupPreviewResponse> groupPreviewResponses
-        = groupService.findParticipatedGroups(new JwtMemberId(creator.getId()));
+        = groupService.findParticipatedGroups(creator.getId());
 
     assertThat(groupPreviewResponses)
         .usingRecursiveFieldByFieldElementComparator()

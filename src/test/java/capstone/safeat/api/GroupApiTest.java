@@ -1,6 +1,5 @@
 package capstone.safeat.api;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -30,7 +29,7 @@ public class GroupApiTest extends ApiTest {
     );
 
     setAccessToken(token, memberId);
-    when(groupService.findParticipatedGroups(any())).thenReturn(responses);
+    when(groupService.findParticipatedGroups(memberId)).thenReturn(responses);
 
     mockMvc.perform(get("/groups")
             .header(AUTHORIZATION, "Bearer " + token))

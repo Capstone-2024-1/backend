@@ -32,8 +32,8 @@ public class GroupService {
   }
 
   @Transactional(readOnly = true)
-  public List<GroupPreviewResponse> findParticipatedGroups(final JwtMemberId jwtMemberId) {
-    final Member member = memberReader.readMember(jwtMemberId.memberId());
+  public List<GroupPreviewResponse> findParticipatedGroups(final Long memberId) {
+    final Member member = memberReader.readMember(memberId);
     final List<Group> groups = groupReader.findGroups(member);
 
     return groups.stream()

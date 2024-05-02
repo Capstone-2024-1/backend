@@ -21,3 +21,17 @@ include::{snippets}/../../build/generated-snippets/group-preview/http-response.a
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/group-preview/response-fields.adoc[]
+
+==== *특정 그룹의 멤버를 반환*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-members/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-members/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/group-members/response-fields.adoc[]

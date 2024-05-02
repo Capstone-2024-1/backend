@@ -17,11 +17,11 @@ public enum MemberExceptionType implements BaseExceptionType {
 
   @Override
   public HttpStatus getHttpStatus() {
-    return null;
+    return httpStatus;
   }
 
   @Override
   public String getMessage() {
-    return null;
+    return message;
   }
 }

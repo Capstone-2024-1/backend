@@ -1,4 +1,4 @@
-package capstone.safeat.member.application;
+package capstone.safeat.login.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,9 +25,9 @@ class JwtProviderTest {
   void 정상적으로_토큰을_생성한다() {
     final Long validId = 10L;
 
-    final String token = jwtProvider.createToken(validId);
+    final String token = jwtProvider.createAccessTokenWith(validId);
 
-    final Long actual = jwtProvider.parseToken(token);
+    final Long actual = jwtProvider.parseMemberId(token);
     assertThat(actual)
         .isEqualTo(validId);
   }
@@ -37,8 +37,8 @@ class JwtProviderTest {
     final Long validId = 10L;
     final JwtProvider differentKeyProvider = createRandomKeyProvider();
 
-    final String token = jwtProvider.createToken(validId);
+    final String token = jwtProvider.createAccessTokenWith(validId);
 
-    Assertions.assertThatThrownBy(() -> differentKeyProvider.parseToken(token));
+    Assertions.assertThatThrownBy(() -> differentKeyProvider.parseMemberId(token));
   }
 }

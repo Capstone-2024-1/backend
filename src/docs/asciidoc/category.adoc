@@ -1,0 +1,65 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+==== *카테고리 목록 반환 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/category tree/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/category tree/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/category tree/response-fields.adoc[]
+
+==== *종교 목록 반환 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/religion-tree/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/religion-tree/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/religion-tree/response-fields.adoc[]
+
+==== *채식주의 목록 반환 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/vegetarian-tree/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/vegetarian-tree/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/vegetarian-tree/response-fields.adoc[]
+
+==== *알레르기 목록 반환 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/response-fields.adoc[]

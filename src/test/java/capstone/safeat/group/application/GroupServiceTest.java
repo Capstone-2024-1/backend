@@ -11,7 +11,6 @@ import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.group.exception.GroupException;
-import capstone.safeat.group.exception.GroupExceptionType;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.support.ServiceTest;
@@ -141,6 +140,31 @@ class GroupServiceTest extends ServiceTest {
       groupMemberRepository.save(new GroupMember(group, member.getId()));
 
       assertThatThrownBy(() -> groupService.expel(group.getId(), member.getId(), member.getId()))
+          .isInstanceOf(GroupException.class)
+          .hasMessage(EXECUTORS_IS_NOT_CREATOR.getMessage());
+    }
+  }
+
+  @Nested
+  class 그룹을_삭제한다 {
+
+    @Test
+    void 성공적으로_삭제한다() {
+      final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+
+      groupService.removeGroup(group.getId(), creator.getId());
+
+      assertThat(groupRepository.findById(group.getId()).isEmpty())
+          .isTrue();
+    }
+
+    @Test
+    void 삭제하는사람이_그룹의_생성자가_아닌경우_예외처리한다() {
+      final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+      final Member member = memberRepository.save(멤버_홍혁준_생성());
+      groupMemberRepository.save(new GroupMember(group, member.getId()));
+
+      assertThatThrownBy(() -> groupService.removeGroup(group.getId(), member.getId()))
           .isInstanceOf(GroupException.class)
           .hasMessage(EXECUTORS_IS_NOT_CREATOR.getMessage());
     }

@@ -79,15 +79,25 @@ public class GroupService {
     final Group group = groupReader.readGroup(groupId);
     final Member executorMember = memberReader.readMember(executorMemberId);
 
-    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
-      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
-    }
+    validateCreator(group, executorMember);
 
     final Member targetMember = memberReader.readMember(targetMemberId);
     groupUpdater.removeMember(groupId, targetMember);
   }
 
+  @Transactional
   public void removeGroup(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member executorMember = memberReader.readMember(memberId);
 
+    validateCreator(group, executorMember);
+
+    groupUpdater.removeGroup(groupId);
+  }
+
+  private static void validateCreator(final Group group, final Member executorMember) {
+    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
+      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
+    }
   }
 }

@@ -83,7 +83,7 @@ class GroupReaderTest extends ServiceTest {
     groupMemberRepository.save(new GroupMember(group, member1.getId()));
     groupMemberRepository.save(new GroupMember(group, member2.getId()));
 
-    final int actual = groupReader.countParticipateMember(group);
+    final int actual = groupReader.countRegisteredMember(group);
 
     assertThat(actual)
         .isEqualTo(3);
@@ -125,7 +125,7 @@ class GroupReaderTest extends ServiceTest {
     groupMemberRepository.save(new GroupMember(group, member1.getId()));
     groupMemberRepository.save(new GroupMember(group, member2.getId()));
 
-    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+    final List<Long> memberIds = groupReader.readRegisteredMemberIds(group);
 
     assertThat(memberIds)
         .containsExactlyInAnyOrder(member1.getId(), member2.getId(), member.getId());

@@ -10,7 +10,6 @@ import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.domain.Member;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +29,7 @@ public class GroupReader {
         .toList();
   }
 
-  public int countParticipateMember(final Group group) {
+  public int countRegisteredMember(final Group group) {
     return groupMemberRepository.countByGroup(group);
   }
 
@@ -45,7 +44,7 @@ public class GroupReader {
         .orElseThrow(() -> new GroupException(GROUP_NOT_FOUND));
   }
 
-  public List<Long> readParticipateMemberIds(final Group group) {
+  public List<Long> readRegisteredMemberIds(final Group group) {
     final List<GroupMember> groupMembers = groupMemberRepository.findByGroupId(group.getId());
     return groupMembers.stream()
         .map(GroupMember::getMemberId)

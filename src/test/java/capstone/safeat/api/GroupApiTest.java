@@ -35,7 +35,7 @@ public class GroupApiTest extends ApiTest {
     );
 
     setAccessToken(token, memberId);
-    when(groupService.findParticipatedGroups(memberId)).thenReturn(responses);
+    when(groupService.findRegisteredGroups(memberId)).thenReturn(responses);
 
     mockMvc.perform(get("/groups")
             .header(AUTHORIZATION, "Bearer " + token))
@@ -106,11 +106,27 @@ public class GroupApiTest extends ApiTest {
 
     setAccessToken(token, memberId);
 
-    mockMvc.perform(post("/groups/" + groupId + "/participate")
+    mockMvc.perform(post("/groups/" + groupId + "/register")
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
-        .andDo(document("group-participate"));
+        .andDo(document("group-register"));
 
-    verify(groupService).participateGroup(groupId, memberId);
+    verify(groupService).registerGroup(groupId, memberId);
+  }
+
+  @Test
+  void 그룹에서_멤버가_탈퇴한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/unregister")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-unregister"));
+
+    verify(groupService).unregisterGroup(groupId, memberId);
   }
 }

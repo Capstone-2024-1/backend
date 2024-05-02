@@ -31,14 +31,14 @@ public class GroupService {
   }
 
   @Transactional(readOnly = true)
-  public List<GroupPreviewResponse> findParticipatedGroups(final Long memberId) {
+  public List<GroupPreviewResponse> findRegisteredGroups(final Long memberId) {
     final Member member = memberReader.readMember(memberId);
     final List<Group> groups = groupReader.findGroups(member);
 
     return groups.stream()
         .map(group -> GroupPreviewResponse.of(
             group,
-            groupReader.countParticipateMember(group),
+            groupReader.countRegisteredMember(group),
             memberReader.readMember(group.getCreatorId()).getNickName()
         )).toList();
   }
@@ -50,12 +50,12 @@ public class GroupService {
 
     groupReader.validateGroupContainMember(group, member);
 
-    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+    final List<Long> memberIds = groupReader.readRegisteredMemberIds(group);
     return memberReader.readMembers(memberIds);
   }
 
   @Transactional
-  public void participateGroup(final Long groupId, final Long memberId) {
+  public void registerGroup(final Long groupId, final Long memberId) {
     final Group group = groupReader.readGroup(groupId);
     final Member member = memberReader.readMember(memberId);
 

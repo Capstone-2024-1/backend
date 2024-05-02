@@ -67,7 +67,7 @@ class GroupServiceTest extends ServiceTest {
     );
 
     final List<GroupPreviewResponse> groupPreviewResponses
-        = groupService.findParticipatedGroups(creator.getId());
+        = groupService.findRegisteredGroups(creator.getId());
 
     assertThat(groupPreviewResponses)
         .usingRecursiveFieldByFieldElementComparator()
@@ -90,9 +90,9 @@ class GroupServiceTest extends ServiceTest {
     final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
     final Member member = memberRepository.save(멤버_홍혁준_생성());
 
-    groupService.participateGroup(group.getId(), member.getId());
+    groupService.registerGroup(group.getId(), member.getId());
 
-    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+    final List<Long> memberIds = groupReader.readRegisteredMemberIds(group);
 
     assertThat(memberIds)
         .contains(member.getId());

@@ -1,10 +1,14 @@
 package capstone.safeat.group.application;
 
+import static capstone.safeat.group.exception.GroupExceptionType.EXECUTORS_IS_NOT_CREATOR;
+
 import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.dto.GroupPreviewResponse;
+import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.application.MemberReader;
 import capstone.safeat.member.domain.Member;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,5 +64,40 @@ public class GroupService {
     final Member member = memberReader.readMember(memberId);
 
     groupUpdater.addMember(group, member);
+  }
+
+  @Transactional
+  public void unregisterGroup(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member member = memberReader.readMember(memberId);
+
+    groupUpdater.removeMember(group.getId(), member);
+  }
+
+  @Transactional
+  public void expel(final Long groupId, final Long executorMemberId, final Long targetMemberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member executorMember = memberReader.readMember(executorMemberId);
+
+    validateCreator(group, executorMember);
+
+    final Member targetMember = memberReader.readMember(targetMemberId);
+    groupUpdater.removeMember(groupId, targetMember);
+  }
+
+  @Transactional
+  public void removeGroup(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member executorMember = memberReader.readMember(memberId);
+
+    validateCreator(group, executorMember);
+
+    groupUpdater.removeGroup(groupId);
+  }
+
+  private static void validateCreator(final Group group, final Member executorMember) {
+    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
+      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
+    }
   }
 }

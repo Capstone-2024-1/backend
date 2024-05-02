@@ -16,6 +16,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import capstone.safeat.group.dto.GroupCreateRequest;
+import capstone.safeat.group.dto.GroupExpelRequest;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.support.ApiTest;
 import java.util.List;
@@ -112,5 +113,63 @@ public class GroupApiTest extends ApiTest {
         .andDo(document("group-register"));
 
     verify(groupService).registerGroup(groupId, memberId);
+  }
+
+  @Test
+  void 그룹에서_멤버가_탈퇴한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/unregister")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-unregister"));
+
+    verify(groupService).unregisterGroup(groupId, memberId);
+  }
+
+  @Test
+  void 그룹에서_멤버를_추방한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+    final Long targetMemberId = 15L;
+
+    final GroupExpelRequest request = new GroupExpelRequest(targetMemberId);
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/expel")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-expel",
+            requestFields(
+                fieldWithPath("memberId").type(NUMBER).description("추방시킬 멤버의 Id")
+            )
+        ));
+
+    verify(groupService).expel(groupId, memberId, targetMemberId);
+  }
+
+  @Test
+  void 그룹을_삭제한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/remove")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-remove"));
+
+    verify(groupService).removeGroup(groupId, memberId);
   }
 }

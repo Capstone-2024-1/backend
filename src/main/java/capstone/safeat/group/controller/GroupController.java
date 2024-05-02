@@ -2,6 +2,7 @@ package capstone.safeat.group.controller;
 
 import capstone.safeat.group.application.GroupService;
 import capstone.safeat.group.dto.GroupCreateRequest;
+import capstone.safeat.group.dto.GroupExpelRequest;
 import capstone.safeat.group.dto.GroupMemberResponse;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.member.dto.JwtMemberId;
@@ -49,7 +50,7 @@ public class GroupController {
 
   @PostMapping("/{groupId}/register")
   public ResponseEntity<Void> registerGroup(
-      @PathVariable final Long groupId,  final JwtMemberId jwtMemberId
+      @PathVariable final Long groupId, final JwtMemberId jwtMemberId
   ) {
     groupService.registerGroup(groupId, jwtMemberId.memberId());
     return ResponseEntity.ok().build();
@@ -57,9 +58,26 @@ public class GroupController {
 
   @PostMapping("/{groupId}/unregister")
   public ResponseEntity<Void> unregisterGroup(
-      @PathVariable final Long groupId,  final JwtMemberId jwtMemberId
+      @PathVariable final Long groupId, final JwtMemberId jwtMemberId
   ) {
-    groupService.registerGroup(groupId, jwtMemberId.memberId());
+    groupService.unregisterGroup(groupId, jwtMemberId.memberId());
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/{groupId}/expel")
+  public ResponseEntity<Void> expelMember(
+      @RequestBody final GroupExpelRequest request, @PathVariable final Long groupId,
+      final JwtMemberId jwtMemberId
+  ) {
+    groupService.expel(groupId, jwtMemberId.memberId(), request.memberId());
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/{groupId}/remove")
+  public ResponseEntity<Void> removeGroup(
+      @PathVariable final Long groupId, final JwtMemberId jwtMemberId
+  ) {
+    groupService.removeGroup(groupId, jwtMemberId.memberId());
     return ResponseEntity.ok().build();
   }
 }

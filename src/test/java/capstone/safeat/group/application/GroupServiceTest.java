@@ -69,4 +69,15 @@ class GroupServiceTest extends ApplicationTest {
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrderElementsOf(expected);
   }
+
+  @Test
+  void 그룹의_멤버를_반환한다() {
+    final Long createdGroupId = groupService.createGroup(creator.getId(), "그룹_1");
+
+    final List<Member> actual = groupService.findMembersInGroup(createdGroupId, creator.getId());
+
+    assertThat(actual)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrder(creator);
+  }
 }

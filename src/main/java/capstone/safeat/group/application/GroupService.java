@@ -4,7 +4,6 @@ import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.member.application.MemberReader;
 import capstone.safeat.member.domain.Member;
-import capstone.safeat.member.dto.JwtMemberId;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,8 +46,11 @@ public class GroupService {
   @Transactional(readOnly = true)
   public List<Member> findMembersInGroup(final Long memberId, final Long groupId) {
     final Member member = memberReader.readMember(memberId);
-    final List<Group> groups = groupReader.findGroups(member);
+    final Group group = groupReader.readGroup(groupId);
 
-    return null;
+    groupReader.validateGroupContainMember(group, member);
+
+    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+    return memberReader.readMembers(memberIds);
   }
 }

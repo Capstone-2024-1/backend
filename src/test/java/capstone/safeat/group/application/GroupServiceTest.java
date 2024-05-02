@@ -3,6 +3,7 @@ package capstone.safeat.group.application;
 import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.domain.GroupMember;
 import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
@@ -19,14 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 class GroupServiceTest extends ApplicationTest {
 
   @Autowired
+  private GroupService groupService;
+
+  @Autowired
   private GroupRepository groupRepository;
   @Autowired
   private MemberRepository memberRepository;
   @Autowired
   private GroupMemberRepository groupMemberRepository;
-
   @Autowired
-  private GroupService groupService;
+  private GroupReader groupReader;
+  @Autowired
+  private GroupUpdater groupUpdater;
 
   private Member creator;
 
@@ -79,5 +84,18 @@ class GroupServiceTest extends ApplicationTest {
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrder(creator);
+  }
+
+  @Test
+  void 그룹에_멤버를_추가한다() {
+    final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+
+    groupService.participateGroup(group.getId(), member.getId());
+
+    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+
+    assertThat(memberIds)
+        .contains(member.getId());
   }
 }

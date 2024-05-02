@@ -53,4 +53,12 @@ public class GroupService {
     final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
     return memberReader.readMembers(memberIds);
   }
+
+  @Transactional
+  public void participateGroup(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member member = memberReader.readMember(memberId);
+
+    groupUpdater.addMember(group, member);
+  }
 }

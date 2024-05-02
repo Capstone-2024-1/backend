@@ -1,0 +1,23 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+==== *속해있는 group 리스트 반환*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-preview/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-preview/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/group-preview/response-fields.adoc[]

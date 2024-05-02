@@ -19,9 +19,7 @@ public class GroupController {
 
   @GetMapping
   public ResponseEntity<List<GroupPreviewResponse>> getMembers(final JwtMemberId jwtMemberId) {
-    final var groups = groupService.findParticipatedGroups(jwtMemberId);
-    final List<GroupPreviewResponse> groupPreviewResponses = GroupPreviewResponse
-        .convertList(groups);
+    final var groupPreviewResponses = groupService.findParticipatedGroups(jwtMemberId);
     return ResponseEntity.ok(groupPreviewResponses);
   }
 }

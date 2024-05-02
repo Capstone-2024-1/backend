@@ -7,8 +7,10 @@ import capstone.safeat.member.domain.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "group_")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class GroupEntity {
+public class Group {
 
   private static final String DEFAULT_GROUP_IMAGE_URL = "";
 
@@ -34,8 +36,11 @@ public class GroupEntity {
   @NotNull
   private Long creatorId;
 
+  @OneToMany(mappedBy = "group")
+  private List<GroupMember> members;
+
   @Builder
-  private GroupEntity(final Long id, final String name, final String imageUrl,
+  private Group(final Long id, final String name, final String imageUrl,
       final Long creatorId) {
     this.id = id;
     this.name = name;
@@ -43,7 +48,7 @@ public class GroupEntity {
     this.creatorId = creatorId;
   }
 
-  public static GroupEntity create(final String name, final Member creator) {
-    return new GroupEntity(null, name, DEFAULT_GROUP_IMAGE_URL, creator.getId());
+  public static Group create(final String name, final Member creator) {
+    return new Group(null, name, DEFAULT_GROUP_IMAGE_URL, creator.getId());
   }
 }

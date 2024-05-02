@@ -4,7 +4,7 @@ import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생�
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import capstone.safeat.group.domain.GroupDomain;
+import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.domain.GroupMember;
 import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
@@ -37,7 +37,7 @@ class GroupUpdaterTest extends ApplicationTest {
 
   @Test
   void 멤버를_기준으로_Group을_추가한다() {
-    final GroupDomain newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    final Group newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
 
     final boolean exists = groupRepository.existsById(newGroup.getId());
     final List<GroupMember> groupMember = groupMemberRepository.findByGroupId(newGroup.getId());
@@ -51,7 +51,7 @@ class GroupUpdaterTest extends ApplicationTest {
 
   @Test
   void 그룹에서_멤버가_삭제된다() {
-    final GroupDomain newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    final Group newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
 
     groupUpdater.removeMember(newGroup.getId(), creator);
 

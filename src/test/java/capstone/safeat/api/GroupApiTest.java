@@ -12,8 +12,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import capstone.safeat.fixture.docs.GroupFixture;
-import capstone.safeat.group.domain.GroupDomain;
+import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.support.ApiTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -24,12 +23,14 @@ public class GroupApiTest extends ApiTest {
   void 자신이_속한_그룹_종류를_반환한다() throws Exception {
     final Long memberId = 10L;
     final String token = "TOKEN TOKEN ACCESS TOKEN";
-    final List<GroupDomain> groupEntities = List.of(
-        GroupFixture.새로운그룹_1(), GroupFixture.새로운그룹_2()
+    final List<GroupPreviewResponse> responses = List.of(
+        new GroupPreviewResponse(1L, "그룹_1", "imageUrl", 4, "전영은"),
+        new GroupPreviewResponse(2L, "그룹_2", "imageUrl", 3, "홍혁준"),
+        new GroupPreviewResponse(3L, "그룹_3", "imageUrl", 2, "김동우")
     );
 
     setAccessToken(token, memberId);
-    when(groupService.findParticipatedGroups(any())).thenReturn(groupEntities);
+    when(groupService.findParticipatedGroups(any())).thenReturn(responses);
 
     mockMvc.perform(get("/groups")
             .header(AUTHORIZATION, "Bearer " + token))

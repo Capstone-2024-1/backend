@@ -16,7 +16,6 @@ public enum Category {
   SEA_FOODS(7L, "어패류", "Seafood", null),
   SEASONINGS(8L, "조미료", "Seasonings", null),
   DAIRIES(9L, "유제품", "Dairy", null),
-  GLUTEN(10L, "글루텐", "Gluten", null),
 
   APPLE(11L, "사과", "Apple", FRUITS),
   KIWI(12L, "키위", "Kiwi", FRUITS),
@@ -57,6 +56,7 @@ public enum Category {
   GRAIN(41L, "곡식", "Grain", null),
   RICE(42L, "쌀", "Rice", GRAIN),
   WHEAT(43L, "밀", "Wheat", GRAIN),
+  BARLEY(90L, "보리", "Barley", GRAIN),
   CORN(44L, "옥수수", "Corn", GRAIN),
   BUCKWHEAT(45L, "메밀", "Buckwheat", GRAIN),
   BEANS(46L, "콩", "Beans", GRAIN),

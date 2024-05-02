@@ -61,4 +61,12 @@ public class GroupService {
 
     groupUpdater.addMember(group, member);
   }
+
+  @Transactional
+  public void unregisterGroup(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member member = memberReader.readMember(memberId);
+
+    groupUpdater.removeMember(group.getId(), member);
+  }
 }

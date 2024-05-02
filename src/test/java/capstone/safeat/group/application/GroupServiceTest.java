@@ -97,4 +97,18 @@ class GroupServiceTest extends ServiceTest {
     assertThat(memberIds)
         .contains(member.getId());
   }
+
+  @Test
+  void 그룹에_멤버를_제거한다() {
+    final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+    groupMemberRepository.save(new GroupMember(group, member.getId()));
+
+    groupService.unregisterGroup(group.getId(), member.getId());
+
+    final List<Long> memberIds = groupReader.readRegisteredMemberIds(group);
+
+    assertThat(memberIds)
+        .doesNotContain(member.getId());
+  }
 }

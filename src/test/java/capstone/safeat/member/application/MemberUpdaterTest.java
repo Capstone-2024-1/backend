@@ -9,12 +9,12 @@ import capstone.safeat.category.domain.Category;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
-import capstone.safeat.support.RepositoryTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MemberUpdaterTest extends RepositoryTest {
+class MemberUpdaterTest extends ServiceTest {
 
   @Autowired
   private MemberUpdater memberUpdater;

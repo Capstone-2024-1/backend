@@ -10,13 +10,13 @@ import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
-import capstone.safeat.support.ApplicationTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class GroupUpdaterTest extends ApplicationTest {
+class GroupUpdaterTest extends ServiceTest {
 
   @Autowired
   private GroupUpdater groupUpdater;

@@ -14,13 +14,13 @@ import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
-import capstone.safeat.support.RepositoryTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class GroupReaderTest extends RepositoryTest {
+class GroupReaderTest extends ServiceTest {
 
   @Autowired
   private GroupReader groupReader;

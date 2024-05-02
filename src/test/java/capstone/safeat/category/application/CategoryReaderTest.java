@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.MemberCategory;
 import capstone.safeat.category.domain.MemberCategoryRepository;
-import capstone.safeat.support.RepositoryTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class CategoryReaderTest extends RepositoryTest {
+class CategoryReaderTest extends ServiceTest {
 
   @Autowired
   private CategoryReader categoryReader;

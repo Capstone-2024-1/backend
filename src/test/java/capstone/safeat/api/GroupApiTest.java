@@ -5,17 +5,21 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import capstone.safeat.group.dto.GroupCreateRequest;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.support.ApiTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
 public class GroupApiTest extends ApiTest {
 
@@ -64,6 +68,31 @@ public class GroupApiTest extends ApiTest {
                 fieldWithPath("[]").type(ARRAY).description("멤버 전체"),
                 fieldWithPath("[].id").type(NUMBER).description("멤버 Id"),
                 fieldWithPath("[].name").type(STRING).description("멤버 닉네임")
+            )
+        ));
+  }
+
+  @Test
+  void 그룹을_생성한다() throws Exception {
+    final Long memberId = 10L;
+    final String groupName = "그룹이름";
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    final GroupCreateRequest request = new GroupCreateRequest(groupName);
+    final String requestBody = objectMapper.writeValueAsString(request);
+
+    setAccessToken(token, memberId);
+    when(groupService.createGroup(memberId, groupName)).thenReturn(groupId);
+
+    mockMvc.perform(post("/groups/create")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isCreated())
+        .andDo(document("group-create",
+            requestFields(
+                fieldWithPath("groupName").type(STRING).description("생성할 그룹의 이름")
             )
         ));
   }

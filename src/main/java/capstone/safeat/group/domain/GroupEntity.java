@@ -9,33 +9,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "group_")
 @NoArgsConstructor(access = PROTECTED)
-public class Group {
+@Getter
+public class GroupEntity {
 
   private static final String DEFAULT_GROUP_IMAGE_URL = "";
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  @Getter
   private Long id;
 
   @NotNull
   private String imageUrl;
 
   @NotNull
+  private String name;
+
+  @NotNull
   private Long creatorId;
 
-  private Group(final String imageUrl, final Long creatorId) {
+  @Builder
+  private GroupEntity(final Long id, final String name, final String imageUrl,
+      final Long creatorId) {
+    this.id = id;
+    this.name = name;
     this.imageUrl = imageUrl;
     this.creatorId = creatorId;
   }
 
-  public static Group create(final Member creator) {
-    return new Group(DEFAULT_GROUP_IMAGE_URL, creator.getId());
+  public static GroupEntity create(final String name, final Member creator) {
+    return new GroupEntity(null, name, DEFAULT_GROUP_IMAGE_URL, creator.getId());
   }
 }

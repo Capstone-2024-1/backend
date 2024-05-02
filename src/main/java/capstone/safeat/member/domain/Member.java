@@ -11,8 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Getter;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,29 +34,27 @@ public class Member extends BaseEntity {
   private OAuthMemberId oauthMemberId;
 
   @Getter
-  @NotNull
   private boolean isRegistered;
 
+  @Getter
   private String nickName;
 
   @Getter
   private String profileImageUrl;
 
   @Builder
-  private Member(final OAuthMemberId oauthMemberId, final String profileImageUrl) {
+  public Member(final Long id, final OAuthMemberId oauthMemberId, final String profileImageUrl) {
+    this.id = id;
     this.oauthMemberId = oauthMemberId;
     this.profileImageUrl = profileImageUrl;
     this.isRegistered = false;
   }
 
-  @Builder
-  public Member(final String nickName, final String profileImageUrl) {
-    this.nickName = nickName;
-    this.profileImageUrl = profileImageUrl;
+  public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
+    return new Member(null, oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
 
-  @Builder
-  public static Member createOAuthMember(final OAuthMemberInfo oauthMemberInfo) {
-    return new Member(oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
+  public void updateNickName(final String nickName) {
+    this.nickName = nickName;
   }
 }

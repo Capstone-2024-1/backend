@@ -1,6 +1,6 @@
 package capstone.safeat.member.application;
 
-import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
+import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static capstone.safeat.member.exception.MemberExceptionType.MEMBER_NOT_FOUND;
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +29,7 @@ class MemberReaderTest extends RepositoryTest {
 
     @Test
     void 멤버를_정상적으로_조회한다() {
-      final Member expected = memberRepository.save(멤버_1());
+      final Member expected = memberRepository.save(멤버_홍혁준_생성());
 
       final Member actual = memberReader.readMember(expected.getId());
 
@@ -51,7 +51,7 @@ class MemberReaderTest extends RepositoryTest {
 
     @Test
     void 멤버를_정상적으로_조회한다() {
-      final Member expected = memberRepository.save(멤버_1());
+      final Member expected = memberRepository.save(멤버_홍혁준_생성());
 
       final OAuthMemberInfo oauthMemberInfo = new OAuthMemberInfo(
           expected.getOauthMemberId().getOauthServerId(),

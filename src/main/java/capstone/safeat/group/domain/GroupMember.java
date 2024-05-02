@@ -25,14 +25,14 @@ public class GroupMember {
   @ManyToOne
   @JoinColumn(name = "group_id", nullable = false
       , foreignKey = @ForeignKey(name = "fk_group_member_to_group"))
-  private Group group;
+  private GroupEntity group;
 
   @ManyToOne
   @JoinColumn(name = "member_id", nullable = false
       , foreignKey = @ForeignKey(name = "fk_group_member_to_member"))
   private Member member;
 
-  public GroupMember(final Group group, final Member member) {
+  public GroupMember(final GroupEntity group, final Member member) {
     this.group = group;
     this.member = member;
   }

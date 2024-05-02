@@ -1,6 +1,6 @@
 package capstone.safeat.member.application;
 
-import static capstone.safeat.fixture.domain.MemberFixture.멤버_1;
+import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.safeat.category.application.CategoryReader;
@@ -25,7 +25,7 @@ class MemberServiceTest extends ServiceTest {
   @Test
   void 멤버에_카테고리를_추가한다() {
     //given
-    final Member member = memberRepository.save(멤버_1());
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
     final List<Category> expected = List.of(Category.APPLE, Category.MANGO);
     final List<Long> categoryIds = expected.stream()
         .map(Category::getId)

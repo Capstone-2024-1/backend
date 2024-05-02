@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import capstone.safeat.group.domain.Group;
+import capstone.safeat.group.domain.GroupMember;
+import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.domain.Member;
@@ -28,6 +30,8 @@ class GroupReaderTest extends RepositoryTest {
   private GroupRepository groupRepository;
   @Autowired
   private MemberRepository memberRepository;
+  @Autowired
+  private GroupMemberRepository groupMemberRepository;
 
   @Nested
   class 그룹을_읽는다 {
@@ -65,5 +69,22 @@ class GroupReaderTest extends RepositoryTest {
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrderElementsOf(expected);
+  }
+
+  @Test
+  void 그룹에_속한_멤버의_수를_반환한다() {
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+    final Member member1 = memberRepository.save(멤버_홍혁준_생성());
+    final Member member2 = memberRepository.save(멤버_홍혁준_생성());
+
+    final Group group = groupUpdater.saveNewGroupBy(member, "그룹_1");
+
+    groupMemberRepository.save(new GroupMember(group, member1.getId()));
+    groupMemberRepository.save(new GroupMember(group, member2.getId()));
+
+    final int actual = groupReader.countParticipateMember(group);
+
+    assertThat(actual)
+        .isEqualTo(3);
   }
 }

@@ -11,6 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import capstone.safeat.category.domain.Allergy;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Religion;
 import capstone.safeat.category.domain.Vegetarianism;
@@ -77,6 +78,26 @@ public class CategoryApiTest extends ApiTest {
                 fieldWithPath("[].id").type(NUMBER).description("채식주의의 id"),
                 fieldWithPath("[].englishName").type(STRING).description("채식주의의 영어이름"),
                 fieldWithPath("[].koreanName").type(STRING).description("채식주의의 한글이름"),
+                fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
+                subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
+            )
+        ));
+  }
+
+  @Test
+  void 알레르기_종류를_반환한다() throws Exception {
+    final List<Allergy> allergies = Arrays.stream(Allergy.values()).toList();
+
+    when(categoryService.findAllAllergies()).thenReturn(allergies);
+
+    mockMvc.perform(get("/categories/allergies"))
+        .andExpect(status().isOk())
+        .andDo(document("allergy-tree",
+            responseFields(
+                fieldWithPath("[]").type(ARRAY).description("알레르기 전체"),
+                fieldWithPath("[].id").type(NUMBER).description("알레르기의 id"),
+                fieldWithPath("[].englishName").type(STRING).description("알레르기의 영어이름"),
+                fieldWithPath("[].koreanName").type(STRING).description("알레르기의 한글이름"),
                 fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
                 subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
             )

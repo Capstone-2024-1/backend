@@ -1,5 +1,6 @@
 package capstone.safeat.category.application;
 
+import capstone.safeat.category.domain.Allergy;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Religion;
 import capstone.safeat.category.domain.Vegetarianism;
@@ -22,5 +23,9 @@ public class CategoryService {
 
   public List<Vegetarianism> findAllVegetarianism() {
     return Arrays.stream(Vegetarianism.values()).toList();
+  }
+
+  public List<Allergy> findAllAllergies() {
+    return Arrays.stream(Allergy.values()).toList();
   }
 }

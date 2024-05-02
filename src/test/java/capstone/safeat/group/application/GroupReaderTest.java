@@ -3,6 +3,7 @@ package capstone.safeat.group.application;
 import static capstone.safeat.fixture.entity.GroupFixture.새로운_그룹_생성;
 import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static capstone.safeat.group.exception.GroupExceptionType.GROUP_NOT_FOUND;
+import static capstone.safeat.group.exception.GroupExceptionType.MEMBER_IS_NOT_CONTAIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -86,5 +87,30 @@ class GroupReaderTest extends RepositoryTest {
 
     assertThat(actual)
         .isEqualTo(3);
+  }
+
+  @Nested
+  class 사용자가_그룹에_포함되어있는지_검증 {
+
+    @Test
+    void 그룹에_포함_안_되어_있으면_예외처리한다() {
+      final Member member = memberRepository.save(멤버_홍혁준_생성());
+      final Member notContainGroupMember = memberRepository.save(멤버_홍혁준_생성());
+
+      final Group group = groupUpdater.saveNewGroupBy(member, "그룹_1");
+
+      assertThatThrownBy(() -> groupReader.validateGroupContainMember(group, notContainGroupMember))
+          .isInstanceOf(GroupException.class)
+          .hasMessage(MEMBER_IS_NOT_CONTAIN.getMessage());
+    }
+
+    @Test
+    void 그룹에_포함되어_있으면_예외처리하지_않는다() {
+      final Member member = memberRepository.save(멤버_홍혁준_생성());
+
+      final Group group = groupUpdater.saveNewGroupBy(member, "그룹_1");
+
+      groupReader.validateGroupContainMember(group, member);
+    }
   }
 }

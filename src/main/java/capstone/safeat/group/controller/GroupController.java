@@ -25,7 +25,7 @@ public class GroupController {
 
   @GetMapping
   public ResponseEntity<List<GroupPreviewResponse>> getGroups(final JwtMemberId jwtMemberId) {
-    final var groupPreviewResponses = groupService.findParticipatedGroups(jwtMemberId.memberId());
+    final var groupPreviewResponses = groupService.findRegisteredGroups(jwtMemberId.memberId());
     return ResponseEntity.ok(groupPreviewResponses);
   }
 
@@ -47,11 +47,19 @@ public class GroupController {
     return ResponseEntity.created(URI.create("/groups/" + groupId)).build();
   }
 
-  @PostMapping("/{groupId}/participate")
-  public ResponseEntity<Void> participateGroup(
+  @PostMapping("/{groupId}/register")
+  public ResponseEntity<Void> registerGroup(
       @PathVariable final Long groupId,  final JwtMemberId jwtMemberId
   ) {
-    groupService.participateGroup(groupId, jwtMemberId.memberId());
+    groupService.registerGroup(groupId, jwtMemberId.memberId());
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/{groupId}/unregister")
+  public ResponseEntity<Void> unregisterGroup(
+      @PathVariable final Long groupId,  final JwtMemberId jwtMemberId
+  ) {
+    groupService.registerGroup(groupId, jwtMemberId.memberId());
     return ResponseEntity.ok().build();
   }
 }

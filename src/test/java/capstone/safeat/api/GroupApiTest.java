@@ -35,7 +35,7 @@ public class GroupApiTest extends ApiTest {
     );
 
     setAccessToken(token, memberId);
-    when(groupService.findParticipatedGroups(memberId)).thenReturn(responses);
+    when(groupService.findRegisteredGroups(memberId)).thenReturn(responses);
 
     mockMvc.perform(get("/groups")
             .header(AUTHORIZATION, "Bearer " + token))
@@ -106,11 +106,11 @@ public class GroupApiTest extends ApiTest {
 
     setAccessToken(token, memberId);
 
-    mockMvc.perform(post("/groups/" + groupId + "/participate")
+    mockMvc.perform(post("/groups/" + groupId + "/register")
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
-        .andDo(document("group-participate"));
+        .andDo(document("group-register"));
 
-    verify(groupService).participateGroup(groupId, memberId);
+    verify(groupService).registerGroup(groupId, memberId);
   }
 }

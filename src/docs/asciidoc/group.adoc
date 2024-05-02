@@ -54,8 +54,8 @@ include::{snippets}/../../build/generated-snippets/group-create/http-response.ad
 
 ===== *Http Request*
 
-include::{snippets}/../../build/generated-snippets/group-participate/http-request.adoc[]
+include::{snippets}/../../build/generated-snippets/group-register/http-request.adoc[]
 
 ===== *Http Response*
 
-include::{snippets}/../../build/generated-snippets/group-participate/http-response.adoc[]
+include::{snippets}/../../build/generated-snippets/group-register/http-response.adoc[]

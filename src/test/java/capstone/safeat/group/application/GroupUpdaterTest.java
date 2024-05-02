@@ -59,4 +59,16 @@ class GroupUpdaterTest extends ApplicationTest {
     assertThat(groupMember.size())
         .isEqualTo(0);
   }
+
+  @Test
+  void 그룹에서_멤버가_추가된다() {
+    final Group newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    final Member newMember = memberRepository.save(멤버_홍혁준_생성());
+
+    groupUpdater.addMember(newGroup, newMember);
+
+    final List<GroupMember> groupMember = groupMemberRepository.findByGroupId(newGroup.getId());
+    assertThat(groupMember.size())
+        .isEqualTo(2);
+  }
 }

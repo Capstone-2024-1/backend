@@ -29,4 +29,8 @@ public class GroupUpdater {
   public void removeMember(final Long groupId, final Member member) {
     groupMemberRepository.removeByGroupIdAndMemberId(groupId, member.getId());
   }
+
+  public void addMember(final Group group, final Member member) {
+    groupMemberRepository.save(new GroupMember(group, member.getId()));
+  }
 }

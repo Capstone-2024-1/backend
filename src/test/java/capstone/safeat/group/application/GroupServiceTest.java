@@ -10,14 +10,13 @@ import capstone.safeat.group.domain.repository.GroupRepository;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
-import capstone.safeat.member.dto.JwtMemberId;
-import capstone.safeat.support.ApplicationTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class GroupServiceTest extends ApplicationTest {
+class GroupServiceTest extends ServiceTest {
 
   @Autowired
   private GroupService groupService;
@@ -79,7 +78,7 @@ class GroupServiceTest extends ApplicationTest {
   void 그룹의_멤버를_반환한다() {
     final Long createdGroupId = groupService.createGroup(creator.getId(), "그룹_1");
 
-    final List<Member> actual = groupService.findMembersInGroup(createdGroupId, creator.getId());
+    final List<Member> actual = groupService.findMembersInGroup(creator.getId(), createdGroupId);
 
     assertThat(actual)
         .usingRecursiveFieldByFieldElementComparator()

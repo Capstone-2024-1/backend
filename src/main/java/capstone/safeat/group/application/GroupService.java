@@ -86,4 +86,8 @@ public class GroupService {
     final Member targetMember = memberReader.readMember(targetMemberId);
     groupUpdater.removeMember(groupId, targetMember);
   }
+
+  public void removeGroup(final Long groupId, final Long memberId) {
+
+  }
 }

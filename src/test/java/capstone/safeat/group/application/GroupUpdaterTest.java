@@ -71,4 +71,16 @@ class GroupUpdaterTest extends ServiceTest {
     assertThat(groupMember.size())
         .isEqualTo(2);
   }
+
+  @Test
+  void 그룹을_삭제한다() {
+    final Group newGroup = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+
+    groupUpdater.removeGroup(newGroup.getId());
+
+    assertThat(groupRepository.existsById(newGroup.getId()))
+        .isFalse();
+    assertThat(groupMemberRepository.findByGroupId(newGroup.getId()))
+        .isEmpty();
+  }
 }

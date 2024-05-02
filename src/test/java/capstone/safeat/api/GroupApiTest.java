@@ -156,4 +156,20 @@ public class GroupApiTest extends ApiTest {
 
     verify(groupService).expel(groupId, memberId, targetMemberId);
   }
+
+  @Test
+  void 그룹을_삭제한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/remove")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-remove"));
+
+    verify(groupService).removeGroup(groupId, memberId);
+  }
 }

@@ -72,4 +72,12 @@ public class GroupController {
     groupService.expel(groupId, jwtMemberId.memberId(), request.memberId());
     return ResponseEntity.ok().build();
   }
+
+  @PostMapping("/{groupId}/remove")
+  public ResponseEntity<Void> removeGroup(
+      @PathVariable final Long groupId, final JwtMemberId jwtMemberId
+  ) {
+    groupService.removeGroup(groupId, jwtMemberId.memberId());
+    return ResponseEntity.ok().build();
+  }
 }

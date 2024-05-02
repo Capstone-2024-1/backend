@@ -11,13 +11,14 @@ import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.member.exception.MemberException;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import capstone.safeat.support.RepositoryTest;
+import capstone.safeat.support.ServiceTest;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class MemberReaderTest extends RepositoryTest {
+class MemberReaderTest extends ServiceTest {
 
   @Autowired
   private MemberReader memberReader;

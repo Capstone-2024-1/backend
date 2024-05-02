@@ -36,9 +36,6 @@ public class Group {
   @NotNull
   private Long creatorId;
 
-  @OneToMany(mappedBy = "group")
-  private List<GroupMember> members;
-
   @Builder
   private Group(final Long id, final String name, final String imageUrl,
       final Long creatorId) {

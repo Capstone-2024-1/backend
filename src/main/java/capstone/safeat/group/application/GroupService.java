@@ -35,6 +35,12 @@ public class GroupService {
   public List<GroupPreviewResponse> findParticipatedGroups(final JwtMemberId jwtMemberId) {
     final Member member = memberReader.readMember(jwtMemberId.memberId());
     final List<Group> groups = groupReader.findGroups(member);
-    return null;
+
+    return groups.stream()
+        .map(group -> GroupPreviewResponse.of(
+            group,
+            groupReader.countParticipateMember(group),
+            memberReader.readMember(group.getCreatorId()).getNickName()
+        )).toList();
   }
 }

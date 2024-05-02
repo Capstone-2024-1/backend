@@ -24,4 +24,8 @@ public class GroupReader {
         .map(GroupMember::getGroup)
         .toList();
   }
+
+  public int countParticipateMember(final Group group) {
+    return groupMemberRepository.countByGroup(group);
+  }
 }

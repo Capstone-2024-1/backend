@@ -6,8 +6,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import capstone.safeat.group.domain.GroupMember;
 import capstone.safeat.group.domain.repository.GroupMemberRepository;
 import capstone.safeat.group.domain.repository.GroupRepository;
+import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
+import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.support.ApplicationTest;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,5 +53,20 @@ class GroupServiceTest extends ApplicationTest {
     final List<GroupMember> groupMember = groupMemberRepository.findByGroupId(createdGroupId);
     assertThat(groupMember.size())
         .isEqualTo(0);
+  }
+
+  @Test
+  void 참여한_그룹_목록을_반환한다() {
+    final Long createdGroupId = groupService.createGroup(creator.getId(), "그룹_1");
+    final List<GroupPreviewResponse> expected = List.of(
+        new GroupPreviewResponse(createdGroupId, "그룹_1", "", 1, creator.getNickName())
+    );
+
+    final List<GroupPreviewResponse> groupPreviewResponses
+        = groupService.findParticipatedGroups(new JwtMemberId(creator.getId()));
+
+    assertThat(groupPreviewResponses)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrderElementsOf(expected);
   }
 }

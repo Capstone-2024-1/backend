@@ -1,5 +1,6 @@
 package capstone.safeat.group.domain.repository;
 
+import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.domain.GroupMember;
 import java.util.List;
 import org.hibernate.annotations.processing.SQL;
@@ -19,4 +20,6 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> 
       where gm.memberId = :memberId
       """)
   List<GroupMember> findByMemberId(final Long memberId);
+
+  int countByGroup(final Group group);
 }

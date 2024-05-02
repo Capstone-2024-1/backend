@@ -7,6 +7,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import capstone.safeat.base.LocalDateTimeProvider;
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.controller.CategoryController;
+import capstone.safeat.config.WebConfig;
 import capstone.safeat.group.application.GroupService;
 import capstone.safeat.group.controller.GroupController;
 import capstone.safeat.login.application.JwtProvider;
@@ -56,6 +57,8 @@ public abstract class ApiTest {
   protected GroupService groupService;
   @MockBean
   protected JwtProvider jwtProvider;
+  @MockBean
+  protected WebConfig webConfig;
 
   //  @MockBean
 //  protected GroupService groupService;

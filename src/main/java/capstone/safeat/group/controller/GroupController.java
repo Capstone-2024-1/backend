@@ -46,4 +46,12 @@ public class GroupController {
         .createGroup(jwtMemberId.memberId(), groupCreateRequest.groupName());
     return ResponseEntity.created(URI.create("/groups/" + groupId)).build();
   }
+
+  @PostMapping("/{groupId}/participate")
+  public ResponseEntity<Void> participateGroup(
+      @PathVariable final Long groupId,  final JwtMemberId jwtMemberId
+  ) {
+    groupService.participateGroup(groupId, jwtMemberId.memberId());
+    return ResponseEntity.ok().build();
+  }
 }

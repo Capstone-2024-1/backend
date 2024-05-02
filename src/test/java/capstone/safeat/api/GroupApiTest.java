@@ -1,6 +1,7 @@
 package capstone.safeat.api;
 
 import static capstone.safeat.fixture.docs.MemberFixture.멤버_3명;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -95,5 +96,21 @@ public class GroupApiTest extends ApiTest {
                 fieldWithPath("groupName").type(STRING).description("생성할 그룹의 이름")
             )
         ));
+  }
+
+  @Test
+  void 그룹에_멤버를_추가한다() throws Exception {
+    final Long memberId = 10L;
+    final String token = "TOKEN TOKEN ACCESS TOKEN";
+    final Long groupId = 100L;
+
+    setAccessToken(token, memberId);
+
+    mockMvc.perform(post("/groups/" + groupId + "/participate")
+            .header(AUTHORIZATION, "Bearer " + token))
+        .andExpect(status().isOk())
+        .andDo(document("group-participate"));
+
+    verify(groupService).participateGroup(groupId, memberId);
   }
 }

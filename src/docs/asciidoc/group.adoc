@@ -59,3 +59,13 @@ include::{snippets}/../../build/generated-snippets/group-register/http-request.a
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/group-register/http-response.adoc[]
+
+==== *그룹에 탈퇴*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-unregister/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-unregister/http-response.adoc[]

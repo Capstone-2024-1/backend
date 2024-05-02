@@ -43,4 +43,12 @@ public class GroupService {
             memberReader.readMember(group.getCreatorId()).getNickName()
         )).toList();
   }
+
+  @Transactional(readOnly = true)
+  public List<Member> findMembersInGroup(final Long memberId, final Long groupId) {
+    final Member member = memberReader.readMember(memberId);
+    final List<Group> groups = groupReader.findGroups(member);
+
+    return null;
+  }
 }

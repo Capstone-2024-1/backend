@@ -7,6 +7,8 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import capstone.safeat.base.LocalDateTimeProvider;
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.controller.CategoryController;
+import capstone.safeat.group.application.GroupService;
+import capstone.safeat.group.controller.GroupController;
 import capstone.safeat.login.application.JwtProvider;
 import capstone.safeat.login.application.LoginService;
 import capstone.safeat.login.controller.LoginController;
@@ -32,7 +34,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest({
-    MemberController.class, LoginController.class, CategoryController.class,
+    MemberController.class, LoginController.class, CategoryController.class, GroupController.class
 })
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
@@ -50,6 +52,8 @@ public abstract class ApiTest {
   protected LoginService loginService;
   @MockBean
   protected CategoryService categoryService;
+  @MockBean
+  protected GroupService groupService;
   @MockBean
   protected JwtProvider jwtProvider;
 

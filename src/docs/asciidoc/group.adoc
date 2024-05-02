@@ -1,0 +1,61 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+==== *속해있는 group 리스트 반환*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-preview/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-preview/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/group-preview/response-fields.adoc[]
+
+==== *특정 그룹의 멤버를 반환*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-members/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-members/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/group-members/response-fields.adoc[]
+
+==== *그룹을 생성*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-create/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/group-create/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-create/http-response.adoc[]
+
+==== *그룹에 참가*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-register/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-register/http-response.adoc[]

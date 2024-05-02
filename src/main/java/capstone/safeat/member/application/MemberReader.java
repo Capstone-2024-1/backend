@@ -6,6 +6,7 @@ import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.member.exception.MemberException;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,9 @@ public class MemberReader {
 
   public Optional<Member> readBy(final OAuthMemberInfo oauthMemberInfo) {
     return memberRepository.findByOauthMemberId(oauthMemberInfo.oauthMemberId());
+  }
+
+  public List<Member> readMembers(final List<Long> memberIds) {
+    return memberRepository.findAllById(memberIds);
   }
 }

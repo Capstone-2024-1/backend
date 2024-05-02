@@ -1,6 +1,5 @@
 package capstone.safeat.member.application;
 
-import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.member.domain.Member;
 import java.util.List;

@@ -11,6 +11,7 @@ import capstone.safeat.member.domain.MemberRepository;
 import capstone.safeat.member.exception.MemberException;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import capstone.safeat.support.RepositoryTest;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -76,5 +77,18 @@ class MemberReaderTest extends RepositoryTest {
       assertThat(actual)
           .isEmpty();
     }
+  }
+
+  @Test
+  void 멤버들을_조회한다() {
+    final Member member1 = memberRepository.save(멤버_홍혁준_생성());
+    final Member member2 = memberRepository.save(멤버_홍혁준_생성());
+
+    final List<Long> memberIds = List.of(member1.getId(), member2.getId());
+    final List<Member> members = memberReader.readMembers(memberIds);
+
+    assertThat(members)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrder(member1, member2);
   }
 }

@@ -113,4 +113,21 @@ class GroupReaderTest extends RepositoryTest {
       groupReader.validateGroupContainMember(group, member);
     }
   }
+
+  @Test
+  void 그룹의_멤버들을_전부_반환한다() {
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+    final Member member1 = memberRepository.save(멤버_홍혁준_생성());
+    final Member member2 = memberRepository.save(멤버_홍혁준_생성());
+
+    final Group group = groupUpdater.saveNewGroupBy(member, "그룹_1");
+
+    groupMemberRepository.save(new GroupMember(group, member1.getId()));
+    groupMemberRepository.save(new GroupMember(group, member2.getId()));
+
+    final List<Long> memberIds = groupReader.readParticipateMemberIds(group);
+
+    assertThat(memberIds)
+        .containsExactlyInAnyOrder(member1.getId(), member2.getId(), member.getId());
+  }
 }

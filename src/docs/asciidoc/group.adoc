@@ -84,6 +84,12 @@ include::{snippets}/../../build/generated-snippets/group-expel/request-fields.ad
 
 include::{snippets}/../../build/generated-snippets/group-expel/http-response.adoc[]
 
-===== *Http Response Description*
+==== *그룹 삭제*
 
-include::{snippets}/../../build/generated-snippets/group-expel/response-fields.adoc[]
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-remove/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-remove/http-response.adoc[]

@@ -148,7 +148,11 @@ public class GroupApiTest extends ApiTest {
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + token))
         .andExpect(status().isOk())
-        .andDo(document("group-expel"));
+        .andDo(document("group-expel",
+            requestFields(
+                fieldWithPath("memberId").type(NUMBER).description("추방시킬 멤버의 Id")
+            )
+        ));
 
     verify(groupService).expel(groupId, memberId, targetMemberId);
   }

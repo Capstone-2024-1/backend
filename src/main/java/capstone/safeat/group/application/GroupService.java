@@ -1,10 +1,14 @@
 package capstone.safeat.group.application;
 
+import static capstone.safeat.group.exception.GroupExceptionType.EXECUTORS_IS_NOT_CREATOR;
+
 import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.dto.GroupPreviewResponse;
+import capstone.safeat.group.exception.GroupException;
 import capstone.safeat.member.application.MemberReader;
 import capstone.safeat.member.domain.Member;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,5 +72,18 @@ public class GroupService {
     final Member member = memberReader.readMember(memberId);
 
     groupUpdater.removeMember(group.getId(), member);
+  }
+
+  @Transactional
+  public void expel(final Long groupId, final Long executorMemberId, final Long targetMemberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member executorMember = memberReader.readMember(executorMemberId);
+
+    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
+      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
+    }
+
+    final Member targetMember = memberReader.readMember(targetMemberId);
+    groupUpdater.removeMember(groupId, targetMember);
   }
 }

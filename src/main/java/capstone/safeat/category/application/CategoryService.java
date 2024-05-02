@@ -2,6 +2,7 @@ package capstone.safeat.category.application;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Religion;
+import capstone.safeat.category.domain.Vegetarianism;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,9 @@ public class CategoryService {
 
   public List<Religion> findAllReligion() {
     return Arrays.stream(Religion.values()).toList();
+  }
+
+  public List<Vegetarianism> findAllVegetarianism() {
+    return Arrays.stream(Vegetarianism.values()).toList();
   }
 }

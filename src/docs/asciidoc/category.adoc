@@ -8,7 +8,7 @@ endif::[]
 :toclevels: 3
 :sectlinks:
 
-==== *Category 목록 반환 API*
+==== *카테고리 목록 반환 API*
 
 ===== *Http Request*
 
@@ -49,3 +49,17 @@ include::{snippets}/../../build/generated-snippets/vegetarian-tree/http-response
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/vegetarian-tree/response-fields.adoc[]
+
+==== *알레르기 목록 반환 API*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/allergy-tree/response-fields.adoc[]

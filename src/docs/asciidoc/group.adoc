@@ -49,3 +49,13 @@ include::{snippets}/../../build/generated-snippets/group-create/request-fields.a
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/group-create/http-response.adoc[]
+
+==== *그룹에 참가*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-participate/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-participate/http-response.adoc[]

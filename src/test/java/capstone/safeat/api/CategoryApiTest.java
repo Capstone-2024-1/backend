@@ -12,6 +12,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.subsecti
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import capstone.safeat.category.domain.Category;
+import capstone.safeat.category.domain.Religion;
+import capstone.safeat.category.domain.Vegetarianism;
 import capstone.safeat.support.ApiTest;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +37,46 @@ public class CategoryApiTest extends ApiTest {
                 fieldWithPath("[].id").type(NUMBER).description("카테고리의 id"),
                 fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
                 fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
+                fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
+                subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
+            )
+        ));
+  }
+
+  @Test
+  void 종교_종류를_반환한다() throws Exception {
+    final List<Religion> religions = Arrays.stream(Religion.values()).toList();
+
+    when(categoryService.findAllReligion()).thenReturn(religions);
+
+    mockMvc.perform(get("/categories/religions"))
+        .andExpect(status().isOk())
+        .andDo(document("religion-tree",
+            responseFields(
+                fieldWithPath("[]").type(ARRAY).description("종교 전체"),
+                fieldWithPath("[].id").type(NUMBER).description("종교의 id"),
+                fieldWithPath("[].englishName").type(STRING).description("종교의 영어이름"),
+                fieldWithPath("[].koreanName").type(STRING).description("종교의 한글이름"),
+                fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
+                subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
+            )
+        ));
+  }
+
+  @Test
+  void 채식주의_종류를_반환한다() throws Exception {
+    final List<Vegetarianism> vegetarian = Arrays.stream(Vegetarianism.values()).toList();
+
+    when(categoryService.findAllVegetarianism()).thenReturn(vegetarian);
+
+    mockMvc.perform(get("/categories/vegetarian"))
+        .andExpect(status().isOk())
+        .andDo(document("vegetarian-tree",
+            responseFields(
+                fieldWithPath("[]").type(ARRAY).description("채식주의 전체"),
+                fieldWithPath("[].id").type(NUMBER).description("채식주의의 id"),
+                fieldWithPath("[].englishName").type(STRING).description("채식주의의 영어이름"),
+                fieldWithPath("[].koreanName").type(STRING).description("채식주의의 한글이름"),
                 fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
                 subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
             )

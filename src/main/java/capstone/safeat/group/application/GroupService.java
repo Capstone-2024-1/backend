@@ -2,6 +2,8 @@ package capstone.safeat.group.application;
 
 import static capstone.safeat.group.exception.GroupExceptionType.EXECUTORS_IS_NOT_CREATOR;
 
+import capstone.safeat.category.application.CategoryReader;
+import capstone.safeat.category.domain.Category;
 import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.dto.GroupPreviewResponse;
 import capstone.safeat.group.exception.GroupException;
@@ -20,6 +22,7 @@ public class GroupService {
   private final MemberReader memberReader;
   private final GroupUpdater groupUpdater;
   private final GroupReader groupReader;
+  private final CategoryReader categoryReader;
 
   @Transactional
   public Long createGroup(final Long memberId, final String groupName) {
@@ -93,6 +96,19 @@ public class GroupService {
     validateCreator(group, executorMember);
 
     groupUpdater.removeGroup(groupId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Category> readGroupsCategories(final Long groupId, final Long memberId) {
+    final Group group = groupReader.readGroup(groupId);
+    final Member member = memberReader.readMember(memberId);
+
+    groupReader.validateGroupContainMember(group, member);
+
+    final List<Long> memberIds = groupReader.readRegisteredMemberIds(group);
+    return categoryReader.readAllCategoriesByMemberIds(memberIds).stream()
+        .distinct()
+        .toList();
   }
 
   private static void validateCreator(final Group group, final Member executorMember) {

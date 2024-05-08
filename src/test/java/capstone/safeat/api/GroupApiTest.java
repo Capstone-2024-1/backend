@@ -13,8 +13,10 @@ import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import capstone.safeat.category.domain.Category;
 import capstone.safeat.group.dto.GroupCreateRequest;
 import capstone.safeat.group.dto.GroupExpelRequest;
 import capstone.safeat.group.dto.GroupPreviewResponse;
@@ -24,6 +26,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 public class GroupApiTest extends ApiTest {
+
+  public static final String TOKEN = "TOKEN TOKEN ACCESS TOKEN";
 
   @Test
   void 자신이_속한_그룹_종류를_반환한다() throws Exception {
@@ -171,5 +175,30 @@ public class GroupApiTest extends ApiTest {
         .andDo(document("group-remove"));
 
     verify(groupService).removeGroup(groupId, memberId);
+  }
+
+  @Test
+  void 그룹원의_음식재료합을_반환한다() throws Exception {
+    final Long memberId = 10L;
+    final Long groupId = 100L;
+    final List<Category> categories = List.of(Category.MEATS);
+
+    setAccessToken(TOKEN, memberId);
+    when(groupService.readGroupsCategories(groupId, memberId)).thenReturn(categories);
+
+    mockMvc.perform(post("/groups/" + groupId + "/categories")
+            .header(AUTHORIZATION, "Bearer " + TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("group-categories",
+                responseFields(
+                    fieldWithPath("[]").type(ARRAY).description("카테고리 전체"),
+                    fieldWithPath("[].id").type(NUMBER).description("카테고리의 id"),
+                    fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
+                    fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
+                    fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
+                    subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
+                )
+            )
+        );
   }
 }

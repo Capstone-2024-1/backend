@@ -93,3 +93,17 @@ include::{snippets}/../../build/generated-snippets/group-remove/http-request.ado
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/group-remove/http-response.adoc[]
+
+==== *그룹원의 못먹는 식재료 반환*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/group-categories/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/group-categories/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/group-categories/response-fields.adoc[]

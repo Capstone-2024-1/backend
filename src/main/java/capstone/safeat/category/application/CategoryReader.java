@@ -21,4 +21,12 @@ public class CategoryReader {
         .map(MemberCategory::getCategory)
         .toList();
   }
+
+  public List<Category> readAllCategoriesByMemberIds(final List<Long> memberIds) {
+    return memberCategoryRepository.findAllByMemberIds(memberIds)
+        .stream()
+        .map(MemberCategory::getCategory)
+        .distinct()
+        .toList();
+  }
 }

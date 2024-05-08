@@ -3,7 +3,6 @@ package capstone.safeat.group.domain.repository;
 import capstone.safeat.group.domain.Group;
 import capstone.safeat.group.domain.GroupMember;
 import java.util.List;
-import org.hibernate.annotations.processing.SQL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

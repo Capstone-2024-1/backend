@@ -23,8 +23,9 @@ public class MemberUpdater {
     return memberRepository.save(Member.createOAuthMember(oauthMemberInfo));
   }
 
-  public void saveCategoryIntoMember(final Member member, final List<Category> leafCategories) {
-    final List<MemberCategory> memberCategories = leafCategories.stream()
+  public void saveCategoryIntoMember(final Member member, final List<Category> categories) {
+    final List<MemberCategory> memberCategories = categories.stream()
+        .filter(Category::isLeaf)
         .map(category -> new MemberCategory(member.getId(), category))
         .toList();
     memberCategoryRepository.saveAll(memberCategories);

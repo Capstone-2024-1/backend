@@ -1,9 +1,11 @@
 package capstone.safeat.member.domain;
 
+import static capstone.safeat.member.exception.MemberExceptionType.ALREADY_REGISTERED;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import capstone.safeat.base.BaseEntity;
+import capstone.safeat.member.exception.MemberException;
 import capstone.safeat.oauth.domain.OAuthMemberId;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import jakarta.persistence.Embedded;
@@ -54,7 +56,15 @@ public class Member extends BaseEntity {
     return new Member(null, oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
 
-  public void updateNickName(final String nickName) {
+  public void register(final String nickName) {
+    validateAlreadyRegistered();
+    isRegistered = true;
     this.nickName = nickName;
+  }
+
+  private void validateAlreadyRegistered() {
+    if (isRegistered()) {
+      throw new MemberException(ALREADY_REGISTERED);
+    }
   }
 }

@@ -14,7 +14,7 @@ public class MemberFixture {
         .profileImageUrl("프로필 이미지")
         .oauthMemberId(new OAuthMemberId("member1_id", GOOGLE))
         .build();
-    홍혁준.updateNickName("홍혁준");
+    홍혁준.register("홍혁준");
     return 홍혁준;
   }
 
@@ -24,7 +24,7 @@ public class MemberFixture {
         .profileImageUrl("프로필 이미지")
         .oauthMemberId(new OAuthMemberId("member1_id", GOOGLE))
         .build();
-    전영은.updateNickName("전영은");
+    전영은.register("전영은");
     return 전영은;
   }
 
@@ -34,7 +34,7 @@ public class MemberFixture {
         .profileImageUrl("프로필 이미지")
         .oauthMemberId(new OAuthMemberId("member1_id", GOOGLE))
         .build();
-    김동우.updateNickName("김동우");
+    김동우.register("김동우");
     return 김동우;
   }
 

@@ -12,7 +12,7 @@ public class MemberFixture {
         .profileImageUrl("프로필 이미지")
         .oauthMemberId(new OAuthMemberId("member1_id", GOOGLE))
         .build();
-    홍혁준.updateNickName("홍혁준");
+    홍혁준.register("홍혁준");
     return 홍혁준;
   }
 }

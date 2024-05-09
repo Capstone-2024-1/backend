@@ -7,10 +7,8 @@ import capstone.safeat.member.domain.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Group {
 
-  private static final String DEFAULT_GROUP_IMAGE_URL = "";
+  private static final String DEFAULT_GROUP_IMAGE_URL = "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/group_default_image.png";
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class GroupServiceTest extends ServiceTest {
 
+  private static final String DEFAULT_GROUP_IMAGE_URL = "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/group_default_image.png";
+
   @Autowired
   private GroupService groupService;
 
@@ -72,7 +74,8 @@ class GroupServiceTest extends ServiceTest {
   void 참여한_그룹_목록을_반환한다() {
     final Long createdGroupId = groupService.createGroup(creator.getId(), "그룹_1");
     final List<GroupPreviewResponse> expected = List.of(
-        new GroupPreviewResponse(createdGroupId, "그룹_1", "", 1, creator.getNickName())
+        new GroupPreviewResponse(createdGroupId, "그룹_1", DEFAULT_GROUP_IMAGE_URL, 1,
+            creator.getNickName())
     );
 
     final List<GroupPreviewResponse> groupPreviewResponses

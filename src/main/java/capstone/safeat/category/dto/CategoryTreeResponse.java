@@ -18,24 +18,25 @@ import lombok.ToString;
 @Getter
 @RequiredArgsConstructor
 @ToString
-public class CategoryResponse {
+public class CategoryTreeResponse {
 
   private final Long id;
   private final String englishName;
   private final String koreanName;
   private final Set<Long> flatChildIds;
-  private final List<CategoryResponse> childCategories;
+  private final List<CategoryTreeResponse> childCategories;
 
-  public static CategoryResponse fromWithEmptyChildren(final Category category) {
-    return new CategoryResponse(
+  public static CategoryTreeResponse fromWithEmptyChildren(final Category category) {
+    return new CategoryTreeResponse(
         category.getId(), category.getEnglishName(),
         category.getKoreanName(), new HashSet<>(), new ArrayList<>()
     );
   }
 
-  public static List<CategoryResponse> convertHierarchyWithAll(final List<Category> categories) {
-    final Map<Long, CategoryResponse> responseMap = categories.stream()
-        .collect(toMap(Category::getId, CategoryResponse::fromWithEmptyChildren));
+  public static List<CategoryTreeResponse> convertHierarchyWithAll(
+      final List<Category> categories) {
+    final Map<Long, CategoryTreeResponse> responseMap = categories.stream()
+        .collect(toMap(Category::getId, CategoryTreeResponse::fromWithEmptyChildren));
 
     addChildrenCategories(categories, responseMap);
     addFlatChildIds(responseMap.values().stream().toList());
@@ -46,7 +47,8 @@ public class CategoryResponse {
         .toList();
   }
 
-  public static List<CategoryResponse> convertHierarchyWithLeafs(final List<Category> categories) {
+  public static List<CategoryTreeResponse> convertHierarchyWithLeafs(
+      final List<Category> categories) {
     final List<Category> parentCategories = new ArrayList<>();
     for (final Category category : categories) {
       final List<Category> parents = category.getAllParent();
@@ -61,16 +63,16 @@ public class CategoryResponse {
     return convertHierarchyWithAll(categoriesIncludeParent);
   }
 
-  private static void addFlatChildIds(final List<CategoryResponse> categoryResponses) {
-    for (final CategoryResponse categoryResponse : categoryResponses) {
-      final List<Long> childIds = getFlattenChildIds(categoryResponse);
-      categoryResponse.flatChildIds.addAll(childIds);
+  private static void addFlatChildIds(final List<CategoryTreeResponse> categoryTreeRespons) {
+    for (final CategoryTreeResponse categoryTreeResponse : categoryTreeRespons) {
+      final List<Long> childIds = getFlattenChildIds(categoryTreeResponse);
+      categoryTreeResponse.flatChildIds.addAll(childIds);
     }
   }
 
-  private static List<Long> getFlattenChildIds(final CategoryResponse categoryResponse) {
+  private static List<Long> getFlattenChildIds(final CategoryTreeResponse categoryTreeResponse) {
     final List<Long> childIds = new ArrayList<>();
-    for (final CategoryResponse childCategory : categoryResponse.getChildCategories()) {
+    for (final CategoryTreeResponse childCategory : categoryTreeResponse.getChildCategories()) {
       childIds.add(childCategory.getId());
       childIds.addAll(getFlattenChildIds(childCategory));
     }
@@ -78,27 +80,29 @@ public class CategoryResponse {
   }
 
   private static void addChildrenCategories(
-      final List<Category> categories, final Map<Long, CategoryResponse> responseMap
+      final List<Category> categories, final Map<Long, CategoryTreeResponse> responseMap
   ) {
     for (final Category category : categories) {
       final Optional<Category> parent = category.getParent();
       if (parent.isPresent()) {
         final Long parentId = parent.get().getId();
-        final CategoryResponse categoryResponse = responseMap.get(category.getId());
+        final CategoryTreeResponse categoryTreeResponse = responseMap.get(category.getId());
         Optional.ofNullable(responseMap.get(parentId))
-            .ifPresent(parentResponse -> parentResponse.getChildCategories().add(categoryResponse));
+            .ifPresent(parentResponse -> parentResponse.getChildCategories().add(
+                categoryTreeResponse));
       }
     }
   }
 
-  public static Set<Long> extractAllCategoryIds(final List<CategoryResponse> categoryResponses) {
-    final Set<Long> flatChildIds = categoryResponses.stream()
-        .map(CategoryResponse::getFlatChildIds)
+  public static Set<Long> extractAllCategoryIds(
+      final List<CategoryTreeResponse> categoryTreeRespons) {
+    final Set<Long> flatChildIds = categoryTreeRespons.stream()
+        .map(CategoryTreeResponse::getFlatChildIds)
         .flatMap(Set::stream)
         .collect(Collectors.toSet());
 
-    final List<Long> categoryIds = categoryResponses.stream()
-        .map(CategoryResponse::getId)
+    final List<Long> categoryIds = categoryTreeRespons.stream()
+        .map(CategoryTreeResponse::getId)
         .toList();
 
     flatChildIds.addAll(categoryIds);

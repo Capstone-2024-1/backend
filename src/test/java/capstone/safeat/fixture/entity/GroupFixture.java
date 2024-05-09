@@ -1,10 +1,7 @@
 package capstone.safeat.fixture.entity;
 
-import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
-
 import capstone.safeat.group.domain.Group;
 import capstone.safeat.member.domain.Member;
-import capstone.safeat.member.domain.MemberRepository;
 
 public class GroupFixture {
 

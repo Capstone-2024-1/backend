@@ -17,7 +17,7 @@ public class VegetarianismResponse {
   private final String englishName;
   private final String koreanName;
   private final Set<Long> flatChildIds;
-  private final List<CategoryResponse> childCategories;
+  private final List<CategoryTreeResponse> childCategories;
 
   public static List<VegetarianismResponse> convertHierarchy(
       final List<Vegetarianism> vegetarians
@@ -30,15 +30,15 @@ public class VegetarianismResponse {
   private static VegetarianismResponse convertHierarchy(final Vegetarianism vegetarianism) {
     final List<Category> categories = vegetarianism.getChildren();
 
-    final List<CategoryResponse> categoryResponses = CategoryResponse
+    final List<CategoryTreeResponse> categoryTreeRespons = CategoryTreeResponse
         .convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = CategoryResponse.extractAllCategoryIds(categoryResponses);
+    final Set<Long> flatChildIds = CategoryTreeResponse.extractAllCategoryIds(categoryTreeRespons);
 
     return new VegetarianismResponse(
         vegetarianism.getId(), vegetarianism.getEnglishName(), vegetarianism.getKoreanName(),
         flatChildIds,
-        categoryResponses
+        categoryTreeRespons
     );
   }
 }

@@ -25,6 +25,19 @@ class MemberReaderTest extends ServiceTest {
   @Autowired
   private MemberRepository memberRepository;
 
+  @Test
+  void 멤버들을_조회한다() {
+    final Member member1 = memberRepository.save(멤버_홍혁준_생성());
+    final Member member2 = memberRepository.save(멤버_홍혁준_생성());
+
+    final List<Long> memberIds = List.of(member1.getId(), member2.getId());
+    final List<Member> members = memberReader.readMembers(memberIds);
+
+    assertThat(members)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrder(member1, member2);
+  }
+
   @Nested
   class id로_멤버를_조회한다 {
 
@@ -77,18 +90,5 @@ class MemberReaderTest extends ServiceTest {
       assertThat(actual)
           .isEmpty();
     }
-  }
-
-  @Test
-  void 멤버들을_조회한다() {
-    final Member member1 = memberRepository.save(멤버_홍혁준_생성());
-    final Member member2 = memberRepository.save(멤버_홍혁준_생성());
-
-    final List<Long> memberIds = List.of(member1.getId(), member2.getId());
-    final List<Member> members = memberReader.readMembers(memberIds);
-
-    assertThat(members)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsExactlyInAnyOrder(member1, member2);
   }
 }

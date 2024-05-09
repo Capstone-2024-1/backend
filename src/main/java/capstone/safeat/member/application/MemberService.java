@@ -18,6 +18,12 @@ public class MemberService {
   private final MemberReader memberReader;
   private final MemberUpdater memberUpdater;
 
+  private static void validateMember(final Long loginMemberId, final Member member) {
+    if (!Objects.equals(member.getId(), loginMemberId)) {
+      throw new MemberException(MEMBER_FORBIDDEN);
+    }
+  }
+
   @Transactional
   public void addCategoryIntoMember(final Long memberId, final List<Long> categoryIds) {
     final Member member = memberReader.readMember(memberId);
@@ -43,12 +49,6 @@ public class MemberService {
     final Member member = memberReader.readMember(memberId);
     validateMember(loginMemberId, member);
     member.updateNickName(nickName);
-  }
-
-  private static void validateMember(final Long loginMemberId, final Member member) {
-    if (!Objects.equals(member.getId(), loginMemberId)) {
-      throw new MemberException(MEMBER_FORBIDDEN);
-    }
   }
 
   private void addCategory(final List<Long> categoryIds, final Member member) {

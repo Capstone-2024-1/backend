@@ -26,13 +26,13 @@ class AllergyResponseTest {
         new AllergyResponse(MILK_ALLERGY.getId(), MILK_ALLERGY.getEnglishName(),
             MILK_ALLERGY.getKoreanName(), Set.of(9L, 79L, 80L, 81L, 82L),
             List.of(
-                new CategoryResponse(9L, DAIRIES.getEnglishName(), DAIRIES.getKoreanName(),
+                new CategoryTreeResponse(9L, DAIRIES.getEnglishName(), DAIRIES.getKoreanName(),
                     Set.of(79L, 80L, 81L, 82L),
                     List.of(
-                        CategoryResponse.fromWithEmptyChildren(MILK),
-                        CategoryResponse.fromWithEmptyChildren(CHEESE),
-                        CategoryResponse.fromWithEmptyChildren(BUTTER),
-                        CategoryResponse.fromWithEmptyChildren(OTHER_DAIRY_PRODUCTS)
+                        CategoryTreeResponse.fromWithEmptyChildren(MILK),
+                        CategoryTreeResponse.fromWithEmptyChildren(CHEESE),
+                        CategoryTreeResponse.fromWithEmptyChildren(BUTTER),
+                        CategoryTreeResponse.fromWithEmptyChildren(OTHER_DAIRY_PRODUCTS)
                     )
                 )
             )
@@ -40,9 +40,10 @@ class AllergyResponseTest {
         new AllergyResponse(BEAN_ALLERGY.getId(), BEAN_ALLERGY.getEnglishName(),
             BEAN_ALLERGY.getKoreanName(), Set.of(41L, 46L),
             List.of(
-                new CategoryResponse(GRAIN.getId(), GRAIN.getEnglishName(), GRAIN.getKoreanName(),
+                new CategoryTreeResponse(GRAIN.getId(), GRAIN.getEnglishName(),
+                    GRAIN.getKoreanName(),
                     Set.of(BEANS.getId()),
-                    List.of(CategoryResponse.fromWithEmptyChildren(BEANS))
+                    List.of(CategoryTreeResponse.fromWithEmptyChildren(BEANS))
                 )
             )
         )

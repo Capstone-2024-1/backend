@@ -103,15 +103,14 @@ public class MemberApiTest extends ApiTest {
 
   @Test
   void 멤버_닉네임_변경() throws Exception {
-    final MemberNickNameEditRequest nickNameEditRequest
-        = new MemberNickNameEditRequest("수정할 닉네임");
+    final MemberNickNameEditRequest nickNameEditRequest = new MemberNickNameEditRequest("수정할 닉네임");
 
     final String requestBody = objectMapper.writeValueAsString(nickNameEditRequest);
     final Long memberId = 10L;
 
     setAccessToken(ACCESS_TOKEN, memberId);
 
-    mockMvc.perform(patch("/members/" + memberId + "/name/edit")
+    mockMvc.perform(patch("/members/my/name/edit")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
@@ -124,6 +123,6 @@ public class MemberApiTest extends ApiTest {
                 fieldWithPath("nickName").type(STRING).description("수정할 멤버의 닉네임")
             )
         ));
-    verify(memberService).editMemberNickName(memberId, memberId, nickNameEditRequest.nickName());
+    verify(memberService).editMemberNickName(memberId, nickNameEditRequest.nickName());
   }
 }

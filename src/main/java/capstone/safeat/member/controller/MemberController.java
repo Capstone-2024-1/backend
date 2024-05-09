@@ -48,12 +48,11 @@ public class MemberController {
     return ResponseEntity.ok(response);
   }
 
-  @PatchMapping("/{memberId}/name/edit")
+  @PatchMapping("/my/name/edit")
   public ResponseEntity<Void> editNickName(
-      @PathVariable final Long memberId, @RequestBody final MemberNickNameEditRequest request,
-      final JwtMemberId jwtMemberId
+      @RequestBody final MemberNickNameEditRequest request, final JwtMemberId jwtMemberId
   ) {
-    memberService.editMemberNickName(jwtMemberId.memberId(), memberId, request.nickName());
+    memberService.editMemberNickName(jwtMemberId.memberId(), request.nickName());
     return ResponseEntity.ok().build();
   }
 }

@@ -181,8 +181,8 @@ class GroupServiceTest extends ServiceTest {
   @Test
   void 멤버들의_카테고리_목록을_반환한다() {
     //given
-    final List<Category> creatorCategories = List.of(Category.APPLE, Category.NUTS);
-    final List<Category> memberCategories = List.of(Category.WILD_CHIVE, Category.NUTS);
+    final List<Category> creatorCategories = List.of(Category.APPLE, Category.KIWI);
+    final List<Category> memberCategories = List.of(Category.WILD_CHIVE, Category.KIWI);
     final List<Category> expected = Stream.of(creatorCategories, memberCategories)
         .flatMap(List::stream)
         .distinct()

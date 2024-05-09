@@ -2,7 +2,6 @@ package capstone.safeat.category.dto;
 
 import capstone.safeat.category.domain.Allergy;
 import capstone.safeat.category.domain.Category;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,13 +29,10 @@ public class AllergyResponse {
   private static AllergyResponse convertHierarchy(final Allergy allergy) {
     final List<Category> categories = allergy.getChildren();
 
-    final List<CategoryResponse> categoryResponses = CategoryResponse
-        .convertHierarchy(categories);
+    final List<CategoryResponse> categoryResponses
+        = CategoryResponse.convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = categoryResponses.stream()
-        .map(AllergyResponse::getFlattenChildIds)
-        .flatMap(List::stream)
-        .collect(Collectors.toSet());
+    final Set<Long> flatChildIds = extractChildIds(categoryResponses);
 
     return new AllergyResponse(
         allergy.getId(), allergy.getEnglishName(), allergy.getKoreanName(),
@@ -45,12 +41,18 @@ public class AllergyResponse {
     );
   }
 
-  private static List<Long> getFlattenChildIds(final CategoryResponse categoryResponse) {
-    final List<Long> childIds = new ArrayList<>();
-    for (final CategoryResponse childCategory : categoryResponse.getChildCategories()) {
-      childIds.add(childCategory.getId());
-      childIds.addAll(getFlattenChildIds(childCategory));
-    }
-    return childIds;
+  private static Set<Long> extractChildIds(final List<CategoryResponse> categoryResponses) {
+    final Set<Long> flatChildIds = categoryResponses.stream()
+        .map(CategoryResponse::getFlatChildIds)
+        .flatMap(Set::stream)
+        .collect(Collectors.toSet());
+
+    final List<Long> categoryIds = categoryResponses.stream()
+        .map(CategoryResponse::getId)
+        .toList();
+
+    flatChildIds.addAll(categoryIds);
+
+    return flatChildIds;
   }
 }

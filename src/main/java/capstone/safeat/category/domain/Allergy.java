@@ -19,26 +19,26 @@ import lombok.Getter;
 public enum Allergy {
 
   CRUSTACEANS_ALLERGY(400L, "갑각류 알레르기", "Crustaceans Allergy",
-      concatList(List.of(CRUSTACEANS), CRUSTACEANS.getAllChildren())
+      CRUSTACEANS.getAllChildren()
   ),
   NUTS_ALLERGY(401L, "견과 알레르기", "Nuts Allergy",
-      concatList(List.of(NUTS), NUTS.getAllChildren())
+      NUTS.getAllChildren()
   ),
   EGGS_ALLERGY(402L, "계란 알레르기", "Eggs Allergy", List.of(EGGS)),
   GLUTEN_ALLERGY(403L, "글루텐 알레르기", "Gluten Allergy",
-      List.of(WHEAT, BARLEY, GRAIN)
+      List.of(WHEAT, BARLEY)
   ),
   FISH_ALLERGY(404L, "생선 알레르기", "Fish Allergy",
-      concatList(List.of(FISH), FISH.getAllChildren())
+      FISH.getAllChildren()
   ),
   MILK_ALLERGY(405L, "우유 알레르기", "Milk Allergy",
-      concatList(List.of(DAIRIES), DAIRIES.getAllChildren())
+      DAIRIES.getAllChildren()
   ),
   SHELLFISH_ALLERGY(406L, "조개 알레르기", "Shellfish Allergy",
-      concatList(List.of(SHELLFISH), SHELLFISH.getAllChildren())
+      SHELLFISH.getAllChildren()
   ),
   BEAN_ALLERGY(407L, "콩 알레르기", "Bean Allergy",
-      concatList(List.of(BEANS, GRAIN))
+      List.of(BEANS)
   );
 
   private final Long id;
@@ -52,20 +52,5 @@ public enum Allergy {
     this.koreanName = koreanName;
     this.englishName = englishName;
     this.children = children;
-  }
-
-  @SafeVarargs
-  private static List<Category> concatList(final List<Category>... categoryLists) {
-    return Arrays.stream(categoryLists)
-        .flatMap(List::stream)
-        .toList();
-  }
-
-  private static List<Category> removeList(
-      final List<Category> target, final List<Category> removes
-  ) {
-    return target.stream()
-        .filter(item -> !removes.contains(item))
-        .toList();
   }
 }

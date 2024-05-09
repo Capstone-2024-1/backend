@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -24,14 +26,14 @@ public class CategoryResponse {
   private final Set<Long> flatChildIds;
   private final List<CategoryResponse> childCategories;
 
-  private static CategoryResponse fromWithEmptyChildren(final Category category) {
+  public static CategoryResponse fromWithEmptyChildren(final Category category) {
     return new CategoryResponse(
         category.getId(), category.getEnglishName(),
         category.getKoreanName(), new HashSet<>(), new ArrayList<>()
     );
   }
 
-  public static List<CategoryResponse> convertHierarchy(final List<Category> categories) {
+  public static List<CategoryResponse> convertHierarchyWithAll(final List<Category> categories) {
     final Map<Long, CategoryResponse> responseMap = categories.stream()
         .collect(toMap(Category::getId, CategoryResponse::fromWithEmptyChildren));
 
@@ -42,6 +44,21 @@ public class CategoryResponse {
         .filter(Category::isRootCategory)
         .map(category -> responseMap.get(category.getId()))
         .toList();
+  }
+
+  public static List<CategoryResponse> convertHierarchyWithLeafs(final List<Category> categories) {
+    final List<Category> parentCategories = new ArrayList<>();
+    for (final Category category : categories) {
+      final List<Category> parents = category.getAllParent();
+      parentCategories.addAll(parents);
+    }
+
+    final List<Category> categoriesIncludeParent = Stream.of(parentCategories, categories)
+        .flatMap(List::stream)
+        .distinct()
+        .toList();
+
+    return convertHierarchyWithAll(categoriesIncludeParent);
   }
 
   private static void addFlatChildIds(final List<CategoryResponse> categoryResponses) {
@@ -72,5 +89,20 @@ public class CategoryResponse {
             .ifPresent(parentResponse -> parentResponse.getChildCategories().add(categoryResponse));
       }
     }
+  }
+
+  public static Set<Long> extractAllCategoryIds(final List<CategoryResponse> categoryResponses) {
+    final Set<Long> flatChildIds = categoryResponses.stream()
+        .map(CategoryResponse::getFlatChildIds)
+        .flatMap(Set::stream)
+        .collect(Collectors.toSet());
+
+    final List<Long> categoryIds = categoryResponses.stream()
+        .map(CategoryResponse::getId)
+        .toList();
+
+    flatChildIds.addAll(categoryIds);
+
+    return flatChildIds;
   }
 }

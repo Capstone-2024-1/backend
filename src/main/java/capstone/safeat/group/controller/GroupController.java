@@ -1,6 +1,5 @@
 package capstone.safeat.group.controller;
 
-import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.dto.CategoryResponse;
 import capstone.safeat.group.application.GroupService;
 import capstone.safeat.group.dto.GroupCreateRequest;
@@ -88,7 +87,7 @@ public class GroupController {
       @PathVariable final Long groupId, final JwtMemberId jwtMemberId
   ) {
     final var categories = groupService.readGroupsCategories(groupId, jwtMemberId.memberId());
-    final List<CategoryResponse> responses = CategoryResponse.convertHierarchy(categories);
+    final List<CategoryResponse> responses = CategoryResponse.convertHierarchyWithLeafs(categories);
     return ResponseEntity.ok(responses);
   }
 }

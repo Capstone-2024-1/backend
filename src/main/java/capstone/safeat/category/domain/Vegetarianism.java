@@ -4,11 +4,12 @@ import static capstone.safeat.category.domain.Category.CRUSTACEANS;
 import static capstone.safeat.category.domain.Category.DAIRIES;
 import static capstone.safeat.category.domain.Category.EGGS;
 import static capstone.safeat.category.domain.Category.FISH;
-import static capstone.safeat.category.domain.Category.FRUITS;
-import static capstone.safeat.category.domain.Category.HONEY;
+import static capstone.safeat.category.domain.Category.FRUITING_VEGETABLES;
+import static capstone.safeat.category.domain.Category.GRAIN;
+import static capstone.safeat.category.domain.Category.HERBAGE_CROP;
 import static capstone.safeat.category.domain.Category.MEATS;
-import static capstone.safeat.category.domain.Category.NUTS;
 import static capstone.safeat.category.domain.Category.POULTRY;
+import static capstone.safeat.category.domain.Category.ROOT_VEGETABLES;
 import static capstone.safeat.category.domain.Category.SEASONINGS;
 import static capstone.safeat.category.domain.Category.SEA_FOODS;
 import static capstone.safeat.category.domain.Category.SHELLFISH;
@@ -21,36 +22,55 @@ import lombok.Getter;
 public enum Vegetarianism {
 
   FRUITARIANISM(300L, "프루테리언", "Fruitarianism",
-      removeList(
-          Arrays.stream(Category.values()).toList(),
-          concatList(List.of(FRUITS, NUTS), FRUITS.getAllChildren(), NUTS.getAllChildren())
+      concatList(
+          ROOT_VEGETABLES.getAllChildren(), FRUITING_VEGETABLES.getAllChildren(),
+          HERBAGE_CROP.getAllChildren(), GRAIN.getAllChildren(), MEATS.getAllLeafChildren(),
+          POULTRY.getAllLeafChildren(), SEA_FOODS.getAllLeafChildren(), FISH.getAllLeafChildren(),
+          CRUSTACEANS.getAllLeafChildren(), SHELLFISH.getAllLeafChildren(),
+          SEASONINGS.getAllLeafChildren(), DAIRIES.getAllLeafChildren(), List.of(EGGS)
       )
   ),
   VEGAN(301L, "비건", "VEGAN",
       concatList(
-          List.of(MEATS, EGGS, SEA_FOODS, DAIRIES, SEASONINGS, HONEY),
-          MEATS.getAllChildren(), POULTRY.getAllChildren(),
-          FISH.getAllChildren(), SEA_FOODS.getAllChildren(), SHELLFISH.getAllChildren(),
-          CRUSTACEANS.getAllChildren(), DAIRIES.getAllChildren()
+          MEATS.getAllLeafChildren(),
+          POULTRY.getAllLeafChildren(), SEA_FOODS.getAllLeafChildren(), FISH.getAllLeafChildren(),
+          CRUSTACEANS.getAllLeafChildren(), SHELLFISH.getAllLeafChildren(),
+          SEASONINGS.getAllLeafChildren(), DAIRIES.getAllLeafChildren(), List.of(EGGS)
       )
   ),
   LACTO(302L, "락토", "LACTO",
-      removeList(
-          VEGAN.children,
-          concatList(List.of(DAIRIES, SEASONINGS, HONEY), DAIRIES.getAllChildren())
+      concatList(
+          MEATS.getAllLeafChildren(),
+          POULTRY.getAllLeafChildren(), SEA_FOODS.getAllLeafChildren(), FISH.getAllLeafChildren(),
+          CRUSTACEANS.getAllLeafChildren(), SHELLFISH.getAllLeafChildren(),
+          SEASONINGS.getAllLeafChildren(), List.of(EGGS)
       )
   ),
   OVO(303L, "오보", "OVO",
-      removeList(VEGAN.children, List.of(EGGS))
+      concatList(
+          MEATS.getAllLeafChildren(),
+          POULTRY.getAllLeafChildren(), SEA_FOODS.getAllLeafChildren(), FISH.getAllLeafChildren(),
+          CRUSTACEANS.getAllLeafChildren(), SHELLFISH.getAllLeafChildren(),
+          SEASONINGS.getAllLeafChildren(), DAIRIES.getAllLeafChildren()
+      )
   ),
   LACTO_OVO(304L, "락토오보", "LACTO_OVO",
-      removeList(LACTO.children, List.of(EGGS))
+      concatList(
+          MEATS.getAllLeafChildren(),
+          POULTRY.getAllLeafChildren(), SEA_FOODS.getAllLeafChildren(), FISH.getAllLeafChildren(),
+          CRUSTACEANS.getAllLeafChildren(), SHELLFISH.getAllLeafChildren(),
+          SEASONINGS.getAllLeafChildren()
+      )
   ),
   POLO(305L, "폴로", "POLO",
-      removeList(concatList(List.of(MEATS), MEATS.getAllChildren()), List.of(POULTRY))
+      concatList(
+          MEATS.getAllLeafChildren()
+      )
   ),
   PESCO(306L, "페스코", "PESCO",
-      concatList(List.of(MEATS), MEATS.getAllChildren(), POULTRY.getAllChildren())
+      concatList(
+          MEATS.getAllLeafChildren(), POULTRY.getAllLeafChildren()
+      )
   );
 
   private final Long id;

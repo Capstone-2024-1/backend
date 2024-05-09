@@ -77,3 +77,17 @@ include::{snippets}/../../build/generated-snippets/member-categories/http-respon
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/member-categories/response-fields.adoc[]
+
+==== *Member 카테고리 변경*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/member-set-categories/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/member-set-categories/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-set-categories/http-response.adoc[]

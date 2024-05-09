@@ -1,5 +1,6 @@
 package capstone.safeat.member.application;
 
+import static capstone.safeat.category.domain.Category.APPLE;
 import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -30,7 +31,7 @@ class MemberUpdaterTest extends ServiceTest {
   void 멤버에_카테고리를_추가한다() {
     //given
     final Member member = memberRepository.save(멤버_홍혁준_생성());
-    final List<Category> expected = List.of(Category.APPLE, Category.MANGO);
+    final List<Category> expected = List.of(APPLE, Category.MANGO);
 
     //when
     memberUpdater.saveCategoryIntoMember(member, expected);
@@ -54,5 +55,26 @@ class MemberUpdaterTest extends ServiceTest {
     assertThat(actual)
         .usingRecursiveComparison()
         .isEqualTo(expected);
+  }
+
+  @Test
+  void 멤버가_새롭게_카테고리를_업데이트한다() {
+    //given
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+    final List<Category> oldCategories = List.of(APPLE, Category.MANGO);
+
+    memberUpdater.saveCategoryIntoMember(member, oldCategories);
+
+    final List<Category> newCategories = List.of(APPLE, Category.KIWI);
+
+    //when
+    memberUpdater.setMemberCategories(member, newCategories);
+
+    //then
+    final List<Category> categories = categoryReader.readCategoriesByMemberId(member.getId());
+
+    assertThat(categories)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrderElementsOf(newCategories);
   }
 }

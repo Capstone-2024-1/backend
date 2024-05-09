@@ -5,6 +5,7 @@ import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
 import capstone.safeat.member.dto.MemberCategoryIdsResponse;
+import capstone.safeat.member.dto.MemberCategoryRequest;
 import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
@@ -71,5 +72,13 @@ public class MemberController {
     final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
     final List<CategoryResponse> response = CategoryResponse.from(categories);
     return ResponseEntity.ok(response);
+  }
+
+  @PutMapping("/my/categories")
+  public ResponseEntity<Void> updateCategories(
+      final JwtMemberId jwtMemberId, @RequestBody final MemberCategoryRequest memberCategoryRequest
+  ) {
+    memberService.setMemberCategories(jwtMemberId.memberId(), memberCategoryRequest.categoryIds());
+    return ResponseEntity.ok().build();
   }
 }

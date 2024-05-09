@@ -3,15 +3,16 @@ package capstone.safeat.member.controller;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberCategoryIdsResponse;
 import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,12 +49,18 @@ public class MemberController {
     return ResponseEntity.ok(response);
   }
 
-  @PatchMapping("/{memberId}/name/edit")
+  @PutMapping("/my/name")
   public ResponseEntity<Void> editNickName(
-      @PathVariable final Long memberId, @RequestBody final MemberNickNameEditRequest request,
-      final JwtMemberId jwtMemberId
+      @RequestBody final MemberNickNameEditRequest request, final JwtMemberId jwtMemberId
   ) {
-    memberService.editMemberNickName(jwtMemberId.memberId(), memberId, request.nickName());
+    memberService.editMemberNickName(jwtMemberId.memberId(), request.nickName());
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/my/categories")
+  public ResponseEntity<MemberCategoryIdsResponse> editCategories(final JwtMemberId jwtMemberId) {
+    final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
+    final MemberCategoryIdsResponse response = MemberCategoryIdsResponse.from(categories);
+    return ResponseEntity.ok(response);
   }
 }

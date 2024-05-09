@@ -36,7 +36,7 @@ include::{snippets}/../../build/generated-snippets/member-register/request-field
 
 include::{snippets}/../../build/generated-snippets/member-register/http-response.adoc[]
 
-==== *member 닉네임 변경*
+==== *Member 닉네임 변경*
 
 ===== *Http Request*
 
@@ -49,3 +49,17 @@ include::{snippets}/../../build/generated-snippets/member-name-edit/request-fiel
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/member-name-edit/http-response.adoc[]
+
+==== *Member 자신의 못 먹는 재료 목록*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/member-categories/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-categories/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/member-categories/response-fields.adoc[]

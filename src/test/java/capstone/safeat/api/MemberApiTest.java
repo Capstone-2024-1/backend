@@ -1,5 +1,7 @@
 package capstone.safeat.api;
 
+import static capstone.safeat.category.domain.Category.APPLE;
+import static capstone.safeat.category.domain.Category.FRUITS;
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.mockito.Mockito.doNothing;
@@ -9,8 +11,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -103,15 +105,14 @@ public class MemberApiTest extends ApiTest {
 
   @Test
   void 멤버_닉네임_변경() throws Exception {
-    final MemberNickNameEditRequest nickNameEditRequest
-        = new MemberNickNameEditRequest("수정할 닉네임");
+    final MemberNickNameEditRequest nickNameEditRequest = new MemberNickNameEditRequest("수정할 닉네임");
 
     final String requestBody = objectMapper.writeValueAsString(nickNameEditRequest);
     final Long memberId = 10L;
 
     setAccessToken(ACCESS_TOKEN, memberId);
 
-    mockMvc.perform(patch("/members/" + memberId + "/name/edit")
+    mockMvc.perform(put("/members/my/name")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
@@ -124,6 +125,24 @@ public class MemberApiTest extends ApiTest {
                 fieldWithPath("nickName").type(STRING).description("수정할 멤버의 닉네임")
             )
         ));
-    verify(memberService).editMemberNickName(memberId, memberId, nickNameEditRequest.nickName());
+    verify(memberService).editMemberNickName(memberId, nickNameEditRequest.nickName());
+  }
+
+  @Test
+  void 멤버_카테고리_목록_반환() throws Exception {
+    final Long memberId = 10L;
+
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    when(memberService.getMemberCategories(memberId)).thenReturn(List.of(APPLE, FRUITS));
+
+    mockMvc.perform(get("/members/my/categories")
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("member-categories",
+            responseFields(
+                fieldWithPath("categoryIds").type(ARRAY).description("멤버의 카테고리 Id 목록들")
+            )
+        ));
   }
 }

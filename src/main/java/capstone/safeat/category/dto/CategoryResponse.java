@@ -1,0 +1,20 @@
+package capstone.safeat.category.dto;
+
+import capstone.safeat.category.domain.Category;
+import java.util.List;
+
+public record CategoryResponse(Long id, String englishName, String koreanName, String imageUrl) {
+
+  public static List<CategoryResponse> from(final List<Category> categories) {
+    return categories.stream()
+        .map(CategoryResponse::from)
+        .toList();
+  }
+
+  //TODO: ImageUrl은 추후 변경
+  public static CategoryResponse from(final Category category) {
+    return new CategoryResponse(
+        category.getId(), category.getEnglishName(), category.getKoreanName(), ""
+    );
+  }
+}

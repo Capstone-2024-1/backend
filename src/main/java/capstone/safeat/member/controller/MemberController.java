@@ -3,9 +3,12 @@ package capstone.safeat.member.controller;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +37,12 @@ public class MemberController {
         jwtMemberId.memberId(), registerRequest.categoryIds(), registerRequest.nickName()
     );
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/{memberId}")
+  public ResponseEntity<MemberResponse> getProfile(@PathVariable final Long memberId) {
+    final var member = memberService.findMember(memberId);
+    final MemberResponse response = MemberResponse.from(member);
+    return ResponseEntity.ok(response);
   }
 }

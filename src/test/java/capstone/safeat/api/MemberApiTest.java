@@ -4,16 +4,21 @@ import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import capstone.safeat.fixture.docs.MemberFixture;
+import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
 import capstone.safeat.member.dto.RegisterRequest;
 import capstone.safeat.support.ApiTest;
@@ -75,5 +80,22 @@ public class MemberApiTest extends ApiTest {
             )
         ));
     verify(memberService).register(memberId, categoryIds, registerRequest.nickName());
+  }
+
+  @Test
+  void 멤버_프로필_조회() throws Exception {
+    final Long memberId = 10L;
+    final Member member = MemberFixture.멤버_홍혁준_생성();
+
+    when(memberService.findMember(memberId)).thenReturn(member);
+
+    mockMvc.perform(get("/members/" + memberId))
+        .andExpect(status().isOk())
+        .andDo(document("member-profile",
+            responseFields(
+                fieldWithPath("nickName").type(STRING).description("멤버의 닉네임"),
+                fieldWithPath("profileImageUrl").type(STRING).description("멤버의 profileUrl")
+            )
+        ));
   }
 }

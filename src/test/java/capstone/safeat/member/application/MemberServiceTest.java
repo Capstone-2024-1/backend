@@ -78,4 +78,18 @@ class MemberServiceTest extends ServiceTest {
             .isTrue()
     );
   }
+
+  @Test
+  void 멤버를_조회한다() {
+    //given
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+
+    //when
+    final Member foundMember = memberService.findMember(member.getId());
+
+    //then
+    assertThat(foundMember)
+        .usingRecursiveComparison()
+        .isEqualTo(member);
+  }
 }

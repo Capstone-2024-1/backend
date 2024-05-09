@@ -1,7 +1,7 @@
 package capstone.safeat.filter.external;
 
 import capstone.safeat.filter.application.CategoryEstimater;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.domain.EstimatedFood.EstimatedFoodBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -14,7 +14,7 @@ public class FaissCategoryEstimater implements CategoryEstimater {
   private final FaissApiClient faissApiClient;
 
   @Override
-  public EstimatedFood estimateFood(final String foodName) {
+  public EstimatedFoodBuilder estimateFood(final String foodName) {
     return faissApiClient.fetchMemberProfile(creatParams(foodName))
         .toEstimateCategory();
   }

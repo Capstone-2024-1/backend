@@ -1,8 +1,10 @@
 package capstone.safeat.category.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import lombok.Getter;
 
 @Getter
@@ -133,6 +135,17 @@ public enum Category {
     return Arrays.stream(Category.values())
         .filter(c -> c.parent == this)
         .toList();
+  }
+
+  public List<Category> getAllParent() {
+    final List<Category> parents = new ArrayList<>();
+    Optional<Category> parent = getParent();
+    while (parent.isPresent()) {
+      final Category parentCategory = parent.get();
+      parents.add(parentCategory);
+      parent = parentCategory.getParent();
+    }
+    return parents;
   }
 
   public boolean isLeaf() {

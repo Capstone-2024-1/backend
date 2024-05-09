@@ -57,8 +57,8 @@ public class MemberController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/my/categories")
-  public ResponseEntity<MemberCategoryIdsResponse> editCategories(final JwtMemberId jwtMemberId) {
+  @GetMapping("/my/categories/ids")
+  public ResponseEntity<MemberCategoryIdsResponse> getCategoryIds(final JwtMemberId jwtMemberId) {
     final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
     final MemberCategoryIdsResponse response = MemberCategoryIdsResponse.from(categories);
     return ResponseEntity.ok(response);

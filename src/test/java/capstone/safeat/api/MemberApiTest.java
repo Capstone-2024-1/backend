@@ -136,7 +136,7 @@ public class MemberApiTest extends ApiTest {
 
     when(memberService.getMemberCategories(memberId)).thenReturn(List.of(APPLE, FRUITS));
 
-    mockMvc.perform(get("/members/my/categories")
+    mockMvc.perform(get("/members/my/categories/ids")
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
         .andExpect(status().isOk())
         .andDo(document("member-categories",

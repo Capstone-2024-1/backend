@@ -3,11 +3,13 @@ package capstone.safeat.member.controller;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,5 +46,14 @@ public class MemberController {
     final var member = memberService.findMember(memberId);
     final MemberResponse response = MemberResponse.from(member);
     return ResponseEntity.ok(response);
+  }
+
+  @PatchMapping("/{memberId}/name/edit")
+  public ResponseEntity<Void> editNickName(
+      @PathVariable final Long memberId, @RequestBody final MemberNickNameEditRequest request,
+      final JwtMemberId jwtMemberId
+  ) {
+    memberService.editMemberNickName(jwtMemberId.memberId(), memberId, request.nickName());
+    return ResponseEntity.ok().build();
   }
 }

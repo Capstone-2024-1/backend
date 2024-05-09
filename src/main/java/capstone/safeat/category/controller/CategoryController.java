@@ -22,7 +22,7 @@ public class CategoryController {
   @GetMapping
   public ResponseEntity<List<CategoryResponse>> getCategoryTree() {
     final var categories = categoryService.findAllCategory();
-    final List<CategoryResponse> categoryTree = CategoryResponse.convertHierarchy(categories);
+    final List<CategoryResponse> categoryTree = CategoryResponse.convertHierarchyWithAll(categories);
     return ResponseEntity.ok(categoryTree);
   }
 

@@ -1,6 +1,7 @@
 package capstone.safeat.member.application;
 
 import static capstone.safeat.category.domain.Category.APPLE;
+import static capstone.safeat.category.domain.Category.HONEY;
 import static capstone.safeat.category.domain.Category.POTATO;
 import static capstone.safeat.fixture.entity.MemberFixture.멤버_홍혁준_생성;
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
@@ -114,7 +115,7 @@ class MemberServiceTest extends ServiceTest {
   void 멤버의_카테고리들을_조회한다() {
     //given
     final Member member = memberRepository.save(멤버_홍혁준_생성());
-    final List<Long> categoryIds = List.of(APPLE.getId(), Category.POTATO.getId());
+    final List<Long> categoryIds = List.of(APPLE.getId(), POTATO.getId());
 
     memberService.addCategoryIntoMember(member.getId(), categoryIds);
 
@@ -125,5 +126,24 @@ class MemberServiceTest extends ServiceTest {
     assertThat(categories)
         .usingRecursiveFieldByFieldElementComparator()
         .containsExactlyInAnyOrder(APPLE, POTATO);
+  }
+
+  @Test
+  void 멤버의_카테고리를_덮어씌운다() {
+    //given
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+    final List<Long> oldCategoryIds = List.of(APPLE.getId(), POTATO.getId());
+    final List<Long> newCategoryIds = List.of(APPLE.getId(), HONEY.getId());
+
+    memberService.addCategoryIntoMember(member.getId(), oldCategoryIds);
+
+    //when
+    memberService.setMemberCategories(member.getId(), newCategoryIds);
+
+    //then
+    final List<Category> categories = memberService.getMemberCategories(member.getId());
+    assertThat(categories)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrder(APPLE, HONEY);
   }
 }

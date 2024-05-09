@@ -40,13 +40,20 @@ public class MemberService {
     member.updateNickName(nickName);
   }
 
-  private void addCategory(final List<Long> categoryIds, final Member member) {
-    final List<Category> categories = Category.readAllById(categoryIds);
-    memberUpdater.saveCategoryIntoMember(member, categories);
-  }
-
   @Transactional(readOnly = true)
   public List<Category> getMemberCategories(final Long memberId) {
     return categoryReader.readCategoriesByMemberId(memberId);
+  }
+
+  @Transactional
+  public void setMemberCategories(final Long memberId, final List<Long> categoryIds) {
+    final Member member = memberReader.readMember(memberId);
+    final List<Category> newCategories = Category.readAllById(categoryIds);
+    memberUpdater.setMemberCategories(member, newCategories);
+  }
+
+  private void addCategory(final List<Long> categoryIds, final Member member) {
+    final List<Category> categories = Category.readAllById(categoryIds);
+    memberUpdater.saveCategoryIntoMember(member, categories);
   }
 }

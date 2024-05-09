@@ -7,6 +7,7 @@ import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import capstone.safeat.fixture.docs.MemberFixture;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberCategoryRequest;
 import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.RegisterRequest;
 import capstone.safeat.support.ApiTest;
@@ -46,7 +48,7 @@ public class MemberApiTest extends ApiTest {
     doNothing().when(memberService).addCategoryIntoMember(memberId, categoryIds);
 
     mockMvc.perform(post("/members/categories")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
         .andExpect(status().isOk())
@@ -71,7 +73,7 @@ public class MemberApiTest extends ApiTest {
     setAccessToken(ACCESS_TOKEN, memberId);
 
     mockMvc.perform(post("/members/register")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
         .andExpect(status().isOk())
@@ -114,7 +116,7 @@ public class MemberApiTest extends ApiTest {
     setAccessToken(ACCESS_TOKEN, memberId);
 
     mockMvc.perform(put("/members/my/name")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
         .andExpect(status().isOk())
@@ -167,5 +169,32 @@ public class MemberApiTest extends ApiTest {
                 fieldWithPath("[].imageUrl").type(STRING).description("카테고리 Image url 추후 값 추가")
             )
         ));
+  }
+
+  @Test
+  void 멤버_카테고리_덮어씌우기() throws Exception {
+    final List<Long> categoryIds = List.of(3L, 4L);
+    final MemberCategoryRequest memberCategoryRequest = new MemberCategoryRequest(categoryIds);
+
+    final String requestBody = objectMapper.writeValueAsString(memberCategoryRequest);
+    final Long memberId = 10L;
+
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    mockMvc.perform(put("/members/my/categories")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("member-set-categories",
+            requestHeaders(
+                headerWithName(CONTENT_TYPE).description("application/json")
+            ),
+            requestFields(
+                fieldWithPath("categoryIds").type(ARRAY).description("새로 덮어씌울 카테고리 ID들")
+            )
+        ));
+
+    verify(memberService).setMemberCategories(memberId, categoryIds);
   }
 }

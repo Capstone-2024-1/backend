@@ -32,4 +32,8 @@ public class MemberService {
     memberUpdater.saveCategoryIntoMember(member, categories);
   }
 
+  @Transactional(readOnly = true)
+  public Member findMember(final Long memberId) {
+    return memberReader.readMember(memberId);
+  }
 }

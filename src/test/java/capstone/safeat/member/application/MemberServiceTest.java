@@ -92,4 +92,19 @@ class MemberServiceTest extends ServiceTest {
         .usingRecursiveComparison()
         .isEqualTo(member);
   }
+
+  @Test
+  void 멤버의_닉네임을_수정한다() {
+    //given
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+
+    //when
+    final String newNickName = "새로운 닉네임";
+    memberService.editMemberNickName(member.getId(), member.getId(), newNickName);
+
+    //then
+    final Member foundMember = memberReader.readMember(member.getId());
+    assertThat(foundMember.getNickName())
+        .isEqualTo(newNickName);
+  }
 }

@@ -9,6 +9,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import capstone.safeat.fixture.docs.MemberFixture;
 import capstone.safeat.member.domain.Member;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.RegisterRequest;
 import capstone.safeat.support.ApiTest;
 import java.util.List;
@@ -97,5 +99,31 @@ public class MemberApiTest extends ApiTest {
                 fieldWithPath("profileImageUrl").type(STRING).description("멤버의 profileUrl")
             )
         ));
+  }
+
+  @Test
+  void 멤버_닉네임_변경() throws Exception {
+    final MemberNickNameEditRequest nickNameEditRequest
+        = new MemberNickNameEditRequest("수정할 닉네임");
+
+    final String requestBody = objectMapper.writeValueAsString(nickNameEditRequest);
+    final Long memberId = 10L;
+
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    mockMvc.perform(patch("/members/" + memberId + "/name/edit")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("member-name-edit",
+            requestHeaders(
+                headerWithName(CONTENT_TYPE).description("application/json")
+            ),
+            requestFields(
+                fieldWithPath("nickName").type(STRING).description("수정할 멤버의 닉네임")
+            )
+        ));
+    verify(memberService).editMemberNickName(memberId, memberId, nickNameEditRequest.nickName());
   }
 }

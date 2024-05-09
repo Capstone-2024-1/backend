@@ -56,6 +56,10 @@ public class Member extends BaseEntity {
     return new Member(null, oauthMemberInfo.oauthMemberId(), oauthMemberInfo.profileImageUrl());
   }
 
+  public void updateNickName(final String newNickName) {
+    this.nickName = newNickName;
+  }
+
   public void register(final String nickName) {
     validateAlreadyRegistered();
     isRegistered = true;

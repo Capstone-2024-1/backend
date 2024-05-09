@@ -35,3 +35,17 @@ include::{snippets}/../../build/generated-snippets/member-register/request-field
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/member-register/http-response.adoc[]
+
+==== *member 닉네임 변경*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/member-name-edit/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/member-name-edit/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-name-edit/http-response.adoc[]

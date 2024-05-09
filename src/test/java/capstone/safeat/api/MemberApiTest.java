@@ -14,6 +14,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
+import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -129,6 +130,24 @@ public class MemberApiTest extends ApiTest {
   }
 
   @Test
+  void 멤버_카테고리_ID_목록_반환() throws Exception {
+    final Long memberId = 10L;
+
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    when(memberService.getMemberCategories(memberId)).thenReturn(List.of(APPLE, FRUITS));
+
+    mockMvc.perform(get("/members/my/categories/ids")
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("member-categories-ids",
+            responseFields(
+                fieldWithPath("categoryIds").type(ARRAY).description("멤버의 카테고리 Id 목록들")
+            )
+        ));
+  }
+
+  @Test
   void 멤버_카테고리_목록_반환() throws Exception {
     final Long memberId = 10L;
 
@@ -141,7 +160,11 @@ public class MemberApiTest extends ApiTest {
         .andExpect(status().isOk())
         .andDo(document("member-categories",
             responseFields(
-                fieldWithPath("categoryIds").type(ARRAY).description("멤버의 카테고리 Id 목록들")
+                fieldWithPath("[]").type(ARRAY).description("카테고리 전체"),
+                fieldWithPath("[].id").type(NUMBER).description("카테고리의 id"),
+                fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
+                fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
+                fieldWithPath("[].imageUrl").type(STRING).description("카테고리 Image url 추후 값 추가")
             )
         ));
   }

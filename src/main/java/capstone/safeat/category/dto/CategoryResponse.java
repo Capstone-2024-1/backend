@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -88,5 +89,20 @@ public class CategoryResponse {
             .ifPresent(parentResponse -> parentResponse.getChildCategories().add(categoryResponse));
       }
     }
+  }
+
+  public static Set<Long> extractAllCategoryIds(final List<CategoryResponse> categoryResponses) {
+    final Set<Long> flatChildIds = categoryResponses.stream()
+        .map(CategoryResponse::getFlatChildIds)
+        .flatMap(Set::stream)
+        .collect(Collectors.toSet());
+
+    final List<Long> categoryIds = categoryResponses.stream()
+        .map(CategoryResponse::getId)
+        .toList();
+
+    flatChildIds.addAll(categoryIds);
+
+    return flatChildIds;
   }
 }

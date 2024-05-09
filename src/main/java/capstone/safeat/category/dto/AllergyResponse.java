@@ -1,10 +1,11 @@
 package capstone.safeat.category.dto;
 
+import static capstone.safeat.category.dto.CategoryResponse.extractAllCategoryIds;
+
 import capstone.safeat.category.domain.Allergy;
 import capstone.safeat.category.domain.Category;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -32,7 +33,7 @@ public class AllergyResponse {
     final List<CategoryResponse> categoryResponses
         = CategoryResponse.convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = extractChildIds(categoryResponses);
+    final Set<Long> flatChildIds = extractAllCategoryIds(categoryResponses);
 
     return new AllergyResponse(
         allergy.getId(), allergy.getEnglishName(), allergy.getKoreanName(),
@@ -41,18 +42,4 @@ public class AllergyResponse {
     );
   }
 
-  private static Set<Long> extractChildIds(final List<CategoryResponse> categoryResponses) {
-    final Set<Long> flatChildIds = categoryResponses.stream()
-        .map(CategoryResponse::getFlatChildIds)
-        .flatMap(Set::stream)
-        .collect(Collectors.toSet());
-
-    final List<Long> categoryIds = categoryResponses.stream()
-        .map(CategoryResponse::getId)
-        .toList();
-
-    flatChildIds.addAll(categoryIds);
-
-    return flatChildIds;
-  }
 }

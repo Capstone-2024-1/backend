@@ -1,5 +1,6 @@
 package capstone.safeat.member.controller;
 
+import capstone.safeat.category.dto.CategoryResponse;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
@@ -7,6 +8,7 @@ import capstone.safeat.member.dto.MemberCategoryIdsResponse;
 import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +63,13 @@ public class MemberController {
   public ResponseEntity<MemberCategoryIdsResponse> getCategoryIds(final JwtMemberId jwtMemberId) {
     final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
     final MemberCategoryIdsResponse response = MemberCategoryIdsResponse.from(categories);
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/my/categories")
+  public ResponseEntity<List<CategoryResponse>> getCategories(final JwtMemberId jwtMemberId) {
+    final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
+    final List<CategoryResponse> response = CategoryResponse.from(categories);
     return ResponseEntity.ok(response);
   }
 }

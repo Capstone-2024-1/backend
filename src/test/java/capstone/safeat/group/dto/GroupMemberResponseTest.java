@@ -18,9 +18,9 @@ class GroupMemberResponseTest {
     final Member 김동우 = 멤버_김동우_생성();
     final List<Member> members = List.of(홍혁준, 전영은, 김동우);
     final List<GroupMemberResponse> expected = List.of(
-        new GroupMemberResponse(홍혁준.getId(), 홍혁준.getNickName()),
-        new GroupMemberResponse(전영은.getId(), 전영은.getNickName()),
-        new GroupMemberResponse(김동우.getId(), 김동우.getNickName())
+        new GroupMemberResponse(홍혁준.getId(), 홍혁준.getNickName(), 홍혁준.getProfileImageUrl()),
+        new GroupMemberResponse(전영은.getId(), 전영은.getNickName(), 전영은.getProfileImageUrl()),
+        new GroupMemberResponse(김동우.getId(), 김동우.getNickName(), 김동우.getProfileImageUrl())
     );
 
     final List<GroupMemberResponse> actual = GroupMemberResponse.from(members);

@@ -2,10 +2,8 @@ package capstone.safeat.category.dto;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Vegetarianism;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -33,26 +31,14 @@ public class VegetarianismResponse {
     final List<Category> categories = vegetarianism.getChildren();
 
     final List<CategoryResponse> categoryResponses = CategoryResponse
-        .convertHierarchy(categories);
+        .convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = categoryResponses.stream()
-        .map(VegetarianismResponse::getFlattenChildIds)
-        .flatMap(List::stream)
-        .collect(Collectors.toSet());
+    final Set<Long> flatChildIds = CategoryResponse.extractAllCategoryIds(categoryResponses);
 
     return new VegetarianismResponse(
         vegetarianism.getId(), vegetarianism.getEnglishName(), vegetarianism.getKoreanName(),
         flatChildIds,
         categoryResponses
     );
-  }
-
-  private static List<Long> getFlattenChildIds(final CategoryResponse categoryResponse) {
-    final List<Long> childIds = new ArrayList<>();
-    for (final CategoryResponse childCategory : categoryResponse.getChildCategories()) {
-      childIds.add(childCategory.getId());
-      childIds.addAll(getFlattenChildIds(childCategory));
-    }
-    return childIds;
   }
 }

@@ -42,4 +42,8 @@ public class MemberService {
     final List<Category> categories = Category.readAllById(categoryIds);
     memberUpdater.saveCategoryIntoMember(member, categories);
   }
+
+  public List<Category> getMemberCategories(final Long memberId) {
+    return null;
+  }
 }

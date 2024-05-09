@@ -3,6 +3,7 @@ package capstone.safeat.member.controller;
 import capstone.safeat.member.application.MemberService;
 import capstone.safeat.member.dto.JwtMemberId;
 import capstone.safeat.member.dto.MemberAddCategoryRequest;
+import capstone.safeat.member.dto.MemberCategoryIdsResponse;
 import capstone.safeat.member.dto.MemberNickNameEditRequest;
 import capstone.safeat.member.dto.MemberResponse;
 import capstone.safeat.member.dto.RegisterRequest;
@@ -57,10 +58,9 @@ public class MemberController {
   }
 
   @GetMapping("/my/categories")
-  public ResponseEntity<Void> editCategories(
-      @RequestBody final, final JwtMemberId jwtMemberId
-  ) {
-    memberService.editMemberNickName(jwtMemberId.memberId(), request.nickName());
-    return ResponseEntity.ok().build();
+  public ResponseEntity<MemberCategoryIdsResponse> editCategories(final JwtMemberId jwtMemberId) {
+    final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
+    final MemberCategoryIdsResponse response = MemberCategoryIdsResponse.from(categories);
+    return ResponseEntity.ok(response);
   }
 }

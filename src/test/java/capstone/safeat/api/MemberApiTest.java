@@ -1,5 +1,7 @@
 package capstone.safeat.api;
 
+import static capstone.safeat.category.domain.Category.APPLE;
+import static capstone.safeat.category.domain.Category.FRUITS;
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.mockito.Mockito.doNothing;
@@ -124,5 +126,23 @@ public class MemberApiTest extends ApiTest {
             )
         ));
     verify(memberService).editMemberNickName(memberId, nickNameEditRequest.nickName());
+  }
+
+  @Test
+  void 멤버_카테고리_목록_반환() throws Exception {
+    final Long memberId = 10L;
+
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    when(memberService.getMemberCategories(memberId)).thenReturn(List.of(APPLE, FRUITS));
+
+    mockMvc.perform(get("/members/my/categories")
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("member-categories",
+            responseFields(
+                fieldWithPath("categoryIds").type(ARRAY).description("멤버의 카테고리 Id 목록들")
+            )
+        ));
   }
 }

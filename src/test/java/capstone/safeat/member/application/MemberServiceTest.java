@@ -100,7 +100,7 @@ class MemberServiceTest extends ServiceTest {
 
     //when
     final String newNickName = "새로운 닉네임";
-    memberService.editMemberNickName(member.getId(), member.getId(), newNickName);
+    memberService.editMemberNickName(member.getId(), newNickName);
 
     //then
     final Member foundMember = memberReader.readMember(member.getId());

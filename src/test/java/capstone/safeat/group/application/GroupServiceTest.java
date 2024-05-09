@@ -124,6 +124,38 @@ class GroupServiceTest extends ServiceTest {
         .doesNotContain(member.getId());
   }
 
+  @Test
+  void 멤버들의_카테고리_목록을_반환한다() {
+    //given
+    final List<Category> creatorCategories = List.of(Category.APPLE, Category.KIWI);
+    final List<Category> memberCategories = List.of(Category.WILD_CHIVE, Category.KIWI);
+    final List<Category> expected = Stream.of(creatorCategories, memberCategories)
+        .flatMap(List::stream)
+        .distinct()
+        .toList();
+
+    final Member member = memberRepository.save(멤버_홍혁준_생성());
+
+    final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
+    groupService.registerGroup(group.getId(), member.getId());
+
+    memberService.addCategoryIntoMember(creator.getId(),
+        creatorCategories.stream().map(Category::getId).toList()
+    );
+    memberService.addCategoryIntoMember(member.getId(),
+        memberCategories.stream().map(Category::getId).toList()
+    );
+
+    //when
+    final List<Category> categories
+        = groupService.readGroupsCategories(group.getId(), creator.getId());
+
+    //then
+    assertThat(categories)
+        .usingRecursiveFieldByFieldElementComparator()
+        .containsExactlyInAnyOrderElementsOf(expected);
+  }
+
   @Nested
   class 그룹에서_추방한다 {
 
@@ -176,37 +208,5 @@ class GroupServiceTest extends ServiceTest {
           .isInstanceOf(GroupException.class)
           .hasMessage(EXECUTORS_IS_NOT_CREATOR.getMessage());
     }
-  }
-
-  @Test
-  void 멤버들의_카테고리_목록을_반환한다() {
-    //given
-    final List<Category> creatorCategories = List.of(Category.APPLE, Category.KIWI);
-    final List<Category> memberCategories = List.of(Category.WILD_CHIVE, Category.KIWI);
-    final List<Category> expected = Stream.of(creatorCategories, memberCategories)
-        .flatMap(List::stream)
-        .distinct()
-        .toList();
-
-    final Member member = memberRepository.save(멤버_홍혁준_생성());
-
-    final Group group = groupUpdater.saveNewGroupBy(creator, "그룹_1");
-    groupService.registerGroup(group.getId(), member.getId());
-
-    memberService.addCategoryIntoMember(creator.getId(),
-        creatorCategories.stream().map(Category::getId).toList()
-    );
-    memberService.addCategoryIntoMember(member.getId(),
-        memberCategories.stream().map(Category::getId).toList()
-    );
-
-    //when
-    final List<Category> categories
-        = groupService.readGroupsCategories(group.getId(), creator.getId());
-
-    //then
-    assertThat(categories)
-        .usingRecursiveFieldByFieldElementComparator()
-        .containsExactlyInAnyOrderElementsOf(expected);
   }
 }

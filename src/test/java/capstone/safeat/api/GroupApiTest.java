@@ -13,7 +13,6 @@ import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import capstone.safeat.category.domain.Category;
@@ -196,8 +195,7 @@ public class GroupApiTest extends ApiTest {
                     fieldWithPath("[].id").type(NUMBER).description("카테고리의 id"),
                     fieldWithPath("[].englishName").type(STRING).description("영어 이름"),
                     fieldWithPath("[].koreanName").type(STRING).description("한국 이름"),
-                    fieldWithPath("[].flatChildIds[]").type(ARRAY).description("자식 카테고리의 flat한 id"),
-                    subsectionWithPath("[].childCategories[]").type(ARRAY).description("하위 카테고리 목록")
+                    fieldWithPath("[].imageUrl").type(STRING).description("추후 추가될 아이콘 현재 비어있음")
                 )
             )
         );

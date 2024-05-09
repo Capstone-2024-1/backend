@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Religion;
-import capstone.safeat.category.dto.CategoryResponse;
+import capstone.safeat.category.dto.CategoryTreeResponse;
 import capstone.safeat.category.dto.ReligionResponse;
 import java.util.List;
 import java.util.Set;
@@ -23,28 +23,29 @@ class ReligionResponseTest {
     final List<ReligionResponse> expected = List.of(
         new ReligionResponse(201L, "Islam", "이슬람교", Set.of(50L, 5L, 7L, 59L),
             List.of(
-                new CategoryResponse(
+                new CategoryTreeResponse(
                     MEATS.getId(), MEATS.getEnglishName(), MEATS.getKoreanName(),
                     Set.of(PORK.getId()),
                     List.of(
-                        CategoryResponse.fromWithEmptyChildren(PORK)
+                        CategoryTreeResponse.fromWithEmptyChildren(PORK)
                     )
                 ),
-                new CategoryResponse(
+                new CategoryTreeResponse(
                     SEA_FOODS.getId(), SEA_FOODS.getEnglishName(), SEA_FOODS.getKoreanName(),
                     Set.of(OTHER_MOLLUSKS.getId()),
                     List.of(
-                        CategoryResponse.fromWithEmptyChildren(OTHER_MOLLUSKS)
+                        CategoryTreeResponse.fromWithEmptyChildren(OTHER_MOLLUSKS)
                     )
                 )
             )
         ),
         new ReligionResponse(203L, "Hinduism", "힌두교", Set.of(49L, 5L),
             List.of(
-                new CategoryResponse(MEATS.getId(), MEATS.getEnglishName(), MEATS.getKoreanName(),
+                new CategoryTreeResponse(MEATS.getId(), MEATS.getEnglishName(),
+                    MEATS.getKoreanName(),
                     Set.of(49L),
                     List.of(
-                        CategoryResponse.fromWithEmptyChildren(Category.BEEF)
+                        CategoryTreeResponse.fromWithEmptyChildren(Category.BEEF)
                     )
                 )
             )

@@ -2,7 +2,7 @@ package capstone.safeat.category.controller;
 
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.dto.AllergyResponse;
-import capstone.safeat.category.dto.CategoryResponse;
+import capstone.safeat.category.dto.CategoryTreeResponse;
 import capstone.safeat.category.dto.ReligionResponse;
 import capstone.safeat.category.dto.VegetarianismResponse;
 import java.util.List;
@@ -20,9 +20,10 @@ public class CategoryController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public ResponseEntity<List<CategoryResponse>> getCategoryTree() {
+  public ResponseEntity<List<CategoryTreeResponse>> getCategoryTree() {
     final var categories = categoryService.findAllCategory();
-    final List<CategoryResponse> categoryTree = CategoryResponse.convertHierarchyWithAll(categories);
+    final List<CategoryTreeResponse> categoryTree = CategoryTreeResponse.convertHierarchyWithAll(
+        categories);
     return ResponseEntity.ok(categoryTree);
   }
 

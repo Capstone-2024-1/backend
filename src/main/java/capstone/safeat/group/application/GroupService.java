@@ -24,6 +24,12 @@ public class GroupService {
   private final GroupReader groupReader;
   private final CategoryReader categoryReader;
 
+  private static void validateCreator(final Group group, final Member executorMember) {
+    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
+      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
+    }
+  }
+
   @Transactional
   public Long createGroup(final Long memberId, final String groupName) {
     final Member creator = memberReader.readMember(memberId);
@@ -109,11 +115,5 @@ public class GroupService {
     return categoryReader.readAllCategoriesByMemberIds(memberIds).stream()
         .distinct()
         .toList();
-  }
-
-  private static void validateCreator(final Group group, final Member executorMember) {
-    if (!Objects.equals(group.getCreatorId(), executorMember.getId())) {
-      throw new GroupException(EXECUTORS_IS_NOT_CREATOR);
-    }
   }
 }

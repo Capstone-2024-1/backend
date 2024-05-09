@@ -16,38 +16,41 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-class CategoryResponseTest {
+class CategoryTreeResponseTest {
 
   @Test
   void 카테고리들을_계층형으로_변환한다() {
-    final List<CategoryResponse> expected = List.of(
-        new CategoryResponse(FRUITS.getId(), FRUITS.getEnglishName(), FRUITS.getKoreanName(),
+    final List<CategoryTreeResponse> expected = List.of(
+        new CategoryTreeResponse(FRUITS.getId(), FRUITS.getEnglishName(), FRUITS.getKoreanName(),
             Set.of(APPLE.getId(), MANGO.getId()),
             List.of(
-                new CategoryResponse(APPLE.getId(), APPLE.getEnglishName(), APPLE.getKoreanName(),
+                new CategoryTreeResponse(APPLE.getId(), APPLE.getEnglishName(),
+                    APPLE.getKoreanName(),
                     Set.of(), List.of()),
-                new CategoryResponse(MANGO.getId(), MANGO.getEnglishName(), MANGO.getKoreanName(),
+                new CategoryTreeResponse(MANGO.getId(), MANGO.getEnglishName(),
+                    MANGO.getKoreanName(),
                     Set.of(), List.of())
             )),
-        new CategoryResponse(
+        new CategoryTreeResponse(
             VEGETABLES.getId(), VEGETABLES.getEnglishName(), VEGETABLES.getKoreanName(),
             Set.of(ROOT_VEGETABLES.getId(), POTATO.getId(), SWEET_POTATO.getId(),
                 FRUITING_VEGETABLES.getId(), CUCUMBER.getId()),
             List.of(
-                new CategoryResponse(
+                new CategoryTreeResponse(
                     ROOT_VEGETABLES.getId(), ROOT_VEGETABLES.getEnglishName(),
                     ROOT_VEGETABLES.getKoreanName(), Set.of(POTATO.getId(), SWEET_POTATO.getId()),
                     List.of(
-                        new CategoryResponse(POTATO.getId(), POTATO.getEnglishName(),
+                        new CategoryTreeResponse(POTATO.getId(), POTATO.getEnglishName(),
                             POTATO.getKoreanName(), Set.of(), List.of()),
-                        new CategoryResponse(SWEET_POTATO.getId(), SWEET_POTATO.getEnglishName(),
+                        new CategoryTreeResponse(SWEET_POTATO.getId(),
+                            SWEET_POTATO.getEnglishName(),
                             SWEET_POTATO.getKoreanName(), Set.of(), List.of())
                     )),
-                new CategoryResponse(FRUITING_VEGETABLES.getId(),
+                new CategoryTreeResponse(FRUITING_VEGETABLES.getId(),
                     FRUITING_VEGETABLES.getEnglishName(), FRUITING_VEGETABLES.getKoreanName(),
                     Set.of(CUCUMBER.getId()),
                     List.of(
-                        new CategoryResponse(CUCUMBER.getId(), CUCUMBER.getEnglishName(),
+                        new CategoryTreeResponse(CUCUMBER.getId(), CUCUMBER.getEnglishName(),
                             CUCUMBER.getKoreanName(), Set.of(), List.of())
                     ))
             ))
@@ -60,7 +63,8 @@ class CategoryResponseTest {
         Category.SWEET_POTATO, Category.CUCUMBER
     );
 
-    final List<CategoryResponse> actual = CategoryResponse.convertHierarchyWithAll(categories);
+    final List<CategoryTreeResponse> actual = CategoryTreeResponse.convertHierarchyWithAll(
+        categories);
 
     assertThat(expected)
         .usingRecursiveFieldByFieldElementComparator()
@@ -69,34 +73,37 @@ class CategoryResponseTest {
 
   @Test
   void 리프_카테고리들을_계층형으로_변환한다() {
-    final List<CategoryResponse> expected = List.of(
-        new CategoryResponse(FRUITS.getId(), FRUITS.getEnglishName(), FRUITS.getKoreanName(),
+    final List<CategoryTreeResponse> expected = List.of(
+        new CategoryTreeResponse(FRUITS.getId(), FRUITS.getEnglishName(), FRUITS.getKoreanName(),
             Set.of(APPLE.getId(), MANGO.getId()),
             List.of(
-                new CategoryResponse(APPLE.getId(), APPLE.getEnglishName(), APPLE.getKoreanName(),
+                new CategoryTreeResponse(APPLE.getId(), APPLE.getEnglishName(),
+                    APPLE.getKoreanName(),
                     Set.of(), List.of()),
-                new CategoryResponse(MANGO.getId(), MANGO.getEnglishName(), MANGO.getKoreanName(),
+                new CategoryTreeResponse(MANGO.getId(), MANGO.getEnglishName(),
+                    MANGO.getKoreanName(),
                     Set.of(), List.of())
             )),
-        new CategoryResponse(
+        new CategoryTreeResponse(
             VEGETABLES.getId(), VEGETABLES.getEnglishName(), VEGETABLES.getKoreanName(),
             Set.of(ROOT_VEGETABLES.getId(), POTATO.getId(), SWEET_POTATO.getId(),
                 FRUITING_VEGETABLES.getId(), CUCUMBER.getId()),
             List.of(
-                new CategoryResponse(
+                new CategoryTreeResponse(
                     ROOT_VEGETABLES.getId(), ROOT_VEGETABLES.getEnglishName(),
                     ROOT_VEGETABLES.getKoreanName(), Set.of(POTATO.getId(), SWEET_POTATO.getId()),
                     List.of(
-                        new CategoryResponse(POTATO.getId(), POTATO.getEnglishName(),
+                        new CategoryTreeResponse(POTATO.getId(), POTATO.getEnglishName(),
                             POTATO.getKoreanName(), Set.of(), List.of()),
-                        new CategoryResponse(SWEET_POTATO.getId(), SWEET_POTATO.getEnglishName(),
+                        new CategoryTreeResponse(SWEET_POTATO.getId(),
+                            SWEET_POTATO.getEnglishName(),
                             SWEET_POTATO.getKoreanName(), Set.of(), List.of())
                     )),
-                new CategoryResponse(FRUITING_VEGETABLES.getId(),
+                new CategoryTreeResponse(FRUITING_VEGETABLES.getId(),
                     FRUITING_VEGETABLES.getEnglishName(), FRUITING_VEGETABLES.getKoreanName(),
                     Set.of(CUCUMBER.getId()),
                     List.of(
-                        new CategoryResponse(CUCUMBER.getId(), CUCUMBER.getEnglishName(),
+                        new CategoryTreeResponse(CUCUMBER.getId(), CUCUMBER.getEnglishName(),
                             CUCUMBER.getKoreanName(), Set.of(), List.of())
                     ))
             ))
@@ -106,7 +113,8 @@ class CategoryResponseTest {
         Category.APPLE, Category.MANGO, Category.POTATO, Category.SWEET_POTATO, Category.CUCUMBER
     );
 
-    final List<CategoryResponse> actual = CategoryResponse.convertHierarchyWithLeafs(categories);
+    final List<CategoryTreeResponse> actual = CategoryTreeResponse.convertHierarchyWithLeafs(
+        categories);
 
     assertThat(expected)
         .usingRecursiveFieldByFieldElementComparator()

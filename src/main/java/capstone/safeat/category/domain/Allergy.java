@@ -6,12 +6,10 @@ import static capstone.safeat.category.domain.Category.CRUSTACEANS;
 import static capstone.safeat.category.domain.Category.DAIRIES;
 import static capstone.safeat.category.domain.Category.EGGS;
 import static capstone.safeat.category.domain.Category.FISH;
-import static capstone.safeat.category.domain.Category.GRAIN;
 import static capstone.safeat.category.domain.Category.NUTS;
 import static capstone.safeat.category.domain.Category.SHELLFISH;
 import static capstone.safeat.category.domain.Category.WHEAT;
 
-import java.util.Arrays;
 import java.util.List;
 import lombok.Getter;
 

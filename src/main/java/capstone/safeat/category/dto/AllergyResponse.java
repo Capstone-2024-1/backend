@@ -1,6 +1,6 @@
 package capstone.safeat.category.dto;
 
-import static capstone.safeat.category.dto.CategoryResponse.extractAllCategoryIds;
+import static capstone.safeat.category.dto.CategoryTreeResponse.extractAllCategoryIds;
 
 import capstone.safeat.category.domain.Allergy;
 import capstone.safeat.category.domain.Category;
@@ -19,7 +19,7 @@ public class AllergyResponse {
   private final String englishName;
   private final String koreanName;
   private final Set<Long> flatChildIds;
-  private final List<CategoryResponse> childCategories;
+  private final List<CategoryTreeResponse> childCategories;
 
   public static List<AllergyResponse> convertHierarchy(final List<Allergy> allergies) {
     return allergies.stream()
@@ -30,15 +30,15 @@ public class AllergyResponse {
   private static AllergyResponse convertHierarchy(final Allergy allergy) {
     final List<Category> categories = allergy.getChildren();
 
-    final List<CategoryResponse> categoryResponses
-        = CategoryResponse.convertHierarchyWithLeafs(categories);
+    final List<CategoryTreeResponse> categoryTreeRespons
+        = CategoryTreeResponse.convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = extractAllCategoryIds(categoryResponses);
+    final Set<Long> flatChildIds = extractAllCategoryIds(categoryTreeRespons);
 
     return new AllergyResponse(
         allergy.getId(), allergy.getEnglishName(), allergy.getKoreanName(),
         flatChildIds,
-        categoryResponses
+        categoryTreeRespons
     );
   }
 

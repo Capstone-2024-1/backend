@@ -54,12 +54,12 @@ include::{snippets}/../../build/generated-snippets/member-name-edit/http-respons
 
 ===== *Http Request*
 
-include::{snippets}/../../build/generated-snippets/member-categories/http-request.adoc[]
+include::{snippets}/../../build/generated-snippets/member-categories-ids/http-request.adoc[]
 
 ===== *Http Response*
 
-include::{snippets}/../../build/generated-snippets/member-categories/http-response.adoc[]
+include::{snippets}/../../build/generated-snippets/member-categories-ids/http-response.adoc[]
 
 ===== *Http Response Description*
 
-include::{snippets}/../../build/generated-snippets/member-categories/response-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/member-categories-ids/response-fields.adoc[]

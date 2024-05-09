@@ -9,7 +9,6 @@ import static capstone.safeat.category.domain.Category.GREEN_ONION;
 import static capstone.safeat.category.domain.Category.MEATS;
 import static capstone.safeat.category.domain.Category.OTHER_MOLLUSKS;
 import static capstone.safeat.category.domain.Category.PORK;
-import static capstone.safeat.category.domain.Category.SEA_FOODS;
 import static capstone.safeat.category.domain.Category.SHELLFISH;
 import static capstone.safeat.category.domain.Category.WILD_CHIVE;
 
@@ -26,7 +25,7 @@ public enum Religion {
   JUDAISM(202L, "유대교", "Judaism",
       concatList(
           List.of(PORK, OTHER_MOLLUSKS),
-          SHELLFISH.getAllChildren(), CRUSTACEANS.getAllChildren()
+          SHELLFISH.getAllLeafChildren(), CRUSTACEANS.getAllLeafChildren()
       )
   ),
   HINDUISM(203L, "힌두교", "Hinduism",
@@ -35,7 +34,7 @@ public enum Religion {
   BUDDHISM(204L, "불교", "buddhism",
       concatList(
           List.of(CHIVES, GARLIC, GREEN_ONION, WILD_CHIVE, ASAFOETIDA),
-          MEATS.getAllChildren()
+          MEATS.getAllLeafChildren()
       )
   );
 

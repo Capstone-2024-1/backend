@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import lombok.Getter;
 
 @Getter
@@ -15,7 +14,7 @@ public enum Category {
   VEGETABLES(3L, "채소", "Vegetables", null, false),
   MEATS(5L, "고기", "Meat", null, false),
   GRAIN(41L, "곡식", "Grain", null, false),
-  EGGS(6L, "계란", "Eggs", null, false),
+  EGGS(6L, "계란", "Eggs", null, true),
   SEA_FOODS(7L, "어패류", "Seafood", null, false),
   SEASONINGS(8L, "조미료", "Seasonings", null, false),
   DAIRIES(9L, "유제품", "Dairy", null, false),
@@ -134,6 +133,12 @@ public enum Category {
   public List<Category> getAllChildren() {
     return Arrays.stream(Category.values())
         .filter(c -> c.parent == this)
+        .toList();
+  }
+
+  public List<Category> getAllLeafChildren() {
+    return getAllChildren().stream()
+        .filter(c -> c.isLeaf)
         .toList();
   }
 

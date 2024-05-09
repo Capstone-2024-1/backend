@@ -1,5 +1,6 @@
 package capstone.safeat.member.application;
 
+import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.member.domain.Member;
 import java.util.List;
@@ -13,6 +14,7 @@ public class MemberService {
 
   private final MemberReader memberReader;
   private final MemberUpdater memberUpdater;
+  private final CategoryReader categoryReader;
 
   @Transactional
   public void addCategoryIntoMember(final Long memberId, final List<Long> categoryIds) {
@@ -43,7 +45,8 @@ public class MemberService {
     memberUpdater.saveCategoryIntoMember(member, categories);
   }
 
+  @Transactional(readOnly = true)
   public List<Category> getMemberCategories(final Long memberId) {
-    return null;
+    return categoryReader.readCategoriesByMemberId(memberId);
   }
 }

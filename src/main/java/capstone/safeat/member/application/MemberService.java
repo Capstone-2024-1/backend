@@ -17,7 +17,19 @@ public class MemberService {
   @Transactional
   public void addCategoryIntoMember(final Long memberId, final List<Long> categoryIds) {
     final Member member = memberReader.readMember(memberId);
+    addCategory(categoryIds, member);
+  }
+
+  @Transactional
+  public void register(final Long memberId, final List<Long> categoryIds, final String nickName) {
+    final Member member = memberReader.readMember(memberId);
+    member.register(nickName);
+    addCategory(categoryIds, member);
+  }
+
+  private void addCategory(final List<Long> categoryIds, final Member member) {
     final List<Category> categories = Category.readAllById(categoryIds);
     memberUpdater.saveCategoryIntoMember(member, categories);
   }
+
 }

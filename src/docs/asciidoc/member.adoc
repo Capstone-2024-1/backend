@@ -21,3 +21,17 @@ include::{snippets}/../../build/generated-snippets/member-add-category/request-f
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/member-add-category/http-response.adoc[]
+
+==== *Member 회원가입*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/member-register/http-request.adoc[]
+
+===== *Http Request Body adoc*
+
+include::{snippets}/../../build/generated-snippets/member-register/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-register/http-response.adoc[]

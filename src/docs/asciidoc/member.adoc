@@ -54,6 +54,20 @@ include::{snippets}/../../build/generated-snippets/member-name-edit/http-respons
 
 ===== *Http Request*
 
+include::{snippets}/../../build/generated-snippets/member-categories-ids/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-categories-ids/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/member-categories-ids/response-fields.adoc[]
+
+==== *Member 자신의 못 먹는 재료 목록*
+
+===== *Http Request*
+
 include::{snippets}/../../build/generated-snippets/member-categories/http-request.adoc[]
 
 ===== *Http Response*

@@ -69,7 +69,8 @@ public class GroupApiTest extends ApiTest {
             responseFields(
                 fieldWithPath("[]").type(ARRAY).description("멤버 전체"),
                 fieldWithPath("[].id").type(NUMBER).description("멤버 Id"),
-                fieldWithPath("[].name").type(STRING).description("멤버 닉네임")
+                fieldWithPath("[].name").type(STRING).description("멤버 닉네임"),
+                fieldWithPath("[].profileImageUrl").type(STRING).description("멤버의 프로필 이미지 Url")
             )
         ));
   }

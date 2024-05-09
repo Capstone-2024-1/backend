@@ -1,11 +1,11 @@
 package capstone.safeat.category.dto;
 
+import static capstone.safeat.category.dto.CategoryResponse.extractAllCategoryIds;
+
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.domain.Religion;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -31,25 +31,13 @@ public class ReligionResponse {
     final List<Category> categories = religion.getChildren();
 
     final List<CategoryResponse> categoryResponses = CategoryResponse
-        .convertHierarchy(categories);
+        .convertHierarchyWithLeafs(categories);
 
-    final Set<Long> flatChildIds = categoryResponses.stream()
-        .map(ReligionResponse::getFlattenChildIds)
-        .flatMap(List::stream)
-        .collect(Collectors.toSet());
+    final Set<Long> flatChildIds = extractAllCategoryIds(categoryResponses);
 
     return new ReligionResponse(
         religion.getId(), religion.getEnglishName(), religion.getKoreanName(), flatChildIds,
         categoryResponses
     );
-  }
-
-  private static List<Long> getFlattenChildIds(final CategoryResponse categoryResponse) {
-    final List<Long> childIds = new ArrayList<>();
-    for (final CategoryResponse childCategory : categoryResponse.getChildCategories()) {
-      childIds.add(childCategory.getId());
-      childIds.addAll(getFlattenChildIds(childCategory));
-    }
-    return childIds;
   }
 }

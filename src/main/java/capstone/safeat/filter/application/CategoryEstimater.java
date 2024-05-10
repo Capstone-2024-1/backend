@@ -1,8 +1,8 @@
 package capstone.safeat.filter.application;
 
-import capstone.safeat.filter.domain.EstimatedFood.EstimatedFoodBuilder;
+import capstone.safeat.filter.domain.EstimatedFood;
 
 public interface CategoryEstimater {
 
-  EstimatedFoodBuilder estimateFood(final String foodName);
+  EstimatedFood estimateFood(final String foodName);
 }

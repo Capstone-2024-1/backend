@@ -13,7 +13,7 @@ public record FoodEstimateResponse(
 
   }
 
-  public EstimatedFoodBuilder toEstimateCategory() {
+  public EstimatedFood toEstimateCategory() {
     final List<Category> categories = ingredients().stream()
         .map(Ingredient::englishName)
         .map(Category::fromEnglishName)
@@ -23,6 +23,7 @@ public record FoodEstimateResponse(
         .categories(categories)
         .isFood(isFood)
         .koreanName(koreanName)
-        .isAmbiguous(isAmbiguous);
+        .isAmbiguous(isAmbiguous)
+        .build();
   }
 }

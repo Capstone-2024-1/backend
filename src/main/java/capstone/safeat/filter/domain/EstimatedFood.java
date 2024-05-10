@@ -1,24 +1,23 @@
 package capstone.safeat.filter.domain;
 
 import capstone.safeat.category.domain.Category;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 
 public class EstimatedFood {
 
   private final String koreanName;
-  private final String englishName;
   private final List<Category> categories;
   private final boolean isAmbiguous;
   private final boolean isFood;
 
   @Builder
   public EstimatedFood(
-      final String koreanName, final String englishName, final List<Category> categories,
+      final String koreanName, final List<Category> categories,
       final boolean isAmbiguous, final boolean isFood
   ) {
     this.koreanName = koreanName;
-    this.englishName = englishName;
     this.categories = categories;
     this.isAmbiguous = isAmbiguous;
     this.isFood = isFood;
@@ -26,10 +25,6 @@ public class EstimatedFood {
 
   public String getKoreanName() {
     return koreanName;
-  }
-
-  public String getEnglishName() {
-    return englishName;
   }
 
   public List<Category> getCategories() {
@@ -42,5 +37,17 @@ public class EstimatedFood {
 
   public boolean isFood() {
     return isFood;
+  }
+
+  public List<Category> extractCannotEatCategories(final List<Category> filterCategories) {
+    return categories.stream()
+        .filter(filterCategories::contains)
+        .toList();
+  }
+
+  public List<Category> extractCanEatCategories(final List<Category> filterCategories) {
+    final List<Category> categories = new ArrayList<>(this.categories);
+    categories.removeAll(filterCategories);
+    return categories;
   }
 }

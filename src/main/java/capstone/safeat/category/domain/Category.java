@@ -53,7 +53,7 @@ public enum Category {
   CUCUMBER(37L, "오이", "Cucumber", FRUITING_VEGETABLES, true),
   CHILLY(38L, "고추", "Chilly", FRUITING_VEGETABLES, true),
   TOMATO(39L, "토마토", "Tomato", FRUITING_VEGETABLES, true),
-  OTHER_FRUIT_VEGETABLES(40L, "기타 열매 채소", "Other fruit vegetables", FRUITING_VEGETABLES, true),
+  OTHER_FRUIT_VEGETABLES(40L, "기타 열매 채소", "Other Fruiting Vegetables", FRUITING_VEGETABLES, true),
 
   RICE(42L, "쌀", "Rice", GRAIN, true),
   WHEAT(43L, "밀", "Wheat", GRAIN, true),

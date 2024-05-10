@@ -4,7 +4,6 @@ import capstone.safeat.support.ServiceTest;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class FaissCategoryEstimaterTest extends ServiceTest {
@@ -12,7 +11,7 @@ class FaissCategoryEstimaterTest extends ServiceTest {
   @Autowired
   private FaissCategoryEstimater categoryEstimater;
 
-  @Test
+  //  @Test
   @Disabled
   void 음식이름으로_카테고리_목록_받기() {
     final ExecutorService executor = Executors.newFixedThreadPool(

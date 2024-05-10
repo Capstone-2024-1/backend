@@ -17,10 +17,13 @@ public class FilterService {
   private final TranslationClient translationClient;
 
   public FoodFilterResponse filterSingleFood(final String foodName, final Long memberId) {
-    final EstimatedFood estimatedFood = categoryEstimater.estimateFood(foodName)
-        .englishName(translationClient.fromKoreanToEnglish(foodName))
-        .build();
+    final EstimatedFood estimatedFood = categoryEstimater.estimateFood(foodName);
     final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
-    return FoodFilterResponse.of(estimatedFood, filterCategories);
+    return FoodFilterResponse.of(
+        estimatedFood,
+        translationClient.fromKoreanToEnglish(estimatedFood.getKoreanName()),
+        estimatedFood.extractCannotEatCategories(filterCategories),
+        estimatedFood.extractCanEatCategories(filterCategories)
+    );
   }
 }

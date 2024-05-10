@@ -8,25 +8,27 @@ import java.util.List;
 public record FoodFilterResponse(
     String koreanName,
     String englishName,
-    boolean canEat,
     List<CategoryResponse> cannotEatCategories,
     List<CategoryResponse> canEatCategories,
+    boolean canEat,
     boolean isFood,
     boolean isAmbiguous
 ) {
 
-  //TODO :FilterService로 옮기기
   public static FoodFilterResponse of(
-      final EstimatedFood estimatedFood, final List<Category> filterCategories
-  ) {
-    final List<Category> cannotEatCategories =
-        extractCannotEatCategories(estimatedFood.getCategories(), filterCategories);
-    return null;
-  }
+      final EstimatedFood estimatedFood, final String englishName,
+      final List<Category> cannotEatCategories,
+      final List<Category> canEatCategories
 
-  private static List<Category> extractCannotEatCategories(
-      final List<Category> categories, final List<Category> filterCategories
   ) {
-    return null;
+    return new FoodFilterResponse(
+        estimatedFood.getKoreanName(),
+        englishName,
+        CategoryResponse.generateList(cannotEatCategories),
+        CategoryResponse.generateList(canEatCategories),
+        cannotEatCategories.isEmpty(),
+        estimatedFood.isFood(),
+        estimatedFood.isAmbiguous()
+    );
   }
 }

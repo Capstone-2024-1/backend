@@ -87,7 +87,7 @@ public class GroupController {
       @PathVariable final Long groupId, final JwtMemberId jwtMemberId
   ) {
     final var categories = groupService.readGroupsCategories(groupId, jwtMemberId.memberId());
-    final List<CategoryResponse> responses = CategoryResponse.from(categories);
+    final List<CategoryResponse> responses = CategoryResponse.generateList(categories);
     return ResponseEntity.ok(responses);
   }
 }

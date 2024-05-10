@@ -70,7 +70,7 @@ public class MemberController {
   @GetMapping("/my/categories")
   public ResponseEntity<List<CategoryResponse>> getCategories(final JwtMemberId jwtMemberId) {
     final var categories = memberService.getMemberCategories(jwtMemberId.memberId());
-    final List<CategoryResponse> response = CategoryResponse.from(categories);
+    final List<CategoryResponse> response = CategoryResponse.generateList(categories);
     return ResponseEntity.ok(response);
   }
 

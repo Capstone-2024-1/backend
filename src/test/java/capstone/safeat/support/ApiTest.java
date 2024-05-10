@@ -8,6 +8,8 @@ import capstone.safeat.base.LocalDateTimeProvider;
 import capstone.safeat.category.application.CategoryService;
 import capstone.safeat.category.controller.CategoryController;
 import capstone.safeat.config.WebConfig;
+import capstone.safeat.filter.application.FilterService;
+import capstone.safeat.filter.controller.FilterController;
 import capstone.safeat.group.application.GroupService;
 import capstone.safeat.group.controller.GroupController;
 import capstone.safeat.login.application.JwtProvider;
@@ -35,7 +37,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest({
-    MemberController.class, LoginController.class, CategoryController.class, GroupController.class
+    MemberController.class, LoginController.class, CategoryController.class, GroupController.class,
+    FilterController.class
 })
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @MockBean(JpaMetamodelMappingContext.class)
@@ -59,6 +62,8 @@ public abstract class ApiTest {
   protected JwtProvider jwtProvider;
   @MockBean
   protected WebConfig webConfig;
+  @MockBean
+  protected FilterService filterService;
 
   //  @MockBean
 //  protected GroupService groupService;

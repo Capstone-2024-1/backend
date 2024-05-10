@@ -31,7 +31,6 @@ import capstone.safeat.member.dto.RegisterRequest;
 import capstone.safeat.support.ApiTest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
 public class MemberApiTest extends ApiTest {
 

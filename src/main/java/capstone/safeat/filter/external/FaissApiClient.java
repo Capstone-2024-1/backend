@@ -7,5 +7,5 @@ import org.springframework.web.service.annotation.GetExchange;
 public interface FaissApiClient {
 
   @GetExchange(url = "https://safeat2.dongwoo.win/search")
-  FoodEstimateResponse fetchMemberProfile(@RequestParam final MultiValueMap<String, String> params);
+  FoodEstimateResponse estimate(@RequestParam final MultiValueMap<String, String> params);
 }

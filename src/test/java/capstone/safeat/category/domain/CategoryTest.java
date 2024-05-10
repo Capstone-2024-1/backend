@@ -2,6 +2,7 @@ package capstone.safeat.category.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,16 @@ class CategoryTest {
       assertThat(actual)
           .containsExactlyInAnyOrderElementsOf(expected);
     }
+  }
+
+  @Test
+  void a() {
+    Arrays.stream(Category.values())
+        .map(Category::getEnglishName)
+        .toList()
+        .forEach(System.out::println);
+
+
   }
 
 }

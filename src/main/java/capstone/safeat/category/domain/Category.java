@@ -118,9 +118,8 @@ public enum Category {
 
   public static Category fromEnglishName(final String englishName) {
     return Arrays.stream(Category.values())
-        .filter(c -> c.getEnglishName().equals(englishName))
+        .filter(c -> c.getEnglishName().equalsIgnoreCase(englishName))
         .findAny()
-        //TODO : 추후 커스텀 예외추가
         .orElseThrow();
   }
 

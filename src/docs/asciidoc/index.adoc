@@ -25,3 +25,7 @@ include::login.adoc[]
 == *[ Group ]*
 
 include::group.adoc[]
+
+== *[ Filter ]*
+
+include::filter.adoc[]

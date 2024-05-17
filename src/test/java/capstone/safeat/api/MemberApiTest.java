@@ -90,12 +90,14 @@ public class MemberApiTest extends ApiTest {
 
   @Test
   void 멤버_프로필_조회() throws Exception {
-    final Long memberId = 10L;
     final Member member = MemberFixture.멤버_홍혁준_생성();
+    final Long memberId = 10L;
 
+    setAccessToken(ACCESS_TOKEN, memberId);
     when(memberService.findMember(memberId)).thenReturn(member);
 
-    mockMvc.perform(get("/members/" + memberId))
+    mockMvc.perform(get("/members/my")
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
         .andExpect(status().isOk())
         .andDo(document("member-profile",
             responseFields(

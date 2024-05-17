@@ -11,6 +11,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
@@ -46,7 +47,7 @@ public class FilterApiTest extends ApiTest {
 
     when(filterService.filterSingleFood(request.foodName(), memberId)).thenReturn(response);
 
-    mockMvc.perform(get("/filter")
+    mockMvc.perform(post("/filter")
             .contentType(APPLICATION_JSON_VALUE)
             .content(requestBody)
             .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))

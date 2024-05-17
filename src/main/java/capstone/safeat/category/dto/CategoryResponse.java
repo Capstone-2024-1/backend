@@ -11,10 +11,10 @@ public record CategoryResponse(Long id, String englishName, String koreanName, S
         .toList();
   }
 
-  //TODO: ImageUrl은 추후 변경
   public static CategoryResponse from(final Category category) {
     return new CategoryResponse(
-        category.getId(), category.getEnglishName(), category.getKoreanName(), ""
+        category.getId(), category.getEnglishName(), category.getKoreanName(),
+        category.getImageUrl()
     );
   }
 }

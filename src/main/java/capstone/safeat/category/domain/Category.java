@@ -92,23 +92,23 @@ public enum Category {
 
   FISH(58L, "생선", "fish", SEA_FOODS, false,
       "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/category/fish.png"),
-  MACKEREL(63L, "고등어", "Mackerel", FISH, true, SEASONINGS.imageUrl),
-  OTHER_FISH(64L, "기타 생선", "Other Fish", FISH, true, SEASONINGS.imageUrl),
+  MACKEREL(63L, "고등어", "Mackerel", FISH, true, FISH.imageUrl),
+  OTHER_FISH(64L, "기타 생선", "Other Fish", FISH, true, FISH.imageUrl),
 
-  OTHER_MOLLUSKS(59L, "기타 연체류", "Other Mollusks", SEA_FOODS, true, SEASONINGS.imageUrl),
+  OTHER_MOLLUSKS(59L, "기타 연체류", "Other Mollusks", SEA_FOODS, true, SEA_FOODS.imageUrl),
 
-  CRUSTACEANS(60L, "갑각류", "Crustaceans", SEA_FOODS, false, SEASONINGS.imageUrl),
-  SHRIMP(65L, "새우", "Shrimp", CRUSTACEANS, true, SEASONINGS.imageUrl),
-  CRAB(66L, "게", "Crab", CRUSTACEANS, true, SEASONINGS.imageUrl),
-  OTHER_CRUSTACEANS(67L, "기타 갑각류", "Other Crustaceans", CRUSTACEANS, true, SEASONINGS.imageUrl),
+  CRUSTACEANS(60L, "갑각류", "Crustaceans", SEA_FOODS, false, SEA_FOODS.imageUrl),
+  SHRIMP(65L, "새우", "Shrimp", CRUSTACEANS, true, SEA_FOODS.imageUrl),
+  CRAB(66L, "게", "Crab", CRUSTACEANS, true, SEA_FOODS.imageUrl),
+  OTHER_CRUSTACEANS(67L, "기타 갑각류", "Other Crustaceans", CRUSTACEANS, true, SEA_FOODS.imageUrl),
 
-  SHELLFISH(61L, "조개류", "Shellfish", SEA_FOODS, false, SEASONINGS.imageUrl),
-  ABALONE(68L, "전복", "Abalone", SHELLFISH, true, SEASONINGS.imageUrl),
-  OYSTER(69L, "굴", "Oyster", SHELLFISH, true, SEASONINGS.imageUrl),
-  MUSSEL(70L, "홍합", "Mussel", SHELLFISH, true, SEASONINGS.imageUrl),
-  OTHER_SHELLFISH(71L, "기타 조개류", "Other Shellfish", SHELLFISH, true, SEASONINGS.imageUrl),
+  SHELLFISH(61L, "조개류", "Shellfish", SEA_FOODS, false, SEA_FOODS.imageUrl),
+  ABALONE(68L, "전복", "Abalone", SHELLFISH, true, SEA_FOODS.imageUrl),
+  OYSTER(69L, "굴", "Oyster", SHELLFISH, true, SEA_FOODS.imageUrl),
+  MUSSEL(70L, "홍합", "Mussel", SHELLFISH, true, SEA_FOODS.imageUrl),
+  OTHER_SHELLFISH(71L, "기타 조개류", "Other Shellfish", SHELLFISH, true, SEA_FOODS.imageUrl),
 
-  OTHER_SEA_FOODS(62L, "기타 어패류", "Other seafood", SEA_FOODS, true, SEASONINGS.imageUrl),
+  OTHER_SEA_FOODS(62L, "기타 어패류", "Other seafood", SEA_FOODS, true, SEA_FOODS.imageUrl),
 
   PEPPER(73L, "고추", "Pepper", SEASONINGS, true, SEASONINGS.imageUrl),
   GINGER(74L, "생강", "Ginger", SEASONINGS, true, SEASONINGS.imageUrl),

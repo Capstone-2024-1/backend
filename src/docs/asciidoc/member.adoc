@@ -91,3 +91,17 @@ include::{snippets}/../../build/generated-snippets/member-set-categories/request
 ===== *Http Response*
 
 include::{snippets}/../../build/generated-snippets/member-set-categories/http-response.adoc[]
+
+==== *Member 프로필 변경*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/member-profile/http-request.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/member-profile/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/member-profile/response-fields.adoc[]

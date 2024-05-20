@@ -6,9 +6,9 @@ import org.springframework.web.service.annotation.GetExchange;
 
 public interface FaissApiClient {
 
-  @GetExchange(url = "http://192.168.5.99/search")
+  @GetExchange(url = "http://192.168.5.99:8000/search")
   FoodEstimateResponse estimate(@RequestParam final MultiValueMap<String, String> params);
 
-  @GetExchange(url = "http://192.168.5.99/inference")
+  @GetExchange(url = "http://192.168.5.99:8000/inference")
   FoodEstimateResponse inference(@RequestParam final MultiValueMap<String, String> params);
 }

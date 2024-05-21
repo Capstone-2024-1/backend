@@ -15,14 +15,14 @@ import org.springframework.util.MultiValueMap;
 @RequiredArgsConstructor
 public class GoogleMemberClient implements OAuthMemberClient {
 
-  private final GoogleApiClient googleApiClient;
+  private final GoogleOauthApiClient googleOauthApiClient;
   private final GoogleOAuthConfig googleOAuthConfig;
 
   @Override
   public OAuthMemberInfo fetchMember(final String authCode) {
-    final GoogleOAuthResponse oauthResponse = googleApiClient
+    final GoogleOAuthResponse oauthResponse = googleOauthApiClient
         .fetchToken(createRequestParam(authCode));
-    final GoogleMemberProfileResponse memberProfileResponse = googleApiClient
+    final GoogleMemberProfileResponse memberProfileResponse = googleOauthApiClient
         .fetchMemberProfile("Bearer " + oauthResponse.accessToken());
     return new OAuthMemberInfo(memberProfileResponse.id(), memberProfileResponse.picture(), GOOGLE);
   }

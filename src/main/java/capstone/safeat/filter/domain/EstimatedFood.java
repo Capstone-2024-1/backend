@@ -27,10 +27,6 @@ public class EstimatedFood {
     return koreanName;
   }
 
-  public List<Category> getCategories() {
-    return categories;
-  }
-
   public boolean isAmbiguous() {
     return isAmbiguous;
   }

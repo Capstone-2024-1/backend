@@ -31,7 +31,8 @@ public class LogFilter implements Filter {
 
     //request 내용 확인
     final String reqContent = new String(httpServletRequest.getContentAsByteArray());
-    log.info("uri : {}, request : {}", uri, reqContent);
+    log.info("{}uri : {} {}request : {}", System.lineSeparator(), uri, System.lineSeparator(),
+        reqContent);
 
     // response 내용 상태 정보, 내용 확인
     int httpStatus = httpServletResponse.getStatus();
@@ -40,6 +41,7 @@ public class LogFilter implements Filter {
     //주의 : response를 클라이언트에서 볼 수 있도록 하려면 response를 복사해야 한다. response를 콘솔에 보여주면 내용이 사라진다.
     httpServletResponse.copyBodyToResponse();
 
-    log.info("status: {}, response {}", httpStatus, resContent);
+    log.info("{}status: {} {}response {}", System.lineSeparator(), httpStatus,
+        System.lineSeparator(), resContent);
   }
 }

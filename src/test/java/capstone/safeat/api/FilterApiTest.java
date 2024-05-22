@@ -6,6 +6,7 @@ import static capstone.safeat.category.domain.Category.PEPPER;
 import static capstone.safeat.category.domain.Category.RICE;
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
@@ -34,7 +35,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 public class FilterApiTest extends ApiTest {
 
@@ -104,10 +104,10 @@ public class FilterApiTest extends ApiTest {
             false)
     );
 
-    when(filterService.filterMultiFoodBy(any(MultipartFile.class), memberId)).thenReturn(responses);
+    when(filterService.filterMultiFoodBy(any(), eq(memberId))).thenReturn(responses);
 
     mockMvc.perform(multipart(POST, "/menu")
-            .file("images", menuImage.getBytes())
+            .file("menuImage", menuImage.getBytes())
             .header("Authorization", "Bearer " + ACCESS_TOKEN)
         )
         .andExpect(status().isOk())
@@ -116,7 +116,7 @@ public class FilterApiTest extends ApiTest {
                 headerWithName(CONTENT_TYPE).description("multipart/form-data")
             ),
             requestParts(
-                partWithName("menuImage").description("menuImage")
+                partWithName("menuImage").description("메뉴 이미지 꼭 png로 보내야함")
             ),
             responseFields(
                 fieldWithPath("[].koreanName").type(STRING).description("음식 한국 이름"),

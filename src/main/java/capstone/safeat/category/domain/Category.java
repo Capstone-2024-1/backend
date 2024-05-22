@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public enum Category {
 
   FRUITS(1L, "과일", "Fruits", null, false,
@@ -141,6 +143,7 @@ public enum Category {
   }
 
   public static Category fromEnglishName(final String englishName) {
+    log.info("englishName : {}", englishName);
     return Arrays.stream(Category.values())
         .filter(c -> c.getEnglishName().equalsIgnoreCase(englishName))
         .findAny()

@@ -21,7 +21,6 @@ import com.google.protobuf.ByteString;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -39,12 +38,10 @@ public class GoogleOcrReader implements FoodOcrReader {
   private final GoogleOcrConfig googleOcrConfig;
   private final DocumentProcessorServiceSettings documentProcessorServiceSettings;
 
-  public GoogleOcrReader(
-      final GoogleOcrConfig googleOcrConfig,
-      @Value("${ocr.google.credentialPath}") final String credentialPath
-  ) {
+  public GoogleOcrReader(final GoogleOcrConfig googleOcrConfig) {
     this.googleOcrConfig = googleOcrConfig;
-    this.documentProcessorServiceSettings = createDocumentProcessorSettings(credentialPath);
+    this.documentProcessorServiceSettings
+        = createDocumentProcessorSettings(googleOcrConfig.credentialPath());
   }
 
   private DocumentProcessorServiceSettings createDocumentProcessorSettings(

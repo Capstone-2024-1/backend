@@ -6,7 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record GoogleOcrConfig(
     String projectId,
     String location,
-    String processorId
+    String processorId,
+    String credentialPath
 ) {
 
 }

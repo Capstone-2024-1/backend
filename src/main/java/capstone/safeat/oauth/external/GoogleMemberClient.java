@@ -2,7 +2,6 @@ package capstone.safeat.oauth.external;
 
 import static capstone.safeat.oauth.domain.OAuthServerType.GOOGLE;
 
-import capstone.safeat.oauth.GoogleOAuthConfig;
 import capstone.safeat.oauth.domain.OAuthMemberClient;
 import capstone.safeat.oauth.domain.OAuthMemberInfo;
 import capstone.safeat.oauth.domain.OAuthServerType;
@@ -15,14 +14,14 @@ import org.springframework.util.MultiValueMap;
 @RequiredArgsConstructor
 public class GoogleMemberClient implements OAuthMemberClient {
 
-  private final GoogleApiClient googleApiClient;
-  private final GoogleOAuthConfig googleOAuthConfig;
+  private final GoogleOauthApiClient googleOauthApiClient;
+  private final GoogleOauthConfig googleOAuthConfig;
 
   @Override
   public OAuthMemberInfo fetchMember(final String authCode) {
-    final GoogleOAuthResponse oauthResponse = googleApiClient
+    final GoogleOAuthResponse oauthResponse = googleOauthApiClient
         .fetchToken(createRequestParam(authCode));
-    final GoogleMemberProfileResponse memberProfileResponse = googleApiClient
+    final GoogleMemberProfileResponse memberProfileResponse = googleOauthApiClient
         .fetchMemberProfile("Bearer " + oauthResponse.accessToken());
     return new OAuthMemberInfo(memberProfileResponse.id(), memberProfileResponse.picture(), GOOGLE);
   }

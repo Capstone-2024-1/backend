@@ -4,6 +4,7 @@ import capstone.safeat.filter.application.FilterService;
 import capstone.safeat.filter.dto.FoodFilterRequest;
 import capstone.safeat.filter.dto.FoodFilterResponse;
 import capstone.safeat.member.dto.JwtMemberId;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,11 @@ public class FilterController {
   }
 
   @PostMapping(path = "/menu", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public ResponseEntity<String> estimateMultiFood(
-      @RequestPart final MultipartFile menuImage
+  public ResponseEntity<List<FoodFilterResponse>> estimateMultiFood(
+      @RequestPart final MultipartFile menuImage, final JwtMemberId jwtMemberId
   ) {
-    return ResponseEntity.ok(menuImage.getName());
+    final List<FoodFilterResponse> foodFilterResponses
+        = filterService.filterMultiFoodBy(menuImage, jwtMemberId.memberId());
+    return ResponseEntity.ok(foodFilterResponses);
   }
 }

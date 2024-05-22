@@ -17,6 +17,12 @@ oauth:
     client-id: "local"
     redirect-uri: "local"
     client-secret: "client-secret"
+ocr:
+  google:
+    projectId: "local"
+    location: "local"
+    processorId: "local"
+    credentialPath: "local"
 jwt:
   secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="
 

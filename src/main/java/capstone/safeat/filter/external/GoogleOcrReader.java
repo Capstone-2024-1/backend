@@ -22,11 +22,13 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
+@Profile("!local")
 @Component
 public class GoogleOcrReader implements FoodOcrReader {
 
@@ -73,10 +75,8 @@ public class GoogleOcrReader implements FoodOcrReader {
 
       final Document documentResponse = result.getDocument();
 
-      // Get all of the document text as one big string
       final String text = documentResponse.getText();
 
-      // Read the text recognition output from the processor
       final Page firstPage = documentResponse.getPages(0);
       final List<Paragraph> paragraphs = firstPage.getParagraphsList();
 

@@ -2,7 +2,6 @@ package capstone.safeat.filter.external;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.filter.domain.EstimatedFood;
-import capstone.safeat.filter.domain.EstimatedFood.EstimatedFoodBuilder;
 import java.util.List;
 
 public record FoodEstimateResponse(
@@ -16,6 +15,7 @@ public record FoodEstimateResponse(
   public EstimatedFood toEstimateCategory() {
     final List<Category> categories = ingredients().stream()
         .map(Ingredient::englishName)
+        .filter(str -> !str.isBlank())
         .map(Category::fromEnglishName)
         .toList();
 

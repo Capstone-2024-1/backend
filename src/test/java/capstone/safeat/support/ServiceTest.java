@@ -2,6 +2,7 @@ package capstone.safeat.support;
 
 import capstone.safeat.config.DatabaseClearExtension;
 import capstone.safeat.filter.application.CategoryEstimater;
+import capstone.safeat.filter.application.FoodOcrReader;
 import capstone.safeat.filter.application.TranslationClient;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -19,4 +20,7 @@ public abstract class ServiceTest {
 
   @MockBean
   protected TranslationClient translationClient;
+
+  @MockBean
+  protected FoodOcrReader foodOcrReader;
 }

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public enum Category {
 
   FRUITS(1L, "과일", "Fruits", null, false,
-      "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/category/Fruits.png"),
+      "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/category/fruits.png"),
   NUTS(2L, "견과", "Nuts", null, false,
       "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/category/nuts.png"),
   VEGETABLES(3L, "채소", "Vegetables", null, false,

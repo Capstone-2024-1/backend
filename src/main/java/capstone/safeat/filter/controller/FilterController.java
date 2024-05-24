@@ -38,4 +38,13 @@ public class FilterController {
         = filterService.filterMultiFoodBy(menuImage, jwtMemberId.memberId());
     return ResponseEntity.ok(foodFilterResponses);
   }
+
+  @PostMapping(path = "/menu/test", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<List<FoodFilterResponse>> estimateMultiFoodTest(
+      @RequestPart final MultipartFile menuImage
+  ) {
+    final List<FoodFilterResponse> foodFilterResponses
+        = filterService.filterMultiFoodBy(menuImage, 2L);
+    return ResponseEntity.ok(foodFilterResponses);
+  }
 }

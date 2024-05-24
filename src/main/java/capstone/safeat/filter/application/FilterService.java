@@ -33,6 +33,7 @@ public class FilterService {
     final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
     return foodOcrReader.readFoods(meuImage).stream()
         .map(food -> categoryEstimater.estimateFood(food.name()))
+        .filter(EstimatedFood::isFood)
         .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))
         .toList();
   }

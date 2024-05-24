@@ -33,7 +33,7 @@ public class GoogleOcrReader implements FoodOcrReader {
 
   private static final String CREDENTIAL_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
   private static final String ENDPOINT_NAME_FORMAT = "projects/%s/locations/%s/processors/%s";
-  public static final String ENDPOINT_FORMAT = "%s-documentai.googleapis.com:443";
+  private static final String ENDPOINT_FORMAT = "%s-documentai.googleapis.com:443";
 
   private final GoogleOcrConfig googleOcrConfig;
   private final DocumentProcessorServiceSettings documentProcessorServiceSettings;
@@ -79,6 +79,7 @@ public class GoogleOcrReader implements FoodOcrReader {
 
       return paragraphs.stream()
           .map(paragraph -> getText(paragraph.getLayout().getTextAnchor(), text))
+          .filter(NonFoodDataFilter::isValidFoodName)
           .map(Food::new)
           .toList();
     } catch (final Exception e) {
@@ -110,7 +111,7 @@ public class GoogleOcrReader implements FoodOcrReader {
     if (!textAnchor.getTextSegmentsList().isEmpty()) {
       int startIdx = (int) textAnchor.getTextSegments(0).getStartIndex();
       int endIdx = (int) textAnchor.getTextSegments(0).getEndIndex();
-      return text.substring(startIdx, endIdx);
+      return text.substring(startIdx, endIdx).replaceAll("\\n$", "");
     }
     return "[NO TEXT]";
   }

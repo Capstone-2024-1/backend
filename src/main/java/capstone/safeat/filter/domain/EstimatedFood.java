@@ -9,13 +9,13 @@ public class EstimatedFood {
 
   private final String koreanName;
   private final List<Category> categories;
-  private final boolean isAmbiguous;
-  private final boolean isFood;
+  private final Boolean isAmbiguous;
+  private final Boolean isFood;
 
   @Builder
   public EstimatedFood(
       final String koreanName, final List<Category> categories,
-      final boolean isAmbiguous, final boolean isFood
+      final Boolean isAmbiguous, final Boolean isFood
   ) {
     this.koreanName = koreanName;
     this.categories = categories;
@@ -27,11 +27,11 @@ public class EstimatedFood {
     return koreanName;
   }
 
-  public boolean isAmbiguous() {
+  public Boolean isAmbiguous() {
     return isAmbiguous;
   }
 
-  public boolean isFood() {
+  public Boolean isFood() {
     return isFood;
   }
 

@@ -1,8 +1,8 @@
 package capstone.safeat.filter.external.dto;
 
 import capstone.safeat.category.domain.Category;
-import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.filter.external.dto.FoodEstimateResponse.Ingredient;
+import capstone.safeat.filter.vo.EstimatedFood;
 import java.util.List;
 
 public record FoodInferenceResponse(
@@ -19,6 +19,7 @@ public record FoodInferenceResponse(
     return EstimatedFood.builder()
         .categories(categories)
         .koreanName(koreanName)
+        .isAmbiguous(true)
         .build();
   }
 }

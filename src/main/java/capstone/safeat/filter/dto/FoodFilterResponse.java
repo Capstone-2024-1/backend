@@ -10,9 +10,9 @@ public record FoodFilterResponse(
     String englishName,
     List<CategoryResponse> cannotEatCategories,
     List<CategoryResponse> canEatCategories,
-    boolean canEat,
-    boolean isFood,
-    boolean isAmbiguous
+    Boolean canEat,
+    Boolean isFood,
+    Boolean isAmbiguous
 ) {
 
   public static FoodFilterResponse of(

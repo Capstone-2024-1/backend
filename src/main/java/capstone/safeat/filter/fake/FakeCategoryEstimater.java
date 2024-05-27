@@ -1,7 +1,7 @@
 package capstone.safeat.filter.fake;
 
 import capstone.safeat.filter.application.CategoryEstimater;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

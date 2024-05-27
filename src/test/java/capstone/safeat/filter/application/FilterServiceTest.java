@@ -9,7 +9,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 import capstone.safeat.category.dto.CategoryResponse;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.filter.dto.FoodFilterResponse;
 import capstone.safeat.member.application.MemberUpdater;
 import capstone.safeat.member.domain.Member;

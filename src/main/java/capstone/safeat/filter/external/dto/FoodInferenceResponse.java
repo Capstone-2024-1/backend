@@ -1,7 +1,7 @@
 package capstone.safeat.filter.external.dto;
 
 import capstone.safeat.category.domain.Category;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.filter.external.dto.FoodEstimateResponse.Ingredient;
 import java.util.List;
 

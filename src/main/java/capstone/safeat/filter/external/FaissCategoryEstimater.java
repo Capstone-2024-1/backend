@@ -1,7 +1,7 @@
 package capstone.safeat.filter.external;
 
 import capstone.safeat.filter.application.CategoryEstimater;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;

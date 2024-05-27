@@ -1,6 +1,6 @@
 package capstone.safeat.filter.application;
 
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 
 public interface FoodRecipeInferencer {
 

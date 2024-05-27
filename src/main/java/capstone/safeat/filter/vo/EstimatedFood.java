@@ -1,4 +1,4 @@
-package capstone.safeat.filter.domain;
+package capstone.safeat.filter.vo;
 
 import capstone.safeat.category.domain.Category;
 import java.util.ArrayList;

@@ -11,11 +11,11 @@ import org.springframework.util.MultiValueMap;
 @RequiredArgsConstructor
 public class FaissCategoryEstimater implements CategoryEstimater {
 
-  private final FaissApiClient faissApiClient;
+  private final AiApiClient aiApiClient;
 
   @Override
   public EstimatedFood estimateFood(final String foodName) {
-    return faissApiClient.estimate(creatParams(foodName))
+    return aiApiClient.estimate(creatParams(foodName))
         .toEstimateCategory();
   }
 

@@ -4,6 +4,7 @@ import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.filter.domain.EstimatedFood;
 import capstone.safeat.filter.dto.FoodFilterResponse;
+import capstone.safeat.group.application.GroupService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class FilterService {
 
   private final FoodOcrReader foodOcrReader;
-  private final CategoryReader categoryReader;
   private final CategoryEstimater categoryEstimater;
   private final TranslationClient translationClient;
+  private final CategoryReader categoryReader;
+  private final GroupService groupService;
 
   @Transactional(readOnly = true)
   public FoodFilterResponse filterSingleFood(final String foodName, final Long memberId) {
@@ -31,6 +33,19 @@ public class FilterService {
       final MultipartFile meuImage, final Long memberId
   ) {
     final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
+    return foodOcrReader.readFoods(meuImage).stream()
+        .map(food -> categoryEstimater.estimateFood(food.name()))
+        .filter(EstimatedFood::isFood)
+        .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))
+        .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<FoodFilterResponse> filterMultiFoodBy(
+      final MultipartFile meuImage, final Long memberId, final Long groupId
+  ) {
+    final List<Category> filterCategories = groupService.readGroupsCategories(groupId, memberId);
+
     return foodOcrReader.readFoods(meuImage).stream()
         .map(food -> categoryEstimater.estimateFood(food.name()))
         .filter(EstimatedFood::isFood)

@@ -28,20 +28,38 @@ include::{snippets}/../../build/generated-snippets/filter-single/http-response.a
 
 include::{snippets}/../../build/generated-snippets/filter-single/response-fields.adoc[]
 
-==== *메뉴 이미지로 필터링*
+==== *메뉴 이미지로 필터링 - member*
 
 ===== *Http Request*
 
-include::{snippets}/../../build/generated-snippets/filter-image/http-request.adoc[]
+include::{snippets}/../../build/generated-snippets/filter-image-member/http-request.adoc[]
 
 ===== *Http Request Parts Description*
 
-include::{snippets}/../../build/generated-snippets/filter-image/request-parts.adoc[]
+include::{snippets}/../../build/generated-snippets/filter-image-member/request-parts.adoc[]
 
 ===== *Http Response*
 
-include::{snippets}/../../build/generated-snippets/filter-image/http-response.adoc[]
+include::{snippets}/../../build/generated-snippets/filter-image-member/http-response.adoc[]
 
 ===== *Http Response Description*
 
-include::{snippets}/../../build/generated-snippets/filter-image/response-fields.adoc[]
+include::{snippets}/../../build/generated-snippets/filter-image-member/response-fields.adoc[]
+
+==== *메뉴 이미지로 필터링 - group*
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/filter-image-group/http-request.adoc[]
+
+===== *Http Request Parts Description*
+
+include::{snippets}/../../build/generated-snippets/filter-image-group/request-parts.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/filter-image-group/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/filter-image-group/response-fields.adoc[]

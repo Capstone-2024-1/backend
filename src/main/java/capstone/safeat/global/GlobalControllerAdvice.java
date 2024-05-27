@@ -3,6 +3,7 @@ package capstone.safeat.global;
 import capstone.safeat.base.BaseException;
 import capstone.safeat.base.BaseExceptionType;
 import java.net.BindException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,7 @@ public class GlobalControllerAdvice {
     );
   }
 
+  @Getter
   public static class ExceptionResponse {
 
     private final String message;
@@ -71,10 +73,6 @@ public class GlobalControllerAdvice {
 
     private static ExceptionResponse from(final Exception exception) {
       return new ExceptionResponse(exception.getMessage());
-    }
-
-    public String getMessage() {
-      return message;
     }
   }
 }

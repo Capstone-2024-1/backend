@@ -183,4 +183,45 @@ public class FilterApiTest extends ApiTest {
             )
         ));
   }
+
+  @Test
+  void 음식이름으로_레시피_추론하여_생성하기() throws Exception {
+    final FoodFilterRequest request = new FoodFilterRequest("김치볶음밥");
+    final Long memberId = 10L;
+
+    final String requestBody = objectMapper.writeValueAsString(request);
+    setAccessToken(ACCESS_TOKEN, memberId);
+
+    final FoodFilterResponse response = new FoodFilterResponse(
+        "김치볶음밥", "kimchi fired rice", CategoryResponse.generateList(List.of(PEPPER)),
+        CategoryResponse.generateList(List.of(RICE, OTHER_HERBAGE_CROP)), false, true, false
+    );
+
+    when(filterService.generateFoodCategories(memberId, request.foodName())).thenReturn(response);
+
+    mockMvc.perform(post("/menu/generate")
+            .contentType(APPLICATION_JSON_VALUE)
+            .content(requestBody)
+            .header(AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        .andExpect(status().isOk())
+        .andDo(document("generate-menu",
+            requestHeaders(
+                headerWithName(CONTENT_TYPE).description("application/json")
+            ),
+            requestFields(
+                fieldWithPath("foodName").type(STRING).description("필터링할 음식 이름")
+            ),
+            responseFields(
+                fieldWithPath("koreanName").type(STRING).description("음식 한국 이름"),
+                fieldWithPath("englishName").type(STRING).description("음식 영문 이름"),
+                subsectionWithPath("cannotEatCategories").type(ARRAY)
+                    .description("음식 재료 중 사용자가 먹을 수 없는 재료들"),
+                subsectionWithPath("canEatCategories").type(ARRAY)
+                    .description("음식 재료 중 사용자가 먹을 수 있는 재료들"),
+                fieldWithPath("canEat").type(BOOLEAN).description("먹을 수 있는지"),
+                fieldWithPath("isFood").type(BOOLEAN).description("음식 인지"),
+                fieldWithPath("isAmbiguous").type(BOOLEAN).description("추출한 카테고리가 모호한지")
+            )
+        ));
+  }
 }

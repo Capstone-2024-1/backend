@@ -8,9 +8,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,5 +59,14 @@ public class FilterController {
     final List<FoodFilterResponse> foodFilterResponses
         = filterService.filterMultiFoodBy(menuImage, 2L);
     return ResponseEntity.ok(foodFilterResponses);
+  }
+
+  @PostMapping(path = "/menu/generate")
+  public ResponseEntity<FoodFilterResponse> generateMenuBoardForSingle(
+      @RequestBody final FoodFilterRequest request, final JwtMemberId jwtMemberId
+  ) {
+    final FoodFilterResponse response = filterService
+        .generateFoodCategories(jwtMemberId.memberId(), request.foodName());
+    return ResponseEntity.ok(response);
   }
 }

@@ -1,7 +1,7 @@
-package capstone.safeat.filter.external;
+package capstone.safeat.filter.external.dto;
 
 import capstone.safeat.category.domain.Category;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import java.util.List;
 
 public record FoodEstimateResponse(
@@ -9,7 +9,6 @@ public record FoodEstimateResponse(
 ) {
 
   public record Ingredient(String englishName) {
-
   }
 
   public EstimatedFood toEstimateCategory() {

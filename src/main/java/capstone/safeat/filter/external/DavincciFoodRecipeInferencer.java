@@ -1,7 +1,9 @@
 package capstone.safeat.filter.external;
 
-import capstone.safeat.filter.application.CategoryEstimater;
+import capstone.safeat.filter.application.FoodRecipeInferencer;
 import capstone.safeat.filter.vo.EstimatedFood;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -9,14 +11,17 @@ import org.springframework.util.MultiValueMap;
 
 @Component
 @RequiredArgsConstructor
-public class FaissCategoryEstimater implements CategoryEstimater {
+public class DavincciFoodRecipeInferencer implements FoodRecipeInferencer {
 
+  private final Map<String, EstimatedFood> cache = new HashMap<>();
   private final AiApiClient aiApiClient;
 
   @Override
-  public EstimatedFood estimateFood(final String foodName) {
-    return aiApiClient.estimate(creatParams(foodName))
-        .toEstimateCategory();
+  public EstimatedFood inferenceFood(final String foodName) {
+    return cache.computeIfAbsent(foodName,
+        key -> aiApiClient.inference(creatParams(key))
+            .toEstimateCategory()
+    );
   }
 
   private static MultiValueMap<String, String> creatParams(final String foodName) {

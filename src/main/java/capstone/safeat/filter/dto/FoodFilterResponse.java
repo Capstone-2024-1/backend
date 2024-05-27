@@ -2,7 +2,7 @@ package capstone.safeat.filter.dto;
 
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.category.dto.CategoryResponse;
-import capstone.safeat.filter.domain.EstimatedFood;
+import capstone.safeat.filter.vo.EstimatedFood;
 import java.util.List;
 
 public record FoodFilterResponse(

@@ -7,6 +7,7 @@ import static capstone.safeat.category.domain.Category.RICE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.safeat.category.domain.Category;
+import capstone.safeat.filter.vo.EstimatedFood;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

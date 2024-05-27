@@ -2,7 +2,7 @@ package capstone.safeat.filter.application;
 
 import capstone.safeat.filter.vo.EstimatedFood;
 
-public interface CategoryEstimater {
+public interface FoodRecipeInferencer {
 
-  EstimatedFood estimateFood(final String foodName);
+  EstimatedFood inferenceFood(final String foodName);
 }

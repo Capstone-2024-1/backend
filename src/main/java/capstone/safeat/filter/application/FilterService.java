@@ -2,8 +2,8 @@ package capstone.safeat.filter.application;
 
 import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
-import capstone.safeat.filter.domain.EstimatedFood;
 import capstone.safeat.filter.dto.FoodFilterResponse;
+import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.group.application.GroupService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ public class FilterService {
 
   private final FoodOcrReader foodOcrReader;
   private final CategoryEstimater categoryEstimater;
+  private final FoodRecipeInferencer foodRecipeInferencer;
   private final TranslationClient translationClient;
   private final CategoryReader categoryReader;
   private final GroupService groupService;
@@ -33,11 +34,7 @@ public class FilterService {
       final MultipartFile meuImage, final Long memberId
   ) {
     final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
-    return foodOcrReader.readFoods(meuImage).stream()
-        .map(food -> categoryEstimater.estimateFood(food.name()))
-        .filter(EstimatedFood::isFood)
-        .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))
-        .toList();
+    return filteringMenus(meuImage, filterCategories);
   }
 
   @Transactional(readOnly = true)
@@ -45,12 +42,14 @@ public class FilterService {
       final MultipartFile meuImage, final Long memberId, final Long groupId
   ) {
     final List<Category> filterCategories = groupService.readGroupsCategories(groupId, memberId);
+    return filteringMenus(meuImage, filterCategories);
+  }
 
-    return foodOcrReader.readFoods(meuImage).stream()
-        .map(food -> categoryEstimater.estimateFood(food.name()))
-        .filter(EstimatedFood::isFood)
-        .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))
-        .toList();
+  @Transactional(readOnly = true)
+  public FoodFilterResponse generateFoodCategories(final Long memberId, final String foodName) {
+    final EstimatedFood estimatedFood = foodRecipeInferencer.inferenceFood(foodName);
+    final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
+    return generateFoodFilter(estimatedFood, filterCategories);
   }
 
   private FoodFilterResponse generateFoodFilter(
@@ -62,5 +61,14 @@ public class FilterService {
         estimatedFood.extractCannotEatCategories(filterCategories),
         estimatedFood.extractCanEatCategories(filterCategories)
     );
+  }
+
+  private List<FoodFilterResponse> filteringMenus(final MultipartFile meuImage,
+      final List<Category> filterCategories) {
+    return foodOcrReader.readFoods(meuImage).stream()
+        .map(food -> categoryEstimater.estimateFood(food.name()))
+        .filter(EstimatedFood::isFood)
+        .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))
+        .toList();
   }
 }

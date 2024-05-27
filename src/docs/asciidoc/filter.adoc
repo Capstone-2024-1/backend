@@ -63,3 +63,21 @@ include::{snippets}/../../build/generated-snippets/filter-image-group/http-respo
 ===== *Http Response Description*
 
 include::{snippets}/../../build/generated-snippets/filter-image-group/response-fields.adoc[]
+
+==== *음식 재료 추론하여 생성 *
+
+===== *Http Request*
+
+include::{snippets}/../../build/generated-snippets/generate-menu/http-request.adoc[]
+
+===== *Http Request Description*
+
+include::{snippets}/../../build/generated-snippets/generate-menu/request-fields.adoc[]
+
+===== *Http Response*
+
+include::{snippets}/../../build/generated-snippets/generate-menu/http-response.adoc[]
+
+===== *Http Response Description*
+
+include::{snippets}/../../build/generated-snippets/generate-menu/response-fields.adoc[]

@@ -40,6 +40,9 @@ dependencies {
     //google-ocr
     implementation 'com.google.cloud:google-cloud-document-ai:2.47.0'
 
+    //gcp translate
+    implementation 'com.google.cloud:google-cloud-translate:2.34.0'
+
     //ahocorasick
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
 

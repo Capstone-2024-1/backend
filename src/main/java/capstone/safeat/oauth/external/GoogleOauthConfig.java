@@ -2,7 +2,7 @@ package capstone.safeat.oauth.external;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "oauth.google")
+@ConfigurationProperties(prefix = "google.oauth")
 public record GoogleOauthConfig(
     String redirectUri,
     String clientId,

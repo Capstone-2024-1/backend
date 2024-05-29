@@ -11,10 +11,17 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-oauth:
-  google:
-    client-id: "test"
-    redirect-uri: "test"
+    open-in-view: false
+google:
+  credentialPath: "local"
+  ocr:
+    projectId: "local"
+    location: "local"
+    processorId: "local"
+  oauth:
+    client-id: "local"
+    redirect-uri: "local"
     client-secret: "client-secret"
+
 jwt:
   secret: "ToiguaOaVf3o3wD8XSnJV10MlWo0exackfAofpscMqs="

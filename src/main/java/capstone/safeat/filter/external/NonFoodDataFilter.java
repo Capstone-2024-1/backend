@@ -1,18 +1,29 @@
 package capstone.safeat.filter.external;
 
+import java.util.List;
+
 public class NonFoodDataFilter {
 
   private static final String KOREAN_FORMAT_REGEX = "[가-힣 ]+";
+  private static final List<String> NON_FOOD_DATAS = List.of(
+      "만두류", "식사류", "김밥류", "주류", "제주산", "음료", "브라질산", "국내산", "중국산", "미국산", "차림표",
+      "쿠폰", "배달"
+  );
 
   public static boolean isValidFoodName(final String foodName) {
-    return containOnlyKorean(foodName) && containNonFoodKeyWord(foodName);
+    return containOnlyKorean(foodName) && notContainNonFoodKeyWord(foodName);
   }
 
   private static boolean containOnlyKorean(final String foodName) {
     return foodName.matches(KOREAN_FORMAT_REGEX);
   }
 
-  private static boolean containNonFoodKeyWord(final String foodName) {
+  private static boolean notContainNonFoodKeyWord(final String foodName) {
+    for (final String nonFoodData : NON_FOOD_DATAS) {
+      if (foodName.contains(nonFoodData)) {
+        return false;
+      }
+    }
     return true;
   }
 }

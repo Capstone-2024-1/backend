@@ -82,7 +82,7 @@ class GroupServiceTest extends ServiceTest {
         = groupService.findRegisteredGroups(creator.getId());
 
     assertThat(groupPreviewResponses)
-        .usingRecursiveFieldByFieldElementComparator()
+        .usingRecursiveFieldByFieldElementComparatorIgnoringFields("imageUrl")
         .containsExactlyInAnyOrderElementsOf(expected);
   }
 

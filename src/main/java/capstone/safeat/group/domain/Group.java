@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.util.Random;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Group {
 
-  private static final String DEFAULT_GROUP_IMAGE_URL = "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/group_default_image.png";
+  private static final String DEFAULT_GROUP_IMAGE_URL_FORMAT = "https://raw.githubusercontent.com/Capstone-2024-1/backend/main/default_image/group/group-default-%d.png";
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -44,6 +45,9 @@ public class Group {
   }
 
   public static Group create(final String name, final Member creator) {
-    return new Group(null, name, DEFAULT_GROUP_IMAGE_URL, creator.getId());
+    final String groupImageUrl = String.format(
+        DEFAULT_GROUP_IMAGE_URL_FORMAT, new Random().nextInt(8) + 1
+    );
+    return new Group(null, name, groupImageUrl, creator.getId());
   }
 }

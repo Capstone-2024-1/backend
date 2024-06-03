@@ -17,7 +17,7 @@ import lombok.Getter;
 public enum Allergy {
 
   CRUSTACEANS_ALLERGY(400L, "갑각류 알레르기", "Crustaceans Allergy",
-      CRUSTACEANS.getAllChildren()
+      CRUSTACEANS.getAllLeafChildren()
   ),
   NUTS_ALLERGY(401L, "견과 알레르기", "Nuts Allergy",
       NUTS.getAllChildren()
@@ -27,13 +27,13 @@ public enum Allergy {
       List.of(WHEAT, BARLEY)
   ),
   FISH_ALLERGY(404L, "생선 알레르기", "Fish Allergy",
-      FISH.getAllChildren()
+      FISH.getAllLeafChildren()
   ),
   MILK_ALLERGY(405L, "우유 알레르기", "Milk Allergy",
       DAIRIES.getAllChildren()
   ),
   SHELLFISH_ALLERGY(406L, "조개 알레르기", "Shellfish Allergy",
-      SHELLFISH.getAllChildren()
+      SHELLFISH.getAllLeafChildren()
   ),
   BEAN_ALLERGY(407L, "콩 알레르기", "Bean Allergy",
       List.of(BEANS)

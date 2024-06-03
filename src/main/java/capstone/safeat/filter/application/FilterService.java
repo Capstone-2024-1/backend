@@ -26,6 +26,9 @@ public class FilterService {
   public FoodFilterResponse filterSingleFood(final String foodName, final Long memberId) {
     final EstimatedFood estimatedFood = categoryEstimater.estimateFood(foodName);
     final List<Category> filterCategories = categoryReader.readCategoriesByMemberId(memberId);
+    if (estimatedFood.isAmbiguous()) {
+      return generateFoodFilter(foodRecipeInferencer.inferenceFood(foodName), filterCategories);
+    }
     return generateFoodFilter(estimatedFood, filterCategories);
   }
 

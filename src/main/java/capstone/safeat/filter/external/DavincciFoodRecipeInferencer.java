@@ -5,10 +5,12 @@ import capstone.safeat.filter.vo.EstimatedFood;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+@Profile("prod")
 @Component
 @RequiredArgsConstructor
 public class DavincciFoodRecipeInferencer implements FoodRecipeInferencer {

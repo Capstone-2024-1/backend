@@ -3,6 +3,7 @@ package capstone.safeat.filter.application;
 import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.filter.dto.FoodFilterResponse;
+import capstone.safeat.filter.external.NonFoodDataFilter;
 import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.group.application.GroupService;
 import java.util.List;
@@ -69,6 +70,7 @@ public class FilterService {
   private List<FoodFilterResponse> filteringMenus(final MultipartFile meuImage,
       final List<Category> filterCategories) {
     return foodOcrReader.readFoods(meuImage).stream()
+        .filter(NonFoodDataFilter::isValidFoodName)
         .map(food -> categoryEstimater.estimateFood(food.name()))
         .filter(EstimatedFood::isFood)
         .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))

@@ -1,5 +1,6 @@
 package capstone.safeat.filter.external;
 
+import capstone.safeat.filter.vo.Food;
 import java.util.List;
 
 public class NonFoodDataFilter {
@@ -13,7 +14,8 @@ public class NonFoodDataFilter {
       "모집", "경품", "진행", "공지사항", "이벤트", "테이블", "환불", "교환", "상품", "품절", "접수"
   );
 
-  public static boolean isValidFoodName(final String foodName) {
+  public static boolean isValidFoodName(final Food food) {
+    final String foodName = food.name();
     return containOnlyKorean(foodName) && notContainNonFoodKeyWord(foodName);
   }
 

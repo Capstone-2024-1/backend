@@ -1,6 +1,8 @@
-package capstone.safeat.filter.external;
+package capstone.safeat.filter.application;
 
+import capstone.safeat.filter.vo.Food;
 import java.util.List;
+import org.ahocorasick.trie.Trie;
 
 public class NonFoodDataFilter {
 
@@ -13,20 +15,19 @@ public class NonFoodDataFilter {
       "모집", "경품", "진행", "공지사항", "이벤트", "테이블", "환불", "교환", "상품", "품절", "접수"
   );
 
-  public static boolean isValidFoodName(final String foodName) {
-    return containOnlyKorean(foodName) && notContainNonFoodKeyWord(foodName);
+  public static boolean isValidFoodName(final Food food) {
+    final String foodName = food.name();
+    return containOnlyKorean(foodName) && notContainNonFoodKeyword(foodName);
   }
 
   private static boolean containOnlyKorean(final String foodName) {
     return foodName.matches(KOREAN_FORMAT_REGEX);
   }
 
-  private static boolean notContainNonFoodKeyWord(final String foodName) {
-    for (final String nonFoodData : NON_FOOD_DATAS) {
-      if (foodName.contains(nonFoodData)) {
-        return false;
-      }
-    }
-    return true;
+  private static boolean notContainNonFoodKeyword(final String foodName) {
+    final Trie trie = Trie.builder()
+        .addKeywords(NON_FOOD_DATAS)
+        .build();
+    return trie.parseText(foodName).isEmpty();
   }
 }

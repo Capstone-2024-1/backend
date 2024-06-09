@@ -69,6 +69,7 @@ public class FilterService {
   private List<FoodFilterResponse> filteringMenus(final MultipartFile meuImage,
       final List<Category> filterCategories) {
     return foodOcrReader.readFoods(meuImage).stream()
+        .filter(NonFoodDataFilter::isValidFoodName)
         .map(food -> categoryEstimater.estimateFood(food.name()))
         .filter(EstimatedFood::isFood)
         .map(estimatedFood -> generateFoodFilter(estimatedFood, filterCategories))

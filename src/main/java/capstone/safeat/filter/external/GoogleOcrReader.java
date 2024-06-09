@@ -83,7 +83,6 @@ public class GoogleOcrReader implements FoodOcrReader {
 
       return paragraphs.stream()
           .map(paragraph -> getText(paragraph.getLayout().getTextAnchor(), text))
-          .filter(NonFoodDataFilter::isValidFoodName)
           .map(Food::new)
           .toList();
     } catch (final Exception e) {

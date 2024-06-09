@@ -3,7 +3,6 @@ package capstone.safeat.filter.application;
 import capstone.safeat.category.application.CategoryReader;
 import capstone.safeat.category.domain.Category;
 import capstone.safeat.filter.dto.FoodFilterResponse;
-import capstone.safeat.filter.external.NonFoodDataFilter;
 import capstone.safeat.filter.vo.EstimatedFood;
 import capstone.safeat.group.application.GroupService;
 import java.util.List;

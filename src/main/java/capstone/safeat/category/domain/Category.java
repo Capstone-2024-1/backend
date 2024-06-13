@@ -119,7 +119,7 @@ public enum Category {
   MILK(79L, "우유", "Milk", DAIRIES, true, DAIRIES.imageUrl),
   CHEESE(80L, "치즈", "Cheese", DAIRIES, true, DAIRIES.imageUrl),
   BUTTER(81L, "버터", "Butter", DAIRIES, true, DAIRIES.imageUrl),
-  SOY_MILK(83L, "두유", "SOY_MILK", DAIRIES, true, DAIRIES.imageUrl),
+  SOY_MILK(90L, "두유", "SOY_MILK", DAIRIES, true, DAIRIES.imageUrl),
   OTHER_DAIRY_PRODUCTS(82L, "기타 유제품", "Other dairy products", DAIRIES, true, DAIRIES.imageUrl);
 
   private final Long id;

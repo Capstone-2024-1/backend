@@ -81,10 +81,12 @@ public class GoogleOcrReader implements FoodOcrReader {
       final Page firstPage = documentResponse.getPages(0);
       final List<Paragraph> paragraphs = firstPage.getParagraphsList();
 
-      return paragraphs.stream()
+      final List<Food> foods = paragraphs.stream()
           .map(paragraph -> getText(paragraph.getLayout().getTextAnchor(), text))
           .map(Food::new)
           .toList();
+      foods.forEach(food -> log.info("ocr로 읽은 문자 : {}", food.name()));
+      return foods;
     } catch (final Exception e) {
       log.error("error Message : {}", e.getMessage());
       throw new FilterException(FilterExceptionType.GOOGLE_OCR_FILTER_FAIL);

@@ -9,6 +9,7 @@ import static capstone.safeat.category.domain.Category.DAIRIES;
 import static capstone.safeat.category.domain.Category.GRAIN;
 import static capstone.safeat.category.domain.Category.MILK;
 import static capstone.safeat.category.domain.Category.OTHER_DAIRY_PRODUCTS;
+import static capstone.safeat.category.domain.Category.SOY_MILK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.safeat.category.domain.Allergy;
@@ -24,14 +25,15 @@ class AllergyResponseTest {
     final List<Allergy> allergies = List.of(MILK_ALLERGY, BEAN_ALLERGY);
     final List<AllergyResponse> expected = List.of(
         new AllergyResponse(MILK_ALLERGY.getId(), MILK_ALLERGY.getEnglishName(),
-            MILK_ALLERGY.getKoreanName(), Set.of(9L, 79L, 80L, 81L, 82L),
+            MILK_ALLERGY.getKoreanName(), Set.of(9L, 79L, 80L, 81L, 91L, 82L),
             List.of(
                 new CategoryTreeResponse(9L, DAIRIES.getEnglishName(), DAIRIES.getKoreanName(),
-                    Set.of(79L, 80L, 81L, 82L),
+                    Set.of(79L, 80L, 81L, 91L, 82L),
                     List.of(
                         CategoryTreeResponse.fromWithEmptyChildren(MILK),
                         CategoryTreeResponse.fromWithEmptyChildren(CHEESE),
                         CategoryTreeResponse.fromWithEmptyChildren(BUTTER),
+                        CategoryTreeResponse.fromWithEmptyChildren(SOY_MILK),
                         CategoryTreeResponse.fromWithEmptyChildren(OTHER_DAIRY_PRODUCTS)
                     )
                 )
